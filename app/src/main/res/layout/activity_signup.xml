@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SignupActivity">
 
     <TextView
-        android:id="@+id/titleLoginTextView"
+        android:id="@+id/titleSignUpTextView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_margin="16dip"
@@ -24,54 +24,58 @@
         app:layout_constraintVertical_bias="0.083" />
 
     <TextView
-        android:id="@+id/welcomeFighterLoginTextView"
+        android:id="@+id/createAccountSignUpTextView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_margin="16dip"
         android:layout_marginTop="184dp"
-        android:layout_marginBottom="420dp"
         android:gravity="center"
-        android:text="@string/welcome_fighter"
+        android:text="@string/create_an_account"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleLoginTextView"
+        app:layout_constraintTop_toBottomOf="@+id/titleSignUpTextView"
         app:layout_constraintVertical_bias="0.0" />
-    
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+
+    <EditText
+        android:id="@+id/usernameSignUpEditText"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:layout_margin="16dp"
-        android:id="@+id/startBattleButton"
-        android:text="@string/start_battle"
-        android:textSize="20sp"
+        android:autofillHints="Please enter username"
+        android:gravity="center"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeFighterLoginTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccountSignUpTextView" />
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+    <EditText
+        android:id="@+id/passwordSignUpEditTextView"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:layout_margin="16dp"
-        android:id="@+id/viewMonstersButton"
-        android:text="@string/view_monsters"
-        android:textSize="20sp"
+        android:autofillHints="Please enter username"
+        android:gravity="center"
+        android:hint="@string/password"
+        android:inputType="text"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startBattleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameSignUpEditText"
+        tools:ignore="TextFields" />
 
     <Button
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:id="@+id/viewRecentBattleButton"
-        android:text="@string/view_recent_battles"
-        android:textSize="18sp"
+        android:id="@+id/signUpButton"
+        android:text="@string/sign_up"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMonstersButton" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/passwordSignUpEditTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
