@@ -11,11 +11,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivitySignupBinding;
 
 public class SignupActivity extends AppCompatActivity {
 
     private ActivitySignupBinding binding;
+    private ApplicationRepository appRepository;
+
+    String usernameEnter = ""; //Stores the input from textedit
+    String passwordEnter = ""; //Stores the input from textedit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +35,38 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Calling intent factory in main
-                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
+                getUserCredentials();
+                insertCredentials();
+
+                Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
+
+        appRepository = ApplicationRepository.getRepository(getApplication());
     }
 
+
+
+    /**
+     * Reads in the User's potential username and password
+     */
+    private void getUserCredentials() {
+        usernameEnter = binding.usernameSignUpEditText.getText().toString();
+        passwordEnter = binding.passwordSignUpEditTextView.getText().toString();
+
+    }
+
+    /**
+     * Enters the stored values to the repository
+     */
+    private void insertCredentials() {
+        if(usernameEnter.isEmpty()){
+            return;
+        }
+        User userInfo = new User(usernameEnter, passwordEnter);
+        appRepository.insertUser(userInfo);
+    }
 
     /**
      * Creating Intent Factory to swap over to other activities
@@ -42,4 +74,9 @@ public class SignupActivity extends AppCompatActivity {
     static Intent signUpIntentFactory(Context context){
         return new Intent(context, SignupActivity.class);
     }
+
+
+    /**
+     * verify the user for signup
+     */
 }

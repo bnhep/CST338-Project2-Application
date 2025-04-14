@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.project2.database.ApplicationRepository;
 import com.example.project2.databinding.ActivityMainBinding;
 
 /**
@@ -17,16 +18,16 @@ import com.example.project2.databinding.ActivityMainBinding;
  * //TODO implement the other activity layouts,logout button should be here
  */
 public class MainActivity extends AppCompatActivity {
-
+    public static final String TAG = "Application_LOG";
     private ActivityMainBinding binding;
+    private ApplicationRepository appRepository; //Performs the queries for the database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
+        appRepository = ApplicationRepository.getRepository(getApplication());
 
 
         //button functionality for Start Battle
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Testing button please remove later
-
                 //TODO the mainactivity menu will show up, IF YOU PRESS START BATTLE IT GOES TO SIGNUP
                 //THIS IS TEMPORARY
                 Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
