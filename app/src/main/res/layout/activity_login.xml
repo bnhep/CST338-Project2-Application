@@ -7,25 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/titleLoginTextView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dip"
-        android:layout_marginTop="184dp"
-        android:gravity="center"
-        android:text="@string/creature_colosseum"
-        android:textSize="42sp"
+    <ImageView
+        android:id="@+id/ratTitleLoginImageView"
+        android:layout_width="335dp"
+        android:layout_height="151dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.034"
+        app:srcCompat="@drawable/rat"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/pleaseSignInLoginTextView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="337dp"
+        android:layout_height="46dp"
         android:layout_margin="16dip"
         android:layout_marginTop="184dp"
         android:gravity="center"
@@ -34,43 +31,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleLoginTextView"
+        app:layout_constraintTop_toBottomOf="@+id/ratTitleLoginImageView"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/usernameLoginEditText"
-        android:layout_width="335dp"
+        android:layout_width="240dp"
         android:layout_height="62dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
         android:autofillHints="Please enter username"
         android:gravity="center"
         android:hint="@string/username"
         android:inputType="text"
-        android:textSize="32sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pleaseSignInLoginTextView" />
 
     <EditText
         android:id="@+id/passwordLoginEditTextView"
-        android:layout_width="335dp"
+        android:layout_width="240dp"
         android:layout_height="62dp"
         android:layout_margin="16dp"
         android:autofillHints="Please enter username"
         android:gravity="center"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textSize="32sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameLoginEditText"
         tools:ignore="TextFields" />
 
     <Button
-        android:layout_width="340dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
         android:id="@+id/loginButton"
+        android:layout_width="322dp"
+        android:layout_height="54dp"
+        android:layout_margin="16dp"
         android:text="@string/log_in"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
