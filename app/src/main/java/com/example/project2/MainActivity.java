@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ApplicationRepository appRepository; //Performs the queries for the database
 
+    private final int userStatus = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,25 +31,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
 
-
+        Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+        startActivity(intent);
         //button functionality for Start Battle
         //TODO should have factory method to swap to StartBattle Activity
         binding.startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Testing button please remove later
-                //TODO the mainactivity menu will show up, IF YOU PRESS START BATTLE IT GOES TO SIGNUP
-                //THIS IS TEMPORARY
-                Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
-                startActivity(intent);
-
-
+                //TODO should have factory method call to the battle options menu(BASICALLY A STUB BUTTON)
                 Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
         //button functionality for View Monsters
-        //TODO should have factory method to swap to View Monsters
+        //TODO should have factory method to swap to View Monsters(BASICALLY A STUB BUTTON)
         binding.viewMonstersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //button functionality for View recent battles
-        //TODO should have factory method to swap to Recent Battles
+        //TODO should have factory method to swap to Recent Battles(BASICALLY A STUB BUTTON)
         binding.viewRecentBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -29,15 +29,14 @@ public class SignupActivity extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //TESTING PURPOSES this will just go to the mainactivity for now but should go to a
-        //Login screen
+        //TODO THIS TAKES IN DATA FOR USER ENTITY, SHOULD VALIDATE USERNAME IF ONE IS ALREADY CREATED
         binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Calling intent factory in main
-                getUserCredentials();
-                insertCredentials();
+                getUserCredentials(); //User input in the textedit of the menu username/password
+                insertCredentials(); //Inserts them into the database
 
+                //TODO VALIDATE METHOD HERE IF SIGNUP IS GOOG THEN GO TO LOGIN MENU(simple...I think)
                 Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
