@@ -32,9 +32,6 @@ public class User {
         isAdmin = false;
     }
 
-
-
-
     public int getId() {
         return id;
     }
