@@ -19,10 +19,11 @@ import com.example.project2.databinding.ActivityMainBinding;
  */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Application_LOG";
+    private static final String MAIN_ACTIVITY_USER_ID = "com.example.project2.MAIN_ACTIVITY_USER_ID";
     private ActivityMainBinding binding;
     private ApplicationRepository appRepository; //Performs the queries for the database
 
-    private final int userStatus = -1;
+    private int userStatus = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
 
-        Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-        startActivity(intent);
+
+        userStatus = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
+        //userStatus will
+        if(userStatus == -1) {
+            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+            startActivity(intent);
+        }
+
         //button functionality for Start Battle
         //TODO should have factory method to swap to StartBattle Activity
         binding.startBattleButton.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     //TemporaryMainActivity intent factory.
-    static Intent MainIntentFactory(Context context){
-        return new Intent(context, MainActivity.class);
+    static Intent MainIntentFactory(Context context, int TEMPORARY_STATUS_CHECK){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MAIN_ACTIVITY_USER_ID, TEMPORARY_STATUS_CHECK);
+        return intent;
     }
 
 
