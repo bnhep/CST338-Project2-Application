@@ -3,6 +3,8 @@ package com.example.project2.database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Query;
+
 import com.example.project2.database.entities.User;
 
 
@@ -28,15 +30,15 @@ public class ApplicationRepository {
         return repository;
     }
 
-
-    public LiveData<User> getUserByUsername(String username) {
-        return userDAO.getUserByUserName(username);
-    }
-
     public void insertUser(User... user){
         ApplicationDatabase.databaseWriteExecutor.execute(() ->
         {
             userDAO.insert(user);
         });
     }
+
+    public LiveData<User> getUserByUserName(String username) {
+        return userDAO.getUserByUserName(username);
+    }
+
 }
