@@ -15,7 +15,7 @@ import com.example.project2.databinding.ActivityMainBinding;
 
 /**
  * Activity Menu where user will choose the options to battle, view monsters, view recent battles
- * //TODO implement the other activity layouts,logout button should be here
+ * //TODO implement the other activity layouts, A logout button should be here
  */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Application_LOG";
@@ -32,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
 
-
+        //TODO Properly manage the userId of the current logged in user
+        //This gets the extra value from the intent which represents the current user's id(Primary Key in entity)
         userStatus = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
-        //userStatus will
+        //userStatus is the current account id, a -1 id will not exist in the database so consider
+        //that a no account tracker.
         if(userStatus == -1) {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //TemporaryMainActivity intent factory.
+    //MainIntentFactory that takes in a
     static Intent MainIntentFactory(Context context, int TEMPORARY_STATUS_CHECK){
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MAIN_ACTIVITY_USER_ID, TEMPORARY_STATUS_CHECK);

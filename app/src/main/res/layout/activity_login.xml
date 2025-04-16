@@ -39,7 +39,7 @@
         android:layout_width="240dp"
         android:layout_height="62dp"
         android:layout_margin="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:autofillHints="Please enter username"
         android:gravity="center"
         android:hint="@string/username"
