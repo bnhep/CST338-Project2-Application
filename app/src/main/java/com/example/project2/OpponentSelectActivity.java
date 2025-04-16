@@ -1,4 +1,9 @@
 package com.example.project2;
+/**
+ * Name: Austin Shatswell
+ * Date: --/--/25
+ * Explanation: Project 2: Creature Coliseum
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +61,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
+                Intent intent = MainActivity.MainIntentFactory(getApplicationContext(), 0);
                 startActivity(intent);
             }
         });
