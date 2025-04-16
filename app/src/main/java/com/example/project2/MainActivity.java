@@ -65,8 +65,12 @@ public class MainActivity extends AppCompatActivity {
         binding.viewMonstersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = TeamBuilderActivity.TeamBuilderIntentFactory(getApplicationContext());
+                startActivity(intent);
+
                 //Testing button please remove later
-                Toast.makeText(MainActivity.this, "View Monster Button works", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "View Monster Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
