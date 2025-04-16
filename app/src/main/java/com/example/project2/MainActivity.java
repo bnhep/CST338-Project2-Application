@@ -47,8 +47,16 @@ public class MainActivity extends AppCompatActivity {
         binding.startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO should have factory method call to the battle options menu(BASICALLY A STUB BUTTON)
-                Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
+                //Testing button please remove later
+                //TODO the mainactivity menu will show up, IF YOU PRESS START BATTLE IT GOES TO SIGNUP
+                //THIS IS TEMPORARY
+                //Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
+                //startActivity(intent);
+
+                Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
+                startActivity(intent);
+
+                //Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
