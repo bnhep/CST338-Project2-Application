@@ -24,13 +24,12 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "applicationDatabase";
 
     private static volatile ApplicationDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);
 
     /**
-     * Method to get the database
+     * Singleton Method to get the database, makes sure only one instance of a database is running
      */
-    static ApplicationDatabase getDatabase(final Context context){
+    public static ApplicationDatabase getDatabase(final Context context){
         if(INSTANCE == null){
             synchronized (ApplicationDatabase.class){
                 if(INSTANCE == null){
@@ -46,7 +45,10 @@ public abstract class ApplicationDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-
+    /**
+     * On build, this will instantiate the database with default account, maybe monsters in the
+     * future possibly.
+     */
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
@@ -58,7 +60,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                 User admin = new User("admin1", "admin1");
                 admin.setAdmin(true);
                 dao.insert(admin);
-                //Prepopulated testuser1
+                //Pre-populated testuser1
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
             });
