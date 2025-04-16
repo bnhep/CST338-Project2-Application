@@ -38,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
                 //Testing button please remove later
                 //TODO the mainactivity menu will show up, IF YOU PRESS START BATTLE IT GOES TO SIGNUP
                 //THIS IS TEMPORARY
-                Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
+                //Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
+                //startActivity(intent);
+
+                Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
                 startActivity(intent);
 
-
-                Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
