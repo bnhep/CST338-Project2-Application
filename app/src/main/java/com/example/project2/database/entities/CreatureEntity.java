@@ -11,7 +11,7 @@ import java.util.List;
 @Entity(tableName = ApplicationDatabase.CREATURE_TABLE)
 public class CreatureEntity {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public int creatureId;
 
     public String userId; //foreign key
     public String type; //subclass type
@@ -35,12 +35,31 @@ public class CreatureEntity {
     public int speedStat;
     public int baseSpeed;
 
-    public int getId() {
-        return id;
+    public CreatureEntity(int creatureId, String userId, String type, String name, String phrase, boolean fainted, List<ElementalType> elements, List<String> abilityList, int level, int curExperiencePoints, int experienceNeededToLevel, int curHealth, int healthStat, int attackStat, int defenseStat, int speedStat) {
+        this.creatureId = creatureId;
+        this.userId = userId;
+        this.type = type;
+        this.name = name;
+        this.phrase = phrase;
+        this.fainted = fainted;
+        this.elements = elements;
+        this.abilityList = abilityList;
+        this.level = level;
+        this.curExperiencePoints = curExperiencePoints;
+        this.experienceNeededToLevel = experienceNeededToLevel;
+        this.curHealth = curHealth;
+        this.healthStat = healthStat;
+        this.attackStat = attackStat;
+        this.defenseStat = defenseStat;
+        this.speedStat = speedStat;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getCreatureId() {
+        return creatureId;
+    }
+
+    public void setCreatureId(int creatureId) {
+        this.creatureId = creatureId;
     }
 
     public String getUserId() {

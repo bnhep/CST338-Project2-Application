@@ -88,9 +88,15 @@ public abstract class Creature {
         return elements;
     }
 
+    public void setElements(List<ElementalType> elements) {
+        this.elements = elements;
+    }
+
     public List<Ability> getAbilityList() {
         return abilityList;
     }
+
+
 
     public int getLevel() {
         return level;
