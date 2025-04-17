@@ -10,13 +10,11 @@
     <TextView
         android:id="@+id/opponentSelectTextView"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:layout_margin="16dp"
         android:gravity="center"
         android:text="Select Opponent"
         android:textSize="36sp"
-        android:background="@color/design_default_color_secondary_variant"
-        android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDisplaySpacer"
@@ -33,8 +31,8 @@
 
     <TextView
         android:id="@+id/usernameDisplayTextView"
-        android:layout_width="89dp"
-        android:layout_height="33dp"
+        android:layout_width="90dp"
+        android:layout_height="34dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="username"
@@ -45,51 +43,52 @@
 
     <Button
         android:id="@+id/opponentOneButton"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
         android:layout_margin="16dp"
         android:text="Gym Leader: Brock"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentSelectTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/opponentSelectTextView"
+        app:layout_constraintBottom_toTopOf="@id/opponentTwoButton"
+        />
 
     <Button
         android:id="@+id/opponentTwoButton"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
         android:layout_margin="16dp"
         android:text="Gym Leader: Misty"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentOneButton" />
+        app:layout_constraintTop_toBottomOf="@+id/opponentOneButton"
+        app:layout_constraintBottom_toTopOf="@id/opponentThreeButton"/>
 
     <Button
         android:id="@+id/opponentThreeButton"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
         android:layout_margin="16dp"
         android:text="Champion: Red"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentTwoButton" />
+        app:layout_constraintTop_toBottomOf="@+id/opponentTwoButton"
+        app:layout_constraintBottom_toTopOf="@id/randomBattleButton"/>
 
     <Button
         android:id="@+id/randomBattleButton"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="280dp"
+        android:layout_height="70dp"
         android:layout_margin="16dp"
         android:text="Random Battle"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentThreeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/opponentThreeButton"
+        app:layout_constraintBottom_toTopOf="@id/backButtonSpacer"/>
 
     <Space
         android:id="@+id/backButtonSpacer"

@@ -6,7 +6,6 @@ package com.example.project2;
  */
 
 import com.example.project2.creatures.*;
-import com.example.project2.utilities.Dice;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ import java.util.Scanner;
 public class PocketCreaturesArena {
     Scanner scan = new Scanner(System.in);
 
-    private final ArrayList<Monster> pocketCreatureTeam = new ArrayList<>();
+    private final ArrayList<Creature> pocketCreatureTeam = new ArrayList<>();
     Ability tackle = new Ability("001", "Tackle", ElementalType.NORMAL, 20, 10, 100);
     Ability flamethrower = new Ability("002", "flamethrower", ElementalType.FIRE, 30, 10, 100);
     Ability razorLeaf = new Ability("003", "razor leaf", ElementalType.GRASS, 25, 20, 90);
@@ -96,7 +95,7 @@ public class PocketCreaturesArena {
 //        }
     }
 
-    public void battle(Monster playerCreature, Monster opponentCreature) {
+    public void battle(Creature playerCreature, Creature opponentCreature) {
 //        boolean exitMenu = false;
 //
 //        while (!exitMenu) {
@@ -221,7 +220,7 @@ public class PocketCreaturesArena {
 //        }
     }
 
-    public void editPocketCreature(Monster monster) {
+    public void editPocketCreature(Creature creature) {
 //        boolean exitMenu = false;
 //        System.out.println("Here's where you would edit " + monster.getName() + "'s abilities.");
 //
@@ -307,8 +306,8 @@ public class PocketCreaturesArena {
 //        }
     }
 
-    public void trainPocketCreature(Monster monster) {
-        monster.gainExperience(8);
+    public void trainPocketCreature(Creature creature) {
+        creature.gainExperience(8);
     }
 
     public void displayTeam(String prompt) {
@@ -329,7 +328,7 @@ public class PocketCreaturesArena {
 //        System.out.println("---------------");
     }
 
-    public void displayBattleOptions(Monster monster) {
+    public void displayBattleOptions(Creature creature) {
 //        System.out.println("---------------\n"
 //                + "Select an ability"
 //        );

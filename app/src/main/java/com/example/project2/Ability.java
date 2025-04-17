@@ -15,6 +15,8 @@ public class Ability {
     private int accuracy;
     //could add in "Uses" so that powerful abilities can only be used a limited number of times
 
+    public Ability() {}
+
     public Ability(String abilityID, String abilityName, ElementalType abilityElement, int power, int critChance, int accuracy) {
         this.abilityID = abilityID;
         this.abilityName = abilityName;

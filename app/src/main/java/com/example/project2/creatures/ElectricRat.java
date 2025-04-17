@@ -7,7 +7,7 @@ package com.example.project2.creatures;
 
 import com.example.project2.ElementalType;
 
-public class ElectricRat extends Monster {
+public class ElectricRat extends Creature {
 
     private final String PHRASE = "'lectra!";
     private final int HEALTH_MAX = 45;

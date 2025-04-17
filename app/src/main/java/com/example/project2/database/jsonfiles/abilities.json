@@ -1,0 +1,42 @@
+[
+  {
+    "abilityID": "TACKLE",
+    "abilityName": "tackle",
+    "abilityElement": "NORMAL",
+    "power": 25,
+    "critChance": 10,
+    "accuracy": 100
+  },
+  {
+    "abilityID": "FLAMETHROWER",
+    "abilityName": "flamethrower",
+    "abilityElement": "FIRE",
+    "power": 30,
+    "critChance": 10,
+    "accuracy": 100
+  },
+  {
+    "abilityID": "RAZORLEAF",
+    "abilityName": "razor leaf",
+    "abilityElement": "GRASS",
+    "power": 25,
+    "critChance": 25,
+    "accuracy": 85
+  },
+  {
+    "abilityID": "SHOCK",
+    "abilityName": "shock",
+    "abilityElement": "ELECTRIC",
+    "power": 40,
+    "critChance": 10,
+    "accuracy": 90
+  },
+  {
+    "abilityID": "WATERJET",
+    "abilityName": "water jet",
+    "abilityElement": "WATER",
+    "power": 25,
+    "critChance": 10,
+    "accuracy": 100
+  }
+]

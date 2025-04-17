@@ -7,10 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.project2.MainActivity;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.database.entities.User;
+import com.example.project2.utilities.Converters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +21,8 @@ import java.util.concurrent.Executors;
 /**
  * Actual Database, if more data needs to be stored use this, create entity and DAO
  */
-@Database(entities = {User.class} , version = 1, exportSchema = false)
+@Database(entities = {User.class, CreatureEntity.class} , version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";
     private static final String DATABASE_NAME = "applicationDatabase";
