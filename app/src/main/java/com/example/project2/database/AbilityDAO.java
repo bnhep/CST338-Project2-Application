@@ -12,10 +12,10 @@ import java.util.List;
 @Dao
 public interface AbilityDAO {
 
-    @Query("SELECT * FROM abilities WHERE abilityID = :id")
+    @Query("SELECT * FROM " + ApplicationDatabase.ABILITY_TABLE + " WHERE abilityID = :id")
     AbilityEntity getAbilityById(String id);
 
-    @Query("SELECT * FROM abilities WHERE abilityID IN (:ids)")
+    @Query("SELECT * FROM " + ApplicationDatabase.ABILITY_TABLE + " WHERE abilityID IN (:ids)")
     List<AbilityEntity> getAbilitiesByIds(List<String> ids);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

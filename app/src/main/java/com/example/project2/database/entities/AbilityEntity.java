@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "abilities")
+import com.example.project2.database.ApplicationDatabase;
+
+@Entity(tableName = ApplicationDatabase.ABILITY_TABLE)
 public class AbilityEntity {
 
     @PrimaryKey
