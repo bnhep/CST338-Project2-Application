@@ -91,8 +91,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
-        tools:layout_editor_absoluteX="307dp"
-        tools:layout_editor_absoluteY="651dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="579dp"
+        app:layout_constraintLeft_toLeftOf="@+id/button6"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:layout_width="wrap_content"
