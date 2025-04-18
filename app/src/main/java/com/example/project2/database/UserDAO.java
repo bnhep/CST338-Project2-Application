@@ -32,4 +32,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + ApplicationDatabase.USER_TABLE + " WHERE username == :username")
     LiveData<User> getUserByUserName(String username);
+
+    @Query("SELECT * FROM " + ApplicationDatabase.USER_TABLE + " WHERE id == :id")
+    LiveData<User> getUsernameByID(int id);
 }

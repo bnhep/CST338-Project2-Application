@@ -12,12 +12,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
+import com.example.project2.database.AccountStatusCheck;
+import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityOpponentSelectBinding;
 
 public class OpponentSelectActivity extends AppCompatActivity {
 
     ActivityOpponentSelectBinding binding;
+    private ApplicationRepository appRepository;
+    private AccountStatusCheck accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,17 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding = ActivityOpponentSelectBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        appRepository = ApplicationRepository.getRepository(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
+        LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
+        userObserver.observe(this, new Observer<>() {
+            @Override
+            public void onChanged(User user) {
+                binding.usernameDisplayTextView.setText(user.getUsername());
+                userObserver.removeObserver(this);
+            }
+        });
+
 
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
