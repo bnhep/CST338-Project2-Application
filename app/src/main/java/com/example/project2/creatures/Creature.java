@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Monster {
+public abstract class Creature {
     //general creature info
     private String type;
     private String name = "";
@@ -41,11 +41,11 @@ public abstract class Monster {
     private int speedStat;
     private int baseSpeed;
 
-    public Monster() {
+    public Creature() {
 
     }
 
-    public Monster(String name, int level, ElementalType... types) {
+    public Creature(String name, int level, ElementalType... types) {
         this.name = name;
         this.level = level;
         this.elements.addAll(Arrays.asList(types));
@@ -88,9 +88,15 @@ public abstract class Monster {
         return elements;
     }
 
+    public void setElements(List<ElementalType> elements) {
+        this.elements = elements;
+    }
+
     public List<Ability> getAbilityList() {
         return abilityList;
     }
+
+
 
     public int getLevel() {
         return level;
@@ -223,7 +229,7 @@ public abstract class Monster {
     }
 
     //TODO: Add accuracy and crit chance into the attack and calculateDamage modifiers respectively
-    public void attack(Monster target, Ability ability) {
+    public void attack(Creature target, Ability ability) {
         //System.out.println(this.getPhrase());
         System.out.println(this.getName() + " uses " + ability.getAbilityName());
 
@@ -231,7 +237,7 @@ public abstract class Monster {
         target.takeDamage(attackValue);
     }
 
-    public double calculateDamage(Monster target, Ability ability) {
+    public double calculateDamage(Creature target, Ability ability) {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
@@ -251,11 +257,7 @@ public abstract class Monster {
             System.out.println("It's not very effective");
         }
 
-        //this is a fun line of code that uses values found in 3 different objects to determine its outcome
-        //original formula
-        //damageTotal =  (((this.getLevel() / 2.0) * (ability.getPower() * ((double) this.getAttackStat() / target.getDefenseStat()))) / 10) * elementalModifier * STABModifier;
-
-        //new formula
+        //damage formula
         double attackDefenseRatio = Math.pow((double) this.getAttackStat() / (this.getAttackStat() + target.getDefenseStat()), .85);
         double baseDamage = (this.getLevel() / 2.0) * ability.getPower();
         double modifierBonus = Math.pow(elementalModifier * STABModifier, .85);
