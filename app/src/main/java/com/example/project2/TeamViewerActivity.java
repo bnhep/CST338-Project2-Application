@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.project2.creatures.*;
@@ -22,6 +23,8 @@ import java.util.concurrent.Executors;
 public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
+    //private CreatureDAO creatureDAO;
+    //private AbilityDAO abilityDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,13 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding = ActivityTeamViewerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        //ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+        //creatureDAO = db.CreatureDAO();
+        //abilityDAO = db.AbilityDAO();
+
+        //loadTeam();
+        //updateTeamSlotButtons();
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,37 +80,7 @@ public class TeamViewerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //This button currently is being used to act as a "load" button for testing
-                try {
-                        Executors.newSingleThreadExecutor().execute(() -> {
-
-                        //clear any current data
-                        UserData.getInstance().clearTeam();
-
-                        ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-                        CreatureDAO creatureDAO = db.CreatureDAO();
-                        AbilityDAO abilityDAO = db.AbilityDAO();
-
-                        //later on we want to pass in the actual users generated id here
-                        List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("testUserId");
-
-                        for (CreatureEntity entity : creatureEntities) {
-                            Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
-                            int slot = entity.getTeamSlot();
-                            UserData.getInstance().addCreaturetoSlot(slot, creature);
-                        }
-                        //i really hope i see this
-                        runOnUiThread(() ->
-                                Toast.makeText(TeamViewerActivity.this, "Loaded " + UserData.getInstance().getUserTeam().size() + " team member(s)!", Toast.LENGTH_SHORT).show()
-                                //Toast.makeText(TeamViewerActivity.this, UserData.getInstance().getUserTeam().get(1).getName(), Toast.LENGTH_SHORT).show()
-                        );
-                    });
-                } catch (Exception e) {
-                    //im going to be sad if i see this
-                    Log.e("TeamBuilder", "Error loading team", e);
-                    runOnUiThread(() ->
-                            Toast.makeText(TeamViewerActivity.this, "Failed to load", Toast.LENGTH_SHORT).show()
-                    );
-                }
+                loadTeam();
             }
         });
 
@@ -108,23 +88,7 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding.saveTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Executors.newSingleThreadExecutor().execute(() -> {
-                    ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-                    CreatureDAO creatureDAO = db.CreatureDAO();
-
-                    for (Map.Entry<Integer, Creature> entry : UserData.getInstance().getUserTeam().entrySet()) {
-                        int slot = entry.getKey();
-                        Creature creature = entry.getValue();
-                        int id = creature.getCreatureId();
-
-                        //later on we want to pass in the actual users generated id here
-                        CreatureEntity entity = Converters.convertCreatureToEntity(creature, "testUserId", slot, id);
-                        creatureDAO.insert(entity);
-                    }
-                    runOnUiThread(() ->
-                            Toast.makeText(TeamViewerActivity.this, "Team saved!", Toast.LENGTH_SHORT).show()
-                    );
-                });
+                saveTeam();
             }
         });
 
@@ -149,14 +113,15 @@ public class TeamViewerActivity extends AppCompatActivity {
         }
         else {
             //launch creature creator
-            //Intent intent = new Intent(this, BuildCreatureToAddToTeamActivity.class);
-            //intent.putExtra("slotNumber", slot);
-            //startActivity(intent);
-            Toast.makeText(TeamViewerActivity.this, "Adding new creature in slot " + slot, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, BuildCreatureToAddToTeamActivity.class);
+            intent.putExtra("slotNumber", slot);
+            startActivity(intent);
+            //Toast.makeText(TeamViewerActivity.this, "Adding new creature in slot " + slot, Toast.LENGTH_SHORT).show();
 
+            /*
             //this is all just for testing at the moment
-            ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-            AbilityDAO abilityDAO = db.AbilityDAO();
+            //ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+            //AbilityDAO abilityDAO = db.AbilityDAO();
 
             Executors.newSingleThreadExecutor().execute(() -> {
                 ElectricRat sparks = new ElectricRat("Sparks", 5);
@@ -170,11 +135,88 @@ public class TeamViewerActivity extends AppCompatActivity {
                         Toast.makeText(TeamViewerActivity.this, sparks.getName() + " added to team in slot " + slot, Toast.LENGTH_SHORT).show()
                 );
             });
-
+            */
         }
     }
 
+    private void updateTeamSlotButtons() {
+        Map<Integer, Creature> userTeam = UserData.getInstance().getUserTeam();
 
+        Button[] buttons = {
+                binding.teamSlotOneButton,
+                binding.teamSlotTwoButton,
+                binding.teamSlotThreeButton,
+                binding.teamSlotFourButton,
+                binding.teamSlotFiveButton,
+                binding.teamSlotSixButton,
+        };
+
+        for (int i = 0; i < buttons.length; i++) {
+            Creature creature = userTeam.get(i+1);
+            if (creature != null) {
+                buttons[i].setText(creature.getName());
+            }
+            else {
+                buttons[i].setText("Team Slot: " + (i+1));
+            }
+        }
+
+        Toast.makeText(TeamViewerActivity.this, "Loaded " + UserData.getInstance().getUserTeam().size() + " team member(s)!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void saveTeam(){
+        Executors.newSingleThreadExecutor().execute(() -> {
+            ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+            CreatureDAO creatureDAO = db.CreatureDAO();
+
+            for (Map.Entry<Integer, Creature> entry : UserData.getInstance().getUserTeam().entrySet()) {
+                int slot = entry.getKey();
+                Creature creature = entry.getValue();
+                int id = creature.getCreatureId();
+
+                //later on we want to pass in the actual users generated id here
+                CreatureEntity entity = Converters.convertCreatureToEntity(creature, "testUserId", slot, id);
+                creatureDAO.insert(entity);
+            }
+            runOnUiThread(() ->
+                    Toast.makeText(TeamViewerActivity.this, "Team saved!", Toast.LENGTH_SHORT).show()
+            );
+        });
+    }
+
+    public void loadTeam(){
+        try {
+            Executors.newSingleThreadExecutor().execute(() -> {
+
+                //clear any current data
+                UserData.getInstance().clearTeam();
+
+                ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+                CreatureDAO creatureDAO = db.CreatureDAO();
+                AbilityDAO abilityDAO = db.AbilityDAO();
+
+                //later on we want to pass in the actual users generated id here
+                List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("testUserId");
+
+                for (CreatureEntity entity : creatureEntities) {
+                    Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
+                    int slot = entity.getTeamSlot();
+                    UserData.getInstance().addCreaturetoSlot(slot, creature);
+                }
+                //i really hope i see this
+                runOnUiThread(() ->
+                                updateTeamSlotButtons()
+                        //Toast.makeText(TeamViewerActivity.this, UserData.getInstance().getUserTeam().get(1).getName(), Toast.LENGTH_SHORT).show()
+                );
+            });
+        } catch (Exception e) {
+            //im going to be sad if i see this
+            Log.e("TeamBuilder", "Error loading team", e);
+            runOnUiThread(() ->
+                    Toast.makeText(TeamViewerActivity.this, "Failed to load", Toast.LENGTH_SHORT).show()
+            );
+        }
+    }
 
     public static Intent TeamBuilderIntentFactory(Context context) {
         Intent intent = new Intent(context, TeamViewerActivity.class);
