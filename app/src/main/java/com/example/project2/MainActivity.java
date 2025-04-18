@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = TeamBuilderActivity.TeamBuilderIntentFactory(getApplicationContext());
+                Intent intent = TeamViewerActivity.TeamBuilderIntentFactory(getApplicationContext());
                 startActivity(intent);
 
                 //Testing button please remove later
