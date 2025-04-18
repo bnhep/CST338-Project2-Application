@@ -21,7 +21,7 @@ public class AccountStatusCheck {
     private final SharedPreferences preferences;
     private final SharedPreferences.Editor editor;
 
-    private static volatile AccountStatusCheck instance;
+    private static volatile AccountStatusCheck INSTANCE;
 
     private AccountStatusCheck(Application application){
         preferences = application.getApplicationContext()
@@ -32,14 +32,14 @@ public class AccountStatusCheck {
 
     /** */
     public static AccountStatusCheck getInstance(Application application){
-        if (instance == null) {
+        if (INSTANCE == null) {
             synchronized (AccountStatusCheck.class) {
-                if (instance == null) {
-                    instance = new AccountStatusCheck(application);
+                if (INSTANCE == null) {
+                    INSTANCE = new AccountStatusCheck(application);
                 }
             }
         }
-        return instance;
+        return INSTANCE;
     }
 
 
