@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
 import com.example.project2.databinding.ActivityMainBinding;
 
@@ -23,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ApplicationRepository appRepository; //Performs the queries for the database
 
-    private int userStatus = -1;
+    private AccountStatusCheck accountManager;
+
+    private int temporaryStatusChecker = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +34,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
 
-        //TODO Properly manage the userId of the current logged in user
-        //This gets the extra value from the intent which represents the current user's id(Primary Key in entity)
-        userStatus = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
-        //userStatus is the current account id, a -1 id will not exist in the database so consider
-        //that a no account tracker.
-        if(userStatus == -1) {
+        temporaryStatusChecker = accountManager.getUserID();
+
+        if(temporaryStatusChecker == -1) {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
@@ -47,16 +48,10 @@ public class MainActivity extends AppCompatActivity {
         binding.startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Testing button please remove later
-                //TODO the mainactivity menu will show up, IF YOU PRESS START BATTLE IT GOES TO SIGNUP
-                //THIS IS TEMPORARY
-                //Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
-                //startActivity(intent);
 
                 Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
                 startActivity(intent);
 
-                //Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -88,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     //MainIntentFactory that takes in a
-    static Intent MainIntentFactory(Context context, int TEMPORARY_STATUS_CHECK){
+    static Intent MainIntentFactory(Context context){
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MAIN_ACTIVITY_USER_ID, TEMPORARY_STATUS_CHECK);
         return intent;
     }
 

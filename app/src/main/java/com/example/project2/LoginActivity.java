@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
 import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityLoginBinding;
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     private ApplicationRepository repository;
+
+    private AccountStatusCheck accountManager;
     boolean adminCheck = false;
 
 
@@ -27,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         repository = ApplicationRepository.getRepository(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
+
 
         /*
          * This button calls userValidation(); the method will validate username and password,
@@ -94,14 +98,17 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent;
                         adminCheck = user.isAdmin();
                         if(!adminCheck) {
-                            intent = MainActivity.MainIntentFactory(getApplicationContext(), user.getId());
+                            //moves to the MainActivity(basic user) page
+                            accountManager.setUserID(user.getId());
+                            intent = MainActivity.MainIntentFactory(getApplicationContext());
                         }
                         else{
-                            //TODO: Connect this else to swap to AdminLandingActivity
-                           // intent = AdminLandingActivity.loginIntentFactory(getApplicationContext());
-                            //TODO ADD A METHOD TO STORE THE USERID AS A KEY TO PERSIST ALONG THE APP
+                            //moves to the AdminLandingActivity page
+                            accountManager.setUserID(user.getId());
+                            intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
+
                         }
-                        //startActivity(intent);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(LoginActivity.this, "Password Invalid. Please Enter a Password",
                                 Toast.LENGTH_SHORT).show();
