@@ -3,21 +3,27 @@ package com.example.project2;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.example.project2.databinding.ActivityOpponentSelectBinding;
+import com.example.project2.creatures.*;
+import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.ApplicationDatabase;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityTeamBuilderBinding;
+import com.example.project2.utilities.Converters;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
 
 public class TeamBuilderActivity extends AppCompatActivity {
 
     ActivityTeamBuilderBinding binding;
+
+    private final List<Creature> userTeam = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,20 @@ public class TeamBuilderActivity extends AppCompatActivity {
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeamBuilderActivity.this, "Button 1 works", Toast.LENGTH_SHORT).show();
+                ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+                AbilityDAO abilityDAO = db.AbilityDAO();
+
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    ElectricRat sparks = new ElectricRat("Sparks", 5);
+                    sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
+                    sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
+
+                    userTeam.add(sparks);
+
+                    runOnUiThread(() ->
+                            Toast.makeText(TeamBuilderActivity.this, userTeam.get(0).getName() + " added to team!", Toast.LENGTH_SHORT).show()
+                    );
+                });
             }
         });
 
@@ -57,21 +76,74 @@ public class TeamBuilderActivity extends AppCompatActivity {
         binding.teamSlotFiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeamBuilderActivity.this, "Button 5 works", Toast.LENGTH_SHORT).show();
+
+                if (userTeam.isEmpty()) {
+                    Toast.makeText(TeamBuilderActivity.this, "No creatures loaded", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(TeamBuilderActivity.this, "Creature ability " +
+                            userTeam.get(0).getAbilityList().get(0).getAbilityName() +
+                            " has " + userTeam.get(0).getAbilityList().get(0).getPower() +
+                            " power!", Toast.LENGTH_SHORT).show();
+                }
+
+                //Toast.makeText(TeamBuilderActivity.this, "Button 5 works", Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.teamSlotSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeamBuilderActivity.this, "Button 6 works", Toast.LENGTH_SHORT).show();
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    try {
+                        //clear the current ArrayList
+                        userTeam.clear();
+
+                        //add in DAOs
+                        ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+                        CreatureDAO creatureDAO = db.CreatureDAO();
+                        AbilityDAO abilityDAO = db.AbilityDAO();
+
+                        //collecting all creatures and passing in the testUserId
+                        List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("testUserId");
+
+                        //populating the userTeam array with creatures converted from creature entities
+                        for (CreatureEntity entity : creatureEntities) {
+                            Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
+                            userTeam.add(creature);
+                        }
+
+                        //hopefully this works
+                        runOnUiThread(() -> {
+                            Toast.makeText(TeamBuilderActivity.this, "Loaded " + userTeam.size() + " creature(s)!", Toast.LENGTH_SHORT).show();
+                        });
+                    } catch (Exception e) {
+                        Log.e("TeamBuilder", "Error loading team", e);
+                        runOnUiThread(() -> {
+                            //ill be sad if I see this
+                            Toast.makeText(TeamBuilderActivity.this, "Failed to load", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                });
             }
         });
 
         binding.saveTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeamBuilderActivity.this, "Team (will be) saved!", Toast.LENGTH_SHORT).show();
+                ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
+                CreatureDAO creatureDAO = db.CreatureDAO();
+
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    for (Creature creature: userTeam) {
+                        CreatureEntity entity = Converters.convertCreatureToEntity(creature, "testUserId");
+                        creatureDAO.insert(entity);
+                    }
+
+                    runOnUiThread(() ->
+                            Toast.makeText(TeamBuilderActivity.this, "Team saved!", Toast.LENGTH_SHORT).show()
+                    );
+                });
             }
         });
 

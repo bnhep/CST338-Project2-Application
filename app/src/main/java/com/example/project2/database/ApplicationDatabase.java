@@ -77,7 +77,6 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
 
-
                 //prepopulate abilities into db
                 insertAbilityListToDatabase();
 
@@ -92,20 +91,21 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                  */
 
                 //instantiating the ability and creature DOAs
-                AbilityDAO abilityDAO = INSTANCE.AbilityDAO();
-                CreatureDAO creatureDAO = INSTANCE.CreatureDAO();
+                //AbilityDAO abilityDAO = INSTANCE.AbilityDAO();
+                //CreatureDAO creatureDAO = INSTANCE.CreatureDAO();
 
                 //creating a default creature
-                ElectricRat sparks = new ElectricRat("Sparks", 5);
+                //ElectricRat sparks = new ElectricRat("Sparks", 5);
 
                 //searching the ability db for the move 'TACKLE' and adding it to sparks abilityList
-                sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
+                //sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
+                //sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
 
                 //creating a creatureEntity and passing sparks + a test user id. (converting the ElectricRat object into a CreatureEntity for storing as data)
-                CreatureEntity sparksEntity = Converters.convertCreatureToEntity(sparks, "user_001"); // use the actual userId here
+                //CreatureEntity sparksEntity = Converters.convertCreatureToEntity(sparks, "user_001"); // use the actual userId here
 
                 //inserting the creature into the data table
-                creatureDAO.insert(sparksEntity);
+                //creatureDAO.insert(sparksEntity);
             });
         }
     };
