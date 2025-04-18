@@ -61,7 +61,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.MainIntentFactory(getApplicationContext(), -1);
+                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });

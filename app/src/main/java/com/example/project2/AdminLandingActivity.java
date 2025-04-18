@@ -1,5 +1,7 @@
 package com.example.project2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -24,4 +26,11 @@ public class AdminLandingActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+
+
+    static Intent AdminLandingIntentFactory(Context context) {
+        return new Intent(context, AdminLandingActivity.class);
+    }
+
 }
