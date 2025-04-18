@@ -41,4 +41,8 @@ public class ApplicationRepository {
         return userDAO.getUserByUserName(username);
     }
 
+    public LiveData<User> getUsernameByID(int id) {
+        return userDAO.getUsernameByID(id);
+    }
+
 }

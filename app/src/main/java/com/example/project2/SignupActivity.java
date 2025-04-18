@@ -85,11 +85,11 @@ public class SignupActivity extends AppCompatActivity {
         }
         LiveData<User> userObserver = appRepository.getUserByUserName(usernameEnter);
         //This has override onChanged because before the
-        userObserver.observe(this, new Observer<User>() {
+        userObserver.observe(this, new Observer<>() {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
-                    // Username exists so displays a toast to prompth user and goes back to the top
+                    // Username exists so displays a toast to prompt user and goes back to the top
                     Toast.makeText(SignupActivity.this, "Username already exists",
                             Toast.LENGTH_SHORT).show();
                 } else {
