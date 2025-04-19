@@ -32,6 +32,7 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
         View view = binding.getRoot();
 
         setContentView(view);
+        //change just so I can commit and create pull request
 
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
