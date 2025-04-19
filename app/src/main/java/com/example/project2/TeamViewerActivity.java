@@ -88,7 +88,7 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.MainIntentFactory(getApplicationContext(), -1);
+                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
@@ -192,7 +192,7 @@ public class TeamViewerActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent TeamBuilderIntentFactory(Context context) {
+    public static Intent TeamViewerIntentFactory(Context context) {
         Intent intent = new Intent(context, TeamViewerActivity.class);
 
         return intent;

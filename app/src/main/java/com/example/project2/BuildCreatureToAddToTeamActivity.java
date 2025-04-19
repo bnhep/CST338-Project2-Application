@@ -6,11 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.creatures.*;
 import com.example.project2.database.AbilityDAO;
@@ -32,7 +28,6 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
         View view = binding.getRoot();
 
         setContentView(view);
-        //change just so I can commit and create pull request
 
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
@@ -66,7 +61,7 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TeamViewerActivity.TeamBuilderIntentFactory(getApplicationContext());
+                Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
