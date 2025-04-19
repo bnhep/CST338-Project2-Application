@@ -36,7 +36,7 @@ public class FireLizard extends Creature {
         setCurHealth(this.getHealthStat());
 
         //All fire lizards start with flamethrower
-        //AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-        //this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("FLAMETHROWER")));
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("FLAMETHROWER")));
     }
 }

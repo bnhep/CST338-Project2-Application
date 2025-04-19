@@ -39,12 +39,6 @@ public class ElectricRat extends Creature {
 
         //All electric rats start with shock
         AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-        if (abilityDAO == null) {
-            Log.e("ElectricRat", "AbilityDAO in ElectricRat is null!");
-        } else {
-            Log.d("ElectricRat", "AbilityDAO in ElectricRat successfully retrieved");
-        }
-
-        //this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
+        this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
     }
 }

@@ -36,7 +36,7 @@ public class WeirdTurtle extends Creature {
         setCurHealth(this.getHealthStat());
 
         //All weird turtles start with water jet
-        //AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-        //this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("WATERJET")));
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("WATERJET")));
     }
 }

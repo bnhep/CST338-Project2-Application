@@ -36,7 +36,7 @@ public class FlowerDino extends Creature {
         setCurHealth(this.getHealthStat());
 
         //All flower dinos start with razor leaf
-        //AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-        //this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("RAZORLEAF")));
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("RAZORLEAF")));
     }
 }
