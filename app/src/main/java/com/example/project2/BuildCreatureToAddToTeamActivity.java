@@ -46,13 +46,6 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
 
         setUpOnClickListener();
 
-        binding.addCreatureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

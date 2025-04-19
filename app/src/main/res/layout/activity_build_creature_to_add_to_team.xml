@@ -48,17 +48,6 @@
         app:layout_constraintBottom_toTopOf="@+id/backButtonSpacer"
         app:layout_constraintTop_toBottomOf="@+id/selectCreatureTextView" />
 
-    <Button
-        android:id="@+id/addCreatureButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/backButtonSpacer"
-        android:text="Add Creature (temp)"
-        android:textSize="24sp"
-        />
-
     <Space
         android:id="@+id/backButtonSpacer"
         android:layout_width="225dp"
