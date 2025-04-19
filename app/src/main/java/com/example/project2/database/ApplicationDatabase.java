@@ -79,33 +79,6 @@ public abstract class ApplicationDatabase extends RoomDatabase {
 
                 //prepopulate abilities into db
                 insertAbilityListToDatabase();
-
-                /** TODO:
-                 *       default creature for testing purposes. Trying to set this up to where
-                 *       I can pull an existing ability from the ability table, and add it to an existing
-                 *       creature object's abilityList. Then save the creature and its abilityList
-                 *       containing the added ability into the database. from there I will work on
-                 *       being able to pull the creature and its full list of abilities from the DB
-                 *       This will all be eventually moved to a place where it should be handled properly
-                 *       such as in the creature create/editor. For now its here for testing.
-                 */
-
-                //instantiating the ability and creature DOAs
-                //AbilityDAO abilityDAO = INSTANCE.AbilityDAO();
-                //CreatureDAO creatureDAO = INSTANCE.CreatureDAO();
-
-                //creating a default creature
-                //ElectricRat sparks = new ElectricRat("Sparks", 5);
-
-                //searching the ability db for the move 'TACKLE' and adding it to sparks abilityList
-                //sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
-                //sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
-
-                //creating a creatureEntity and passing sparks + a test user id. (converting the ElectricRat object into a CreatureEntity for storing as data)
-                //CreatureEntity sparksEntity = Converters.convertCreatureToEntity(sparks, "user_001"); // use the actual userId here
-
-                //inserting the creature into the data table
-                //creatureDAO.insert(sparksEntity);
             });
         }
     };

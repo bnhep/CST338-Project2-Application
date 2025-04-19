@@ -11,31 +11,32 @@ import java.util.List;
 @Entity(tableName = ApplicationDatabase.CREATURE_TABLE)
 public class CreatureEntity {
     @PrimaryKey(autoGenerate = true)
-    public int creatureId;
+    private int creatureId;
 
-    public String userId; //foreign key
-    public String type; //subclass type
-    public String name;
-    public String phrase;
-    public boolean fainted;
+    private String userId; //foreign key
+    private String type; //subclass type
+    private String name;
+    private String phrase;
+    private boolean fainted;
 
-    public List<ElementalType> elements;
-    public List<String> abilityList;
+    private List<ElementalType> elements;
+    private List<String> abilityList;
 
-    public int level;
-    public int curExperiencePoints;
-    public int experienceNeededToLevel;
-    public int curHealth;
-    public int healthStat;
-    public int baseHealth;
-    public int attackStat;
-    public int baseAttack;
-    public int defenseStat;
-    public int baseDefense;
-    public int speedStat;
-    public int baseSpeed;
+    private int level;
+    private int curExperiencePoints;
+    private int experienceNeededToLevel;
+    private int curHealth;
+    private int healthStat;
+    private int baseHealth;
+    private int attackStat;
+    private int baseAttack;
+    private int defenseStat;
+    private int baseDefense;
+    private int speedStat;
+    private int baseSpeed;
+    private int teamSlot;
 
-    public CreatureEntity(int creatureId, String userId, String type, String name, String phrase, boolean fainted, List<ElementalType> elements, List<String> abilityList, int level, int curExperiencePoints, int experienceNeededToLevel, int curHealth, int healthStat, int attackStat, int defenseStat, int speedStat) {
+    public CreatureEntity(int creatureId, String userId, String type, String name, String phrase, boolean fainted, List<ElementalType> elements, List<String> abilityList, int level, int curExperiencePoints, int experienceNeededToLevel, int curHealth, int healthStat, int attackStat, int defenseStat, int speedStat, int teamSlot) {
         this.creatureId = creatureId;
         this.userId = userId;
         this.type = type;
@@ -52,6 +53,7 @@ public class CreatureEntity {
         this.attackStat = attackStat;
         this.defenseStat = defenseStat;
         this.speedStat = speedStat;
+        this.teamSlot = teamSlot;
     }
 
     public int getCreatureId() {
@@ -212,5 +214,13 @@ public class CreatureEntity {
 
     public void setBaseSpeed(int baseSpeed) {
         this.baseSpeed = baseSpeed;
+    }
+
+    public int getTeamSlot() {
+        return teamSlot;
+    }
+
+    public void setTeamSlot(int teamSlot) {
+        this.teamSlot = teamSlot;
     }
 }

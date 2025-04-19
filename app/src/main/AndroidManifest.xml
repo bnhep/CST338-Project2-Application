@@ -13,7 +13,13 @@
         android:theme="@style/Theme.Project2"
         tools:targetApi="31">
         <activity
-            android:name=".TeamBuilderActivity"
+            android:name=".CreatureViewAndEditorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BuildCreatureToAddToTeamActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TeamViewerActivity"
             android:exported="false" />
         <activity
             android:name=".OpponentSelectActivity"
