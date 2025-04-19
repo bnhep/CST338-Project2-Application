@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 /**
  * Name: Austin Shatswell
  * Date: --/--/25
@@ -12,12 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
-import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityOpponentSelectBinding;
 
 public class OpponentSelectActivity extends AppCompatActivity {

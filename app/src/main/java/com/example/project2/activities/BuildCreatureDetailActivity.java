@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.databinding.ActivityBuildCreatureDetailBinding;
 

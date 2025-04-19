@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.UserTeamData;
 import com.example.project2.databinding.ActivityCreatureViewAndEditorBinding;
 
 public class CreatureViewAndEditorActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,18 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.CreatureCellAdapter;
+import com.example.project2.R;
 import com.example.project2.creatures.*;
-import com.example.project2.database.AbilityDAO;
-import com.example.project2.database.ApplicationDatabase;
 import com.example.project2.databinding.ActivityBuildCreatureToAddToTeamBinding;
-import com.example.project2.utilities.Converters;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 
 public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {

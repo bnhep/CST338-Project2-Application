@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.project2.UserTeamData;
 import com.example.project2.creatures.*;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.CreatureDAO;
