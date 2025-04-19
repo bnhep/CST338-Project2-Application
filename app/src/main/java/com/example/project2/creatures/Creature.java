@@ -13,6 +13,7 @@ import java.util.List;
 
 public abstract class Creature {
     //general creature info
+    private int creatureId;
     private String type;
     private String name = "";
     private String phrase = "";
@@ -50,6 +51,14 @@ public abstract class Creature {
         this.level = level;
         this.elements.addAll(Arrays.asList(types));
         this.experienceNeededToLevel = calculateExperienceNeeded(level);
+    }
+
+    public int getCreatureId() {
+        return creatureId;
+    }
+
+    public void setCreatureId(int creatureId) {
+        this.creatureId = creatureId;
     }
 
     public String getType() {
@@ -177,6 +186,8 @@ public abstract class Creature {
     public int getBaseSpeed() {
         return baseSpeed;
     }
+
+
 
     public void setBaseStats(int baseHealth, int baseAttack, int baseDefense, int baseSpeed) {
         this.baseHealth = baseHealth;

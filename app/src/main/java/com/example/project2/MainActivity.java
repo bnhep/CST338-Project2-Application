@@ -10,13 +10,10 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
-import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityMainBinding;
 
 /**
@@ -40,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
         accountManager = AccountStatusCheck.getInstance(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
         /*
         LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = TeamBuilderActivity.TeamBuilderIntentFactory(getApplicationContext());
+                Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                 startActivity(intent);
 
                 //Testing button please remove later
