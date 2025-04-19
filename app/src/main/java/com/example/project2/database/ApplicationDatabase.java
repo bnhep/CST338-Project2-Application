@@ -76,24 +76,9 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                 //Pre-populated testuser1
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
-
-                //prepopulate abilities into db
-                insertAbilityListToDatabase();
             });
         }
     };
-
-    static void insertAbilityListToDatabase() {
-        AbilityDAO abilityDAO = INSTANCE.AbilityDAO();
-
-        AbilityEntity tackle = new AbilityEntity("TACKLE", "tackle", "NORMAL", 25, 10, 100);
-        AbilityEntity flamethrower = new AbilityEntity("FLAMETHROWER", "flamethrower", "FIRE", 25, 10, 100);
-        AbilityEntity razorLeaf = new AbilityEntity("RAZORLEAF", "razor leaf", "GRASS", 25, 10, 100);
-        AbilityEntity shock = new AbilityEntity("SHOCK", "shock", "ELECTRIC", 25, 10, 100);
-        AbilityEntity waterJet = new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100);
-
-        abilityDAO.insertAll(List.of(tackle, flamethrower, razorLeaf, shock, waterJet));
-    }
 
     public abstract UserDAO UserDAO();
     public abstract AbilityDAO AbilityDAO();

@@ -68,12 +68,10 @@ public class TeamViewerActivity extends AppCompatActivity {
             }
         });
 
-        //TODO:  *************************** LOAD ***************************
         binding.teamSlotSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //This button currently is being used to act as a "load" button for testing
-                loadTeam();
+                contextualButtonChoice(6);
             }
         });
 
@@ -92,6 +90,15 @@ public class TeamViewerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //TODO:  *************************** LOAD ***************************
+        binding.loadTeamButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //This button currently is being used to act as a "load" button for testing
+                loadTeam();
+            }
+        });
     }
 
     @Override
@@ -101,7 +108,7 @@ public class TeamViewerActivity extends AppCompatActivity {
     }
 
     public void contextualButtonChoice(int slot) {
-        if (UserData.getInstance().getCreatureAtSlot(slot) != null) {
+        if (UserTeamData.getInstance().getCreatureAtSlot(slot) != null) {
             //if not empty launch creature viewer
             Intent intent = new Intent(this, CreatureViewAndEditorActivity.class);
             intent.putExtra("slotNumber", slot);
@@ -117,7 +124,7 @@ public class TeamViewerActivity extends AppCompatActivity {
     }
 
     private void updateTeamSlotButtons() {
-        Map<Integer, Creature> userTeam = UserData.getInstance().getUserTeam();
+        Map<Integer, Creature> userTeam = UserTeamData.getInstance().getUserTeam();
 
         Button[] buttons = {
                 binding.teamSlotOneButton,
@@ -144,7 +151,7 @@ public class TeamViewerActivity extends AppCompatActivity {
             ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
             CreatureDAO creatureDAO = db.CreatureDAO();
 
-            for (Map.Entry<Integer, Creature> entry : UserData.getInstance().getUserTeam().entrySet()) {
+            for (Map.Entry<Integer, Creature> entry : UserTeamData.getInstance().getUserTeam().entrySet()) {
                 int slot = entry.getKey();
                 Creature creature = entry.getValue();
                 int id = creature.getCreatureId();
@@ -160,11 +167,12 @@ public class TeamViewerActivity extends AppCompatActivity {
     }
 
     public void loadTeam(){
+        //TODO: This is just here for testing. this should be moved to when the user logs in later
         try {
             Executors.newSingleThreadExecutor().execute(() -> {
 
                 //clear any current data
-                UserData.getInstance().clearTeam();
+                UserTeamData.getInstance().clearTeam();
 
                 ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
                 CreatureDAO creatureDAO = db.CreatureDAO();
@@ -176,7 +184,7 @@ public class TeamViewerActivity extends AppCompatActivity {
                 for (CreatureEntity entity : creatureEntities) {
                     Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
                     int slot = entity.getTeamSlot();
-                    UserData.getInstance().addCreaturetoSlot(slot, creature);
+                    UserTeamData.getInstance().addCreatureToSlot(slot, creature);
                 }
                 //i really hope i see this
                 runOnUiThread(() ->

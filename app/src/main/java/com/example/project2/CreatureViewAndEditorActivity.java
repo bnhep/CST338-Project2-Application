@@ -28,7 +28,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         }
 
         //after passing in the slot# from TeamViewer get reference to UserData to get the hashmap userTeam and get the creature from that slot#'s name
-        binding.creatureNameTextView.setText(UserData.getInstance().getCreatureAtSlot(slot).getName());
+        binding.creatureNameTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getName());
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override

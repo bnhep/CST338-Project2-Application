@@ -96,7 +96,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/teamSlotSixButton"
-        android:text="[Team slot 5]]"
+        android:text="[Team slot 5]"
         android:textSize="24sp"
         />
 
@@ -108,7 +108,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/backButtonSpacer"
-        android:text="Load (temp button)"
+        android:text="[Team slot 6]"
         android:textSize="24sp"
         />
 
@@ -132,6 +132,18 @@
         app:layout_constraintStart_toStartOf="@+id/backButtonSpacer"
         app:layout_constraintEnd_toEndOf="@id/backButtonSpacer"
         app:layout_constraintBottom_toBottomOf="@id/backButtonSpacer"
+        />
+
+    <Button
+        android:id="@+id/loadTeamButton"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Load Team (for testing)"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@+id/userDisplaySpacer"
+        app:layout_constraintStart_toStartOf="@+id/userDisplaySpacer"
+        app:layout_constraintEnd_toEndOf="@id/userDisplaySpacer"
+        app:layout_constraintBottom_toBottomOf="@id/userDisplaySpacer"
         />
 
     <Button

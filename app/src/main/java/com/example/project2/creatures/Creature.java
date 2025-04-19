@@ -5,8 +5,14 @@ package com.example.project2.creatures;
  * Explanation: Project 2: Creature Coliseum
  */
 
+import android.util.Log;
+
 import com.example.project2.Ability;
 import com.example.project2.ElementalType;
+import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.utilities.Converters;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +57,17 @@ public abstract class Creature {
         this.level = level;
         this.elements.addAll(Arrays.asList(types));
         this.experienceNeededToLevel = calculateExperienceNeeded(level);
+
+        //All creatures start with tackle
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+        if (abilityDAO == null) {
+            Log.e("Creature", "AbilityDAO in Creature is null!");
+        } else {
+            Log.d("Creature", "AbilityDAO in Creature successfully retrieved");
+        }
+
+        this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
     public int getCreatureId() {
