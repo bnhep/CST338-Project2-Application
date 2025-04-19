@@ -23,8 +23,6 @@ import java.util.concurrent.Executors;
 public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
-    //private CreatureDAO creatureDAO;
-    //private AbilityDAO abilityDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +31,7 @@ public class TeamViewerActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-        //creatureDAO = db.CreatureDAO();
-        //abilityDAO = db.AbilityDAO();
-
-        //loadTeam();
-        //updateTeamSlotButtons();
+        updateTeamSlotButtons();
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +94,12 @@ public class TeamViewerActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTeamSlotButtons(); //refresh names every time activity regains focus
+    }
+
     public void contextualButtonChoice(int slot) {
         if (UserData.getInstance().getCreatureAtSlot(slot) != null) {
             //launch creature viewer
@@ -116,26 +115,6 @@ public class TeamViewerActivity extends AppCompatActivity {
             Intent intent = new Intent(this, BuildCreatureToAddToTeamActivity.class);
             intent.putExtra("slotNumber", slot);
             startActivity(intent);
-            //Toast.makeText(TeamViewerActivity.this, "Adding new creature in slot " + slot, Toast.LENGTH_SHORT).show();
-
-            /*
-            //this is all just for testing at the moment
-            //ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-            //AbilityDAO abilityDAO = db.AbilityDAO();
-
-            Executors.newSingleThreadExecutor().execute(() -> {
-                ElectricRat sparks = new ElectricRat("Sparks", 5);
-
-                sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
-                sparks.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
-
-                UserData.getInstance().addCreaturetoSlot(slot, sparks);
-
-                runOnUiThread(() ->
-                        Toast.makeText(TeamViewerActivity.this, sparks.getName() + " added to team in slot " + slot, Toast.LENGTH_SHORT).show()
-                );
-            });
-            */
         }
     }
 
@@ -160,8 +139,6 @@ public class TeamViewerActivity extends AppCompatActivity {
                 buttons[i].setText("Team Slot: " + (i+1));
             }
         }
-
-        Toast.makeText(TeamViewerActivity.this, "Loaded " + UserData.getInstance().getUserTeam().size() + " team member(s)!", Toast.LENGTH_SHORT).show();
     }
 
     public void saveTeam(){
@@ -206,7 +183,6 @@ public class TeamViewerActivity extends AppCompatActivity {
                 //i really hope i see this
                 runOnUiThread(() ->
                                 updateTeamSlotButtons()
-                        //Toast.makeText(TeamViewerActivity.this, UserData.getInstance().getUserTeam().get(1).getName(), Toast.LENGTH_SHORT).show()
                 );
             });
         } catch (Exception e) {
