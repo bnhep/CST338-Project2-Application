@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
         accountManager = AccountStatusCheck.getInstance(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
         /*
         LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
