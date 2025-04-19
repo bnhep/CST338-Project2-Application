@@ -6,6 +6,9 @@ package com.example.project2.creatures;
  */
 
 import com.example.project2.ElementalType;
+import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.utilities.Converters;
 
 public class FireLizard extends Creature {
 
@@ -25,10 +28,15 @@ public class FireLizard extends Creature {
      */
     public FireLizard(String name, int level) {
         super(name, level, ElementalType.FIRE);
+
         setType(this.getClass().getSimpleName());
         setPhrase(PHRASE);
         setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
         updateStats();
         setCurHealth(this.getHealthStat());
+
+        //All fire lizards start with flamethrower
+        //AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        //this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("FLAMETHROWER")));
     }
 }

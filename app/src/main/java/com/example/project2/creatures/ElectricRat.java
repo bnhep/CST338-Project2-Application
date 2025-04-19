@@ -5,7 +5,12 @@ package com.example.project2.creatures;
  * Explanation: Project 2: Creature Coliseum
  */
 
+import android.util.Log;
+
 import com.example.project2.ElementalType;
+import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.utilities.Converters;
 
 public class ElectricRat extends Creature {
 
@@ -25,10 +30,21 @@ public class ElectricRat extends Creature {
      */
     public ElectricRat(String name, int level) {
         super(name, level, ElementalType.ELECTRIC);
+
         setType(this.getClass().getSimpleName());
         setPhrase(PHRASE);
         setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
         updateStats();
         setCurHealth(this.getHealthStat());
+
+        //All electric rats start with shock
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        if (abilityDAO == null) {
+            Log.e("ElectricRat", "AbilityDAO in ElectricRat is null!");
+        } else {
+            Log.d("ElectricRat", "AbilityDAO in ElectricRat successfully retrieved");
+        }
+
+        //this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
     }
 }
