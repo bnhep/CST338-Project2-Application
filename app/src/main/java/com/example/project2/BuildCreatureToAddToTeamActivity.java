@@ -33,22 +33,15 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
 
         setContentView(view);
 
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = TeamViewerActivity.TeamBuilderIntentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            finish();
+        }
 
         binding.addCreatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slot = getIntent().getIntExtra("slotNumber", -1);
 
-                if (slot == -1) {
-                    finish();
-                }
 
                 //this is all just for testing at the moment
                 ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
@@ -66,6 +59,14 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
                             Toast.makeText(BuildCreatureToAddToTeamActivity.this, sparks.getName() + " added to team in slot " + slot, Toast.LENGTH_SHORT).show()
                     );
                 });
+            }
+        });
+
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TeamViewerActivity.TeamBuilderIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
     }

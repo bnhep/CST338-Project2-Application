@@ -102,16 +102,14 @@ public class TeamViewerActivity extends AppCompatActivity {
 
     public void contextualButtonChoice(int slot) {
         if (UserData.getInstance().getCreatureAtSlot(slot) != null) {
-            //launch creature viewer
-            //Intent intent = new Intent(this, TeamViewerActivity.class);
-            //intent.putExtra("slotNumber", slot);
-            //startActivity(intent);
+            //if not empty launch creature viewer
+            Intent intent = new Intent(this, CreatureViewAndEditorActivity.class);
+            intent.putExtra("slotNumber", slot);
+            startActivity(intent);
 
-            //for testing
-            Toast.makeText(TeamViewerActivity.this, "Creature in slot " + slot + ": " + UserData.getInstance().getCreatureAtSlot(slot).getName(), Toast.LENGTH_SHORT).show();
         }
         else {
-            //launch creature creator
+            //if empty launch creature creator
             Intent intent = new Intent(this, BuildCreatureToAddToTeamActivity.class);
             intent.putExtra("slotNumber", slot);
             startActivity(intent);
