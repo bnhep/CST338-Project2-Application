@@ -100,11 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                         if(!adminCheck) {
                             //moves to the MainActivity(basic user) page
                             accountManager.setUserID(user.getId());
+                            accountManager.setUserName(user.getUsername());
                             intent = MainActivity.MainIntentFactory(getApplicationContext());
                         }
                         else{
                             //moves to the AdminLandingActivity page
                             accountManager.setUserID(user.getId());
+                            accountManager.setUserName(user.getUsername());
                             intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
 
                         }

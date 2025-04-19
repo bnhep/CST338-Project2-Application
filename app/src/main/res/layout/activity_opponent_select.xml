@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Select Opponent"
         android:textSize="36sp"
@@ -23,13 +24,11 @@
         android:id="@+id/usernameDisplayTextView"
         android:layout_width="136dp"
         android:layout_height="43dp"
-        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="username"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/opponentOneButton"
@@ -38,11 +37,10 @@
         android:layout_margin="16dp"
         android:text="Gym Leader: Brock"
         android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@id/opponentTwoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentSelectTextView"
-        app:layout_constraintBottom_toTopOf="@id/opponentTwoButton"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/opponentSelectTextView" />
 
     <Button
         android:id="@+id/opponentTwoButton"
@@ -82,10 +80,12 @@
 
     <Space
         android:id="@+id/backButtonSpacer"
-        android:layout_width="225dp"
-        android:layout_height="80dp"
+        android:layout_width="202dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -93,6 +93,8 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="back"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
