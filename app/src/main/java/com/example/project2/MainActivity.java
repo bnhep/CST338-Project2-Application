@@ -1,6 +1,8 @@
 package com.example.project2;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +10,13 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityMainBinding;
 
 /**
@@ -23,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ApplicationRepository appRepository; //Performs the queries for the database
 
-    private int userStatus = -1;
+    private AccountStatusCheck accountManager;
+
+    private static final int LOGGED_OUT_STATUS = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +39,21 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
+        //If we want it to say "Welcome [whatever the username]"
+        /*
+        LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
+        userObserver.observe(this, new Observer<>() {
+            @Override
+            public void onChanged(User user) {
+                binding.welcomeFighterLoginTextView.setText("Welcome " + user.getUsername());
+                userObserver.removeObserver(this);
+            }
+        });
+         */
+        int temporaryStatusChecker = accountManager.getUserID();
 
-        //TODO Properly manage the userId of the current logged in user
-        //This gets the extra value from the intent which represents the current user's id(Primary Key in entity)
-        userStatus = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
-        //userStatus is the current account id, a -1 id will not exist in the database so consider
-        //that a no account tracker.
-        if(userStatus == -1) {
+        if(temporaryStatusChecker == LOGGED_OUT_STATUS) {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
@@ -47,16 +63,10 @@ public class MainActivity extends AppCompatActivity {
         binding.startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Testing button please remove later
-                //TODO the mainactivity menu will show up, IF YOU PRESS START BATTLE IT GOES TO SIGNUP
-                //THIS IS TEMPORARY
-                //Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
-                //startActivity(intent);
 
                 Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
                 startActivity(intent);
 
-                //Toast.makeText(MainActivity.this, "Start Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -84,15 +94,53 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOutAlertDialog();
+            }
+        });
+
     }
+
 
 
     //MainIntentFactory that takes in a
-    static Intent MainIntentFactory(Context context, int TEMPORARY_STATUS_CHECK){
+    static Intent MainIntentFactory(Context context){
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MAIN_ACTIVITY_USER_ID, TEMPORARY_STATUS_CHECK);
         return intent;
     }
 
+    /**
+     * placeholder dialog may create a custom dialog
+     */
+    private void logOutAlertDialog(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setTitle("Confirm logout");
+        alertBuilder.setMessage("Are you sure you want to log out?");
+
+        alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logoutMain();
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.show();
+    }
+
+    private void logoutMain(){
+        accountManager.logout();
+        Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+        startActivity(intent);
+    }
 
 }

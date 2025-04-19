@@ -13,4 +13,6 @@
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign Up</string>
     <string name="back">Back</string>
+    <string name="train_monsters">Train Monsters</string>
+    <string name="logout">Logout</string>
 </resources>

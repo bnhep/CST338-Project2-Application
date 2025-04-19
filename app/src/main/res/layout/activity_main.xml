@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/ratTitleLogoImageView"
-        android:layout_width="277dp"
-        android:layout_height="268dp"
+        android:layout_width="335dp"
+        android:layout_height="151dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,39 +36,48 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_margin="16dp"
         android:id="@+id/startBattleButton"
+        android:layout_width="161dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
         android:text="@string/start_battle"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeFighterLoginTextView" />
 
     <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_margin="16dp"
         android:id="@+id/viewMonstersButton"
+        android:layout_width="161dp"
+        android:layout_height="48dp"
         android:text="@string/view_monsters"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startBattleButton" />
 
     <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_margin="16dp"
+        android:layout_width="161dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/viewRecentBattleButton"
-        android:text="@string/view_recent_battles"
-        android:textSize="18sp"
+        android:text="@string/train_monsters"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewMonstersButton" />
 
-
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="161dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/logout"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewRecentBattleButton"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

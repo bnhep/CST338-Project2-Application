@@ -10,14 +10,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
 import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityLoginBinding;
+
 
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     private ApplicationRepository repository;
+
+    private AccountStatusCheck accountManager;
+    boolean adminCheck = false;
 
 
     @Override
@@ -25,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         repository = ApplicationRepository.getRepository(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplication());
+
 
         /*
          * This button calls userValidation(); the method will validate username and password,
@@ -47,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         binding.signUpButtonLoginMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: THIS WILL GO TO THE SIGNUP PAGE USER WILL HAVE OPTION TO COME BACK
                 Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
@@ -63,8 +68,21 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void userValidation() {
         String username = binding.usernameLoginEditText.getText().toString();
+        String password = binding.passwordLoginEditTextView.getText().toString();
+        if (username.isEmpty() && password.isEmpty()){
+            Toast.makeText(LoginActivity.this,
+                    "Username and Password are blank.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (username.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Username is blank. \nPlease enter a username",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.isEmpty()) {
+            Toast.makeText(LoginActivity.this,
+                    "Password is blank.\nPlease enter a password",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -72,12 +90,24 @@ public class LoginActivity extends AppCompatActivity {
         userObserver.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
+
                 if (user != null) {
-                    String password = binding.passwordLoginEditTextView.getText().toString();
                     if (password.equals(user.getPassword())) {
                         //TODO: ADD A IF/ELSE TO DETERMINE IN USER IS AN ADMIN OR NOT
                         // IF THEY ARE AN ADMIN GO TO ADMIN SCREEN
-                        Intent intent = MainActivity.MainIntentFactory(getApplicationContext(), user.getId());
+                        Intent intent;
+                        adminCheck = user.isAdmin();
+                        if(!adminCheck) {
+                            //moves to the MainActivity(basic user) page
+                            accountManager.setUserID(user.getId());
+                            intent = MainActivity.MainIntentFactory(getApplicationContext());
+                        }
+                        else{
+                            //moves to the AdminLandingActivity page
+                            accountManager.setUserID(user.getId());
+                            intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
+
+                        }
                         startActivity(intent);
                     } else {
                         Toast.makeText(LoginActivity.this, "Password Invalid. Please Enter a Password",
