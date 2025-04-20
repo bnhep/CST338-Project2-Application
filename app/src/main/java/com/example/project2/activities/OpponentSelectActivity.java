@@ -20,7 +20,6 @@ import com.example.project2.databinding.ActivityOpponentSelectBinding;
 public class OpponentSelectActivity extends AppCompatActivity {
 
     ActivityOpponentSelectBinding binding;
-    private ApplicationRepository appRepository;
     private AccountStatusCheck accountManager;
 
     @Override
@@ -29,8 +28,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding = ActivityOpponentSelectBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        appRepository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
 
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {

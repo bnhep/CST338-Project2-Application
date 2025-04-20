@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
         /*
          * This button calls the intent method of LoginActivity and swaps back to the login screen.
          */
-        binding.backButtonSignup.setOnClickListener(new View.OnClickListener() {
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());

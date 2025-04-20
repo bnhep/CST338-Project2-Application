@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private AccountStatusCheck accountManager;
 
     private static final int LOGGED_OUT_STATUS = -1;
+    private static final boolean ADMIN_STATUS = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
+        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
         /*
@@ -50,9 +50,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
          */
-        int temporaryStatusChecker = accountManager.getUserID();
+        int idCheck = accountManager.getUserID();
+        boolean adminCheck = accountManager.getIsAdminStatus();
 
-        if(temporaryStatusChecker == LOGGED_OUT_STATUS) {
+        if(ADMIN_STATUS == adminCheck){
+            Intent intent =  AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
+            startActivity(intent);
+        }
+        if(idCheck == LOGGED_OUT_STATUS) {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
