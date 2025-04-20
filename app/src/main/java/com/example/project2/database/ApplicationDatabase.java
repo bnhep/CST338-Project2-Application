@@ -10,15 +10,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.project2.Ability;
-import com.example.project2.MainActivity;
-import com.example.project2.creatures.ElectricRat;
+import com.example.project2.activities.MainActivity;
 import com.example.project2.database.entities.AbilityEntity;
 import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.database.entities.User;
 import com.example.project2.utilities.Converters;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

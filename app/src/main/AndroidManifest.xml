@@ -14,34 +14,34 @@
         android:theme="@style/Theme.Project2"
         tools:targetApi="31">
         <activity
-            android:name=".BuildCreatureDetailActivity"
+            android:name=".activities.BuildCreatureDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatureViewAndEditorActivity"
+            android:name=".activities.CreatureViewAndEditorActivity"
             android:exported="false" />
         <activity
-            android:name=".BuildCreatureToAddToTeamActivity"
+            android:name=".activities.BuildCreatureToAddToTeamActivity"
             android:exported="false" />
         <activity
-            android:name=".TeamViewerActivity"
+            android:name=".activities.TeamViewerActivity"
             android:exported="false" />
         <activity
-            android:name=".OpponentSelectActivity"
+            android:name=".activities.OpponentSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".AddMonstersActivity"
+            android:name=".activities.AddMonstersActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminLandingActivity"
+            android:name=".activities.AdminLandingActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".activities.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

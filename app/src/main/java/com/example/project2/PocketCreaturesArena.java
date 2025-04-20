@@ -1,8 +1,9 @@
 package com.example.project2;
 /**
- * Name: Austin Shatswell
- * Date: --/--/25
- * Explanation: Project 2: Creature Coliseum
+ * *********************** DEPRECATED ***********************
+ * THIS CLASS IS ONLY BEING USED FOR REFERENCE
+ * AND WILL BE REMOVED ONCE NO LONGER NEEDED
+ * *********************** DEPRECATED ***********************
  */
 
 import com.example.project2.creatures.*;

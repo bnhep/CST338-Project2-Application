@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //MainIntentFactory that takes in a
-    static Intent MainIntentFactory(Context context){
+    public static Intent MainIntentFactory(Context context){
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
     }

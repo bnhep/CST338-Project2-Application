@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.databinding.ActivityBuildCreatureDetailBinding;
 
@@ -20,7 +21,6 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
 
     private int slot;
     int creatureArrayPosition;
-
     Creature selectedCreature;
 
     @Override
@@ -30,8 +30,10 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
             finish();
         }
         
@@ -43,9 +45,6 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //this is all just for testing at the moment
-                //ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-                //AbilityDAO abilityDAO = db.AbilityDAO();
-
                 Executors.newSingleThreadExecutor().execute(() -> {
                     UserTeamData.getInstance().addCreatureToSlot(slot, selectedCreature);
 
@@ -76,6 +75,7 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setValues() {
+        //update the text view values to that of the creatures
         binding.creatureNameTextView.setText(selectedCreature.getName());
         binding.creatureBaseHealthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());
         binding.creatureBaseAttackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());

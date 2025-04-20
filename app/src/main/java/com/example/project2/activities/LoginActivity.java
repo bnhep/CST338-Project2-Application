@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Creating Intent Factory to swap over to other activities
      */
-    static Intent loginIntentFactory(Context context) {
+    public static Intent loginIntentFactory(Context context) {
         return new Intent(context, LoginActivity.class);
     }
 

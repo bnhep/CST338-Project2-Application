@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.project2.UserTeamData;
 import com.example.project2.creatures.*;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.ApplicationDatabase;
+import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityTeamViewerBinding;
 import com.example.project2.utilities.Converters;
@@ -24,6 +27,10 @@ public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
 
+    //TODO: just for testing. this will be removed later
+    private final String TEMP_USER_ID = "testUserId";
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +38,14 @@ public class TeamViewerActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        //update buttons to display team members
         updateTeamSlotButtons();
+
+        /**
+         * TODO:this is where we should be picking up and assigning the
+         *  the users proper randomly generated userId
+         */
+        userId = TEMP_USER_ID;
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +89,11 @@ public class TeamViewerActivity extends AppCompatActivity {
             }
         });
 
-        //TODO:  *************************** SAVE  ***************************
+        // *************************** SAVE  ***************************
+        /**
+         * This button will be used to save the changes the user makes
+         * to their team roster
+         */
         binding.saveTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,22 +109,37 @@ public class TeamViewerActivity extends AppCompatActivity {
             }
         });
 
-        //TODO:  *************************** LOAD ***************************
+        // *************************** LOAD ***************************
+        /**
+         * This is a temporary button and its functionality will be
+         * moved to load the users team on log in
+         */
         binding.loadTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //This button currently is being used to act as a "load" button for testing
                 loadTeam();
             }
         });
     }
 
+    /**
+     * This method makes sure that any time the user returns to this page
+     * the buttons are updated to resemble the current team members
+     */
     @Override
     protected void onResume() {
         super.onResume();
-        updateTeamSlotButtons(); //refresh names every time activity regains focus
+        //refresh names every time activity regains focus
+        updateTeamSlotButtons();
     }
 
+    /**
+     * This method accepts a number based on the button selected and
+     * will send the user to a new activity dependant on whether the
+     * team slot associated with that button is currently holding
+     * creature information
+     * @param slot
+     */
     public void contextualButtonChoice(int slot) {
         if (UserTeamData.getInstance().getCreatureAtSlot(slot) != null) {
             //if not empty launch creature viewer
@@ -123,9 +156,15 @@ public class TeamViewerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method collects all of the buttons and assigns their
+     * text value to either display and empty slot or display
+     * the name of the creature that currently occupies the slot
+     */
     private void updateTeamSlotButtons() {
         Map<Integer, Creature> userTeam = UserTeamData.getInstance().getUserTeam();
 
+        //array of buttons
         Button[] buttons = {
                 binding.teamSlotOneButton,
                 binding.teamSlotTwoButton,
@@ -135,29 +174,48 @@ public class TeamViewerActivity extends AppCompatActivity {
                 binding.teamSlotSixButton,
         };
 
+        //iterate through the buttons
         for (int i = 0; i < buttons.length; i++) {
+            //set the creature based from userTeam array
             Creature creature = userTeam.get(i+1);
             if (creature != null) {
+                //set name if exists
                 buttons[i].setText(creature.getName());
             }
             else {
+                //show empty slot if it doesn't
                 buttons[i].setText("Team Slot: " + (i+1));
             }
         }
     }
 
     public void saveTeam(){
+        //run on a background thread when making changes to the database
         Executors.newSingleThreadExecutor().execute(() -> {
-            ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-            CreatureDAO creatureDAO = db.CreatureDAO();
 
+            //get reference to the CreatureDAO singleton
+            CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+
+            //delete the old saved data
+            creatureDAO.deleteAllCreaturesByUserId(userId);
+
+            //for each creature found in the userTeam map
             for (Map.Entry<Integer, Creature> entry : UserTeamData.getInstance().getUserTeam().entrySet()) {
+                //store the key (creatures current slot number)
                 int slot = entry.getKey();
+                //store the creature located in that slot
                 Creature creature = entry.getValue();
+                //store the creatures unique ID for retrieval
                 int id = creature.getCreatureId();
 
-                //later on we want to pass in the actual users generated id here
-                CreatureEntity entity = Converters.convertCreatureToEntity(creature, "testUserId", slot, id);
+                //TODO:later on we want to pass in the actual users generated id here
+                /**
+                 * passing the information about the creature along with user ID into
+                 * the converter to 'dehydrate' the creature class into simple data
+                 * that the database can parse correctly
+                 */
+                CreatureEntity entity = Converters.convertCreatureToEntity(creature, userId, slot, id);
+                //insert that converted creature entity into the creature database
                 creatureDAO.insert(entity);
             }
             runOnUiThread(() ->
@@ -169,21 +227,33 @@ public class TeamViewerActivity extends AppCompatActivity {
     public void loadTeam(){
         //TODO: This is just here for testing. this should be moved to when the user logs in later
         try {
+            //run on a background thread when making changes to the database
             Executors.newSingleThreadExecutor().execute(() -> {
 
-                //clear any current data
+                //clear any current data from the userTeam map
                 UserTeamData.getInstance().clearTeam();
 
-                ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-                CreatureDAO creatureDAO = db.CreatureDAO();
-                AbilityDAO abilityDAO = db.AbilityDAO();
+                //get reference to the CreatureDAO and AbilityDAO singletons
+                CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+                AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
-                //later on we want to pass in the actual users generated id here
-                List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("testUserId");
+                //TODO:later on we want to pass in the actual users generated id here
+                /**
+                 * Passing the users ID into the creatureDAO to collect a list of
+                 * creatures associated with the current user.
+                 */
+                List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId(userId);
 
+                //for each creature creature retrieved
                 for (CreatureEntity entity : creatureEntities) {
+                    /**
+                     * pass that entities information into the converter to 'rehydrate'
+                     * the creature object with the proper stats and abilities
+                     */
                     Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
+                    //store the saved team slot
                     int slot = entity.getTeamSlot();
+                    //add the now rehydrated creature object into the userTeam map in the remembered slot
                     UserTeamData.getInstance().addCreatureToSlot(slot, creature);
                 }
                 //i really hope i see this
