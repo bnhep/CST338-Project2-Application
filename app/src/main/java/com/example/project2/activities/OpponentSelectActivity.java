@@ -30,6 +30,10 @@ public class OpponentSelectActivity extends AppCompatActivity {
     private boolean opponentSelectButtonsVisible = true;
     private boolean creatureSelectButtonsVisible = false;
 
+    private String opponentName;
+    Button[] teamSlotButtons;
+    Button[] opponentButtons;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +44,29 @@ public class OpponentSelectActivity extends AppCompatActivity {
         accountManager = AccountStatusCheck.getInstance(getApplication());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
 
+        teamSlotButtons = new Button[] {
+                binding.teamSlotOneButton,
+                binding.teamSlotTwoButton,
+                binding.teamSlotThreeButton,
+                binding.teamSlotFourButton,
+                binding.teamSlotFiveButton,
+                binding.teamSlotSixButton,
+        };
+
+        opponentButtons = new Button[] {
+                binding.opponentOneButton,
+                binding.opponentTwoButton,
+                binding.opponentThreeButton,
+                binding.opponentFourButton,
+        };
+
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleOpponentSelectButtons();
                 updateTeamSlotButtons();
+                opponentName = "Brock";
+                updateTextView("Select your creature");
                 toggleCreatureSelectButtons();
             }
         });
@@ -54,6 +76,8 @@ public class OpponentSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 toggleOpponentSelectButtons();
                 updateTeamSlotButtons();
+                opponentName = "Misty";
+                updateTextView("Select your creature");
                 toggleCreatureSelectButtons();
             }
         });
@@ -63,15 +87,19 @@ public class OpponentSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 toggleOpponentSelectButtons();
                 updateTeamSlotButtons();
+                opponentName = "Red";
+                updateTextView("Select your creature");
                 toggleCreatureSelectButtons();
             }
         });
 
-        binding.randomBattleButton.setOnClickListener(new View.OnClickListener() {
+        binding.opponentFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleOpponentSelectButtons();
                 updateTeamSlotButtons();
+                opponentName = "Random";
+                updateTextView("Select your creature");
                 toggleCreatureSelectButtons();
             }
         });
@@ -79,42 +107,42 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(1);
+                startBattleOpponent(1, opponentName);
             }
         });
 
         binding.teamSlotTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(2);
+                startBattleOpponent(2, opponentName);
             }
         });
 
         binding.teamSlotThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(3);
+                startBattleOpponent(3, opponentName);
             }
         });
 
         binding.teamSlotFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(4);
+                startBattleOpponent(4, opponentName);
             }
         });
 
         binding.teamSlotFiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(5);
+                startBattleOpponent(5, opponentName);
             }
         });
 
         binding.teamSlotSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(6);
+                startBattleOpponent(6, opponentName);
             }
         });
 
@@ -126,13 +154,13 @@ public class OpponentSelectActivity extends AppCompatActivity {
         });
     }
 
-    private void startBattleOpponent(int slot) {
+    private void startBattleOpponent(int slot, String opponentName) {
         Creature creature = UserTeamData.getInstance().getUserTeam().get(slot);
 
         if (creature != null) {
             Intent intent = new Intent(this, BattleActivity.class);
             //add opponent info here
-            //intent.putExtra("name", value);
+            intent.putExtra("name", opponentName);
             //add creature chosen here
             intent.putExtra("slotNumber", slot);
             startActivity(intent);
@@ -143,40 +171,30 @@ public class OpponentSelectActivity extends AppCompatActivity {
     }
 
     private void toggleOpponentSelectButtons() {
-        if (opponentSelectButtonsVisible) {
-            opponentSelectButtonsVisible = false;
-            binding.opponentOneButton.setVisibility(View.GONE);
-            binding.opponentTwoButton.setVisibility(View.GONE);
-            binding.opponentThreeButton.setVisibility(View.GONE);
-            binding.randomBattleButton.setVisibility(View.GONE);
-        }
-        else {
-            opponentSelectButtonsVisible = true;
-            binding.opponentOneButton.setVisibility(View.VISIBLE);
-            binding.opponentTwoButton.setVisibility(View.VISIBLE);
-            binding.opponentThreeButton.setVisibility(View.VISIBLE);
-            binding.randomBattleButton.setVisibility(View.VISIBLE);
+        //flip boolean
+        opponentSelectButtonsVisible = !opponentSelectButtonsVisible;
+
+        //iterate through the buttons
+        for (Button opponentButton : opponentButtons) {
+            if (opponentSelectButtonsVisible) {
+                opponentButton.setVisibility(View.VISIBLE);
+            } else {
+                opponentButton.setVisibility(View.GONE);
+            }
         }
     }
 
     private void toggleCreatureSelectButtons() {
-        if (creatureSelectButtonsVisible) {
-            creatureSelectButtonsVisible = false;
-            binding.teamSlotOneButton.setVisibility(View.GONE);
-            binding.teamSlotTwoButton.setVisibility(View.GONE);
-            binding.teamSlotThreeButton.setVisibility(View.GONE);
-            binding.teamSlotFourButton.setVisibility(View.GONE);
-            binding.teamSlotFiveButton.setVisibility(View.GONE);
-            binding.teamSlotSixButton.setVisibility(View.GONE);
-        }
-        else {
-            creatureSelectButtonsVisible = true;
-            binding.teamSlotOneButton.setVisibility(View.VISIBLE);
-            binding.teamSlotTwoButton.setVisibility(View.VISIBLE);
-            binding.teamSlotThreeButton.setVisibility(View.VISIBLE);
-            binding.teamSlotFourButton.setVisibility(View.VISIBLE);
-            binding.teamSlotFiveButton.setVisibility(View.VISIBLE);
-            binding.teamSlotSixButton.setVisibility(View.VISIBLE);
+        //flip boolean
+        creatureSelectButtonsVisible = !creatureSelectButtonsVisible;
+
+        //iterate through the buttons
+        for (Button teamSlotButton : teamSlotButtons) {
+            if (creatureSelectButtonsVisible) {
+                teamSlotButton.setVisibility(View.VISIBLE);
+            } else {
+                teamSlotButton.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -188,29 +206,37 @@ public class OpponentSelectActivity extends AppCompatActivity {
     private void updateTeamSlotButtons() {
         Map<Integer, Creature> userTeam = UserTeamData.getInstance().getUserTeam();
 
-        //array of buttons
-        Button[] buttons = {
-                binding.teamSlotOneButton,
-                binding.teamSlotTwoButton,
-                binding.teamSlotThreeButton,
-                binding.teamSlotFourButton,
-                binding.teamSlotFiveButton,
-                binding.teamSlotSixButton,
-        };
-
         //iterate through the buttons
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 0; i < teamSlotButtons.length; i++) {
             //set the creature based from userTeam array
             Creature creature = userTeam.get(i+1);
             if (creature != null) {
                 //set name if exists
-                buttons[i].setText(creature.getName());
+                teamSlotButtons[i].setText(creature.getName());
             }
             else {
                 //show empty slot if it doesn't
-                buttons[i].setText("Team Slot: " + (i+1));
+                teamSlotButtons[i].setText("Team Slot: " + (i+1));
             }
         }
+    }
+
+    private void updateTextView(String text) {
+        binding.opponentSelectTextView.setText(text);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        //reset the UI back to opponent selection mode
+        opponentSelectButtonsVisible = false;
+        toggleOpponentSelectButtons();
+
+        creatureSelectButtonsVisible = true;
+        toggleCreatureSelectButtons();
+
+        updateTextView("Select opponent");
     }
 
     private void toastMaker(String s) {

@@ -13,6 +13,7 @@ import com.example.project2.databinding.ActivityBattleBinding;
 public class BattleActivity extends AppCompatActivity {
 
     ActivityBattleBinding binding;
+    private int slot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,13 @@ public class BattleActivity extends AppCompatActivity {
         binding = ActivityBattleBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        //store the passed in slot number
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
+            finish();
+        }
 
         binding.abilityOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
