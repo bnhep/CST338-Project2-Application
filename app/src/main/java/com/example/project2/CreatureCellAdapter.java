@@ -1,5 +1,11 @@
 package com.example.project2;
 
+/**
+ * This class exists to help form the list that
+ * will display all of the creatures available
+ * in the BuildCreatureToAddToTeam activities ListView
+ */
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +22,6 @@ import java.util.List;
 
 public class CreatureCellAdapter extends ArrayAdapter<Creature> {
 
-
     public CreatureCellAdapter(Context context, int resource, List<Creature> creatureList) {
         super(context, resource, creatureList);
     }
@@ -29,8 +34,9 @@ public class CreatureCellAdapter extends ArrayAdapter<Creature> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell_creature_preview, parent, false);
         }
 
-        TextView creatureNameTextView = (TextView) convertView.findViewById(R.id.creatureNameCellTextView);
+        TextView creatureNameTextView = convertView.findViewById(R.id.creatureNameCellTextView);
 
+        //use the creature that was passed in and grab their name
         creatureNameTextView.setText(creature.getName());
 
         return convertView;

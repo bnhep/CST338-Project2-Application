@@ -27,6 +27,10 @@ public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
 
+    //TODO: just for testing. this will be removed later
+    private final String TEMP_USER_ID = "testUserId";
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,12 @@ public class TeamViewerActivity extends AppCompatActivity {
 
         //update buttons to display team members
         updateTeamSlotButtons();
+
+        /**
+         * TODO:this is where we should be picking up and assigning the
+         *  the users proper randomly generated userId
+         */
+        userId = TEMP_USER_ID;
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +196,9 @@ public class TeamViewerActivity extends AppCompatActivity {
             //get reference to the CreatureDAO singleton
             CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
 
+            //delete the old saved data
+            creatureDAO.deleteAllCreaturesByUserId(userId);
+
             //for each creature found in the userTeam map
             for (Map.Entry<Integer, Creature> entry : UserTeamData.getInstance().getUserTeam().entrySet()) {
                 //store the key (creatures current slot number)
@@ -201,7 +214,7 @@ public class TeamViewerActivity extends AppCompatActivity {
                  * the converter to 'dehydrate' the creature class into simple data
                  * that the database can parse correctly
                  */
-                CreatureEntity entity = Converters.convertCreatureToEntity(creature, "testUserId", slot, id);
+                CreatureEntity entity = Converters.convertCreatureToEntity(creature, userId, slot, id);
                 //insert that converted creature entity into the creature database
                 creatureDAO.insert(entity);
             }
@@ -229,7 +242,7 @@ public class TeamViewerActivity extends AppCompatActivity {
                  * Passing the users ID into the creatureDAO to collect a list of
                  * creatures associated with the current user.
                  */
-                List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("testUserId");
+                List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId(userId);
 
                 //for each creature creature retrieved
                 for (CreatureEntity entity : creatureEntities) {

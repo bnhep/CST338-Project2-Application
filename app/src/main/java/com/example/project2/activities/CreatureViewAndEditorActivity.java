@@ -20,16 +20,25 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreatureViewAndEditorBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-
         setContentView(view);
 
+        //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
             finish();
         }
 
         //after passing in the slot# from TeamViewer get reference to UserData to get the hashmap userTeam and get the creature from that slot#'s name
         binding.creatureNameTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getName());
+
+        binding.deleteCreatureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserTeamData.getInstance().removeCreatureFromSlot(slot);
+                finish();
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override

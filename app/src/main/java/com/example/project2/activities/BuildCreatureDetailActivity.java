@@ -21,7 +21,6 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
 
     private int slot;
     int creatureArrayPosition;
-
     Creature selectedCreature;
 
     @Override
@@ -31,8 +30,10 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
             finish();
         }
         
@@ -44,9 +45,6 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //this is all just for testing at the moment
-                //ApplicationDatabase db = ApplicationDatabase.getDatabase(getApplicationContext());
-                //AbilityDAO abilityDAO = db.AbilityDAO();
-
                 Executors.newSingleThreadExecutor().execute(() -> {
                     UserTeamData.getInstance().addCreatureToSlot(slot, selectedCreature);
 
@@ -77,6 +75,7 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void setValues() {
+        //update the text view values to that of the creatures
         binding.creatureNameTextView.setText(selectedCreature.getName());
         binding.creatureBaseHealthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());
         binding.creatureBaseAttackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());

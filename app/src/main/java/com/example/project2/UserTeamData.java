@@ -43,6 +43,9 @@ public class UserTeamData {
         userTeam.put(slotB, temp);
     }
 
+    public void removeCreatureFromSlot(int slot) {
+        userTeam.remove(slot);
+    }
 
     public void clearTeam(){
         userTeam.clear();
