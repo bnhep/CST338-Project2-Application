@@ -7,13 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".activities.CreatureViewAndEditorActivity">
 
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="40dp"
+        android:text="back"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/userDisplaySpacer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
     <Space
         android:id="@+id/userDisplaySpacer"
-        android:layout_width="225dp"
+        android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/usernameDisplayTextView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -60,19 +73,20 @@
         android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/backButtonSpacer"
+        app:layout_constraintBottom_toTopOf="@id/bottomSpacer"
         app:layout_constraintTop_toBottomOf="@+id/creatureStatsTextView"
         android:text="Add Ability (temp)"
         android:textSize="24sp"
         />
 
     <Space
-        android:id="@+id/backButtonSpacer"
+        android:id="@+id/bottomSpacer"
         android:layout_width="225dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/backButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/deleteCreatureButton"
+        />
 
     <Button
         android:id="@+id/deleteCreatureButton"
@@ -80,23 +94,10 @@
         android:layout_height="60dp"
         android:text="Delete"
         android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="@+id/backButtonSpacer"
-        app:layout_constraintStart_toStartOf="@+id/backButtonSpacer"
-        app:layout_constraintEnd_toEndOf="@id/backButtonSpacer"
-        app:layout_constraintBottom_toBottomOf="@id/backButtonSpacer"
-        />
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="40dp"
-        android:text="back"
-        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/backButtonSpacer"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="@+id/bottomSpacer"
+        app:layout_constraintEnd_toStartOf="@id/bottomSpacer"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

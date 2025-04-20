@@ -43,8 +43,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
-                startActivity(intent);
+                finish();
             }
         });
     }
