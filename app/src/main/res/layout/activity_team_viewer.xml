@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_activities"
-    tools:context=".TeamViewerActivity">
+    tools:context=".activities.TeamViewerActivity">
 
     <LinearLayout
         android:id="@+id/teamViewerLinearLayout"
@@ -137,6 +137,14 @@
         app:layout_constraintBottom_toTopOf="@+id/teamViewerLinearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/loadTeamButton"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Load Team (for testing)"
+        android:textSize="16sp"
+        />
 
     <Button
         android:id="@+id/backButton"

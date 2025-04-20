@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 /**
  * Name: Austin Shatswell
  * Date: --/--/25
@@ -12,12 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
-import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityOpponentSelectBinding;
 
 public class OpponentSelectActivity extends AppCompatActivity {
@@ -35,16 +32,6 @@ public class OpponentSelectActivity extends AppCompatActivity {
         appRepository = ApplicationRepository.getRepository(getApplication());
         accountManager = AccountStatusCheck.getInstance(getApplication());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
-        /*
-        LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
-        userObserver.observe(this, new Observer<>() {
-            @Override
-            public void onChanged(User user) {
-                binding.usernameDisplayTextView.setText(user.getUsername());
-                userObserver.removeObserver(this);
-            }
-        });
-        */
 
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +68,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
-                startActivity(intent);
+                finish();
             }
         });
     }

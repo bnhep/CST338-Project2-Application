@@ -6,6 +6,9 @@ package com.example.project2.creatures;
  */
 
 import com.example.project2.ElementalType;
+import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.utilities.Converters;
 
 public class FlowerDino extends Creature {
 
@@ -25,10 +28,15 @@ public class FlowerDino extends Creature {
      */
     public FlowerDino(String name, int level) {
         super(name, level, ElementalType.GRASS);
+
         setType(this.getClass().getSimpleName());
         setPhrase(PHRASE);
         setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
         updateStats();
         setCurHealth(this.getHealthStat());
+
+        //All flower dinos start with razor leaf
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("RAZORLEAF")));
     }
 }

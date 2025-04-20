@@ -20,4 +20,7 @@ public interface CreatureDAO {
 
     @Query("SELECT * FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE userId = :userId")
     List<CreatureEntity> getCreaturesByUserId(String userId);
+
+    @Query("DELETE FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE userId = :userId")
+    void deleteAllCreaturesByUserId(String userId);
 }

@@ -1,4 +1,4 @@
-package com.example.project2;
+package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -121,7 +121,7 @@ public class SignupActivity extends AppCompatActivity {
     /**
      * Creating Intent Factory to swap over to other activities
      */
-    static Intent signUpIntentFactory(Context context) {
+    public static Intent signUpIntentFactory(Context context) {
         return new Intent(context, SignupActivity.class);
     }
 
