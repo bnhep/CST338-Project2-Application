@@ -50,7 +50,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //This is placeholder
-                Toast.makeText(OpponentSelectActivity.this, "You challenged Brock", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OpponentSelectActivity.this, "You challenged Billy", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -58,7 +58,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //This is placeholder
-                Toast.makeText(OpponentSelectActivity.this, "You challenged Misty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OpponentSelectActivity.this, "You challenged Hana", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -66,7 +66,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //This is placeholder
-                Toast.makeText(OpponentSelectActivity.this, "You challenged Red", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OpponentSelectActivity.this, "You challenged Da Champ", Toast.LENGTH_SHORT).show();
             }
         });
 
