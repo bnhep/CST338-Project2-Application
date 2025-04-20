@@ -32,16 +32,6 @@ public class OpponentSelectActivity extends AppCompatActivity {
         appRepository = ApplicationRepository.getRepository(getApplication());
         accountManager = AccountStatusCheck.getInstance(getApplication());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
-        /*
-        LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
-        userObserver.observe(this, new Observer<>() {
-            @Override
-            public void onChanged(User user) {
-                binding.usernameDisplayTextView.setText(user.getUsername());
-                userObserver.removeObserver(this);
-            }
-        });
-        */
 
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +68,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
-                startActivity(intent);
+                finish();
             }
         });
     }
