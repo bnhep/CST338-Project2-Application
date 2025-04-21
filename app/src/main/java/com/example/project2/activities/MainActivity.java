@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.project2.UserTeamData;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
 import com.example.project2.databinding.ActivityMainBinding;
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logoutMain(){
         accountManager.logout();
+        UserTeamData.getInstance().clearTeam();
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
     }

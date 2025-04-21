@@ -27,8 +27,11 @@ public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
     private AccountStatusCheck accountManager;
+
     //TODO: just for testing. this will be removed later
     private final String TEMP_USER_ID = "testUserId";
+
+    //TODO:this should be assigned the users unique ID as its used for saving and loading creatures
     private String userId;
 
     @Override
@@ -46,7 +49,7 @@ public class TeamViewerActivity extends AppCompatActivity {
          * TODO:this is where we should be picking up and assigning the
          *  the users proper randomly generated userId
          */
-        userId = TEMP_USER_ID;
+        userId = String.valueOf(AccountStatusCheck.getInstance().getUserID());
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +108,8 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = MainActivity.MainIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
 

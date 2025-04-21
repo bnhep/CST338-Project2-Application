@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     private ApplicationRepository repository;
-
     private AccountStatusCheck accountManager;
     boolean adminCheck = false;
 
@@ -104,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
                             intent = MainActivity.MainIntentFactory(getApplicationContext());
+
                         }
                         else{
                             //moves to the AdminLandingActivity page
