@@ -5,195 +5,201 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_activities"
     tools:context=".activities.OpponentSelectActivity">
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="40dp"
-        android:text="back"
-        android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/userDisplaySpacer"
+
+    <LinearLayout
+        android:id="@+id/opponentSelectCenterLayout"
+        android:layout_width="359dp"
+        android:layout_height="559dp"
+        android:foregroundGravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/backButtonSpacer"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/opponentSelectTextView"
+            android:layout_width="230dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/merriweather"
+            android:gravity="center"
+            android:text="Select Opponent"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
+        <Button
+            android:id="@+id/opponentOneButton"
+            android:layout_width="259dp"
+            android:layout_height="59dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="Arena Leader: Billy"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/opponentTwoButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/opponentSelectTextView" />
+
+        <Button
+            android:id="@+id/opponentTwoButton"
+            android:layout_width="259dp"
+            android:layout_height="59dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="Arena Leader: Hana"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/opponentThreeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/opponentOneButton" />
+
+        <Button
+            android:id="@+id/opponentThreeButton"
+            android:layout_width="259dp"
+            android:layout_height="59dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="Champion: Da Champ"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/opponentTwoButton" />
+
+        <Button
+            android:id="@+id/opponentFourButton"
+            android:layout_width="259dp"
+            android:layout_height="59dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="Random Battle"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomSpacer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/opponentThreeButton" />
+
+        <Button
+            android:id="@+id/teamSlotOneButton"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:text="[Team slot 1]"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/teamSlotTwoButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/opponentSelectTextView" />
+
+        <Button
+            android:id="@+id/teamSlotTwoButton"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:text="[Team slot 2]"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/teamSlotThreeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamSlotOneButton" />
+
+        <Button
+            android:id="@+id/teamSlotThreeButton"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:text="[Team slot 3]"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/teamSlotFourButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamSlotTwoButton" />
+
+        <Button
+            android:id="@+id/teamSlotFourButton"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:text="[Team slot 4]"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/teamSlotFiveButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamSlotThreeButton" />
+
+        <Button
+            android:id="@+id/teamSlotFiveButton"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:text="[Team slot 5]"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/teamSlotSixButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamSlotFourButton" />
+
+        <Button
+            android:id="@+id/teamSlotSixButton"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:text="[Team slot 6]"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/bottomSpacer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamSlotFiveButton" />
+
+    </LinearLayout>
 
     <Space
         android:id="@+id/userDisplaySpacer"
-        android:layout_width="140dp"
+        android:layout_width="225dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/usernameDisplayTextView"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/usernameDisplayTextView"
         android:layout_width="90dp"
         android:layout_height="34dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/merriweather"
         android:gravity="center"
         android:text="username"
-        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/opponentSelectTextView"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Select Opponent"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDisplaySpacer" />
-
-    <Button
-        android:id="@+id/opponentOneButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        android:layout_margin="16dp"
-        android:text="Gym Leader: Brock"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@id/opponentTwoButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentSelectTextView"
-        />
-
-    <Button
-        android:id="@+id/opponentTwoButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        android:layout_margin="16dp"
-        android:text="Gym Leader: Misty"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentOneButton"
-        app:layout_constraintBottom_toTopOf="@id/opponentThreeButton" />
-
-    <Button
-        android:id="@+id/opponentThreeButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        android:layout_margin="16dp"
-        android:text="Champion: Red"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentTwoButton"
-        app:layout_constraintBottom_toTopOf="@id/opponentFourButton" />
-
-    <Button
-        android:id="@+id/opponentFourButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        android:layout_margin="16dp"
-        android:text="Random Battle"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentThreeButton"
-        app:layout_constraintBottom_toTopOf="@+id/bottomSpacer" />
-
-    <Button
-        android:id="@+id/teamSlotOneButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@id/opponentSelectTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/teamSlotTwoButton"
-        android:text="[Team slot 1]"
-        android:textSize="24sp"
-        android:visibility="gone"
-        />
-
-    <Button
-        android:id="@+id/teamSlotTwoButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/teamSlotOneButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/teamSlotThreeButton"
-        android:text="[Team slot 2]"
-        android:textSize="24sp"
-        android:visibility="gone"
-        />
-
-    <Button
-        android:id="@+id/teamSlotThreeButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/teamSlotTwoButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/teamSlotFourButton"
-        android:text="[Team slot 3]"
-        android:textSize="24sp"
-        android:visibility="gone"
-        />
-
-    <Button
-        android:id="@+id/teamSlotFourButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/teamSlotThreeButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/teamSlotFiveButton"
-        android:text="[Team slot 4]"
-        android:textSize="24sp"
-        android:visibility="gone"
-        />
-
-    <Button
-        android:id="@+id/teamSlotFiveButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/teamSlotFourButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/teamSlotSixButton"
-        android:text="[Team slot 5]"
-        android:textSize="24sp"
-        android:visibility="gone"
-        />
-
-    <Button
-        android:id="@+id/teamSlotSixButton"
-        android:layout_width="280dp"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toBottomOf="@+id/teamSlotFiveButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomSpacer"
-        android:text="[Team slot 6]"
-        android:textSize="24sp"
-        android:visibility="gone"
-        />
-
-
 
     <Space
-        android:id="@+id/bottomSpacer"
+        android:id="@+id/backButtonSpacer"
         android:layout_width="225dp"
         android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
-
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/playfair_bold"
+        android:text="back"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameDisplayTextView"
+        app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

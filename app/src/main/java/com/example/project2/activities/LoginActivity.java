@@ -30,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        repository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
+
+        repository = ApplicationRepository.getInstance();
+        accountManager = AccountStatusCheck.getInstance();
 
 
         /*
@@ -101,14 +102,15 @@ public class LoginActivity extends AppCompatActivity {
                             //moves to the MainActivity(basic user) page
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
+                            accountManager.setIsAdminStatus(user.isAdmin());
                             intent = MainActivity.MainIntentFactory(getApplicationContext());
                         }
                         else{
                             //moves to the AdminLandingActivity page
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
+                            accountManager.setIsAdminStatus(user.isAdmin());
                             intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
-
                         }
                         startActivity(intent);
                     } else {

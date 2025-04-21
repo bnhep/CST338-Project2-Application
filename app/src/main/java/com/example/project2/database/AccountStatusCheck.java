@@ -20,6 +20,7 @@ public class AccountStatusCheck {
     private static final String ACCOUNT_USER_ID = "com.example.project2.ACCOUNT_USER_ID";
     private static final String CURRENT_ACTIVITY_KEY = "com.example.project2.CURRENT_ACTIVITY_KEY";
 
+    private static final String CURRENT_STATUS_KEY = "com.example.project2.CURRENT_STATUS_KEY ";
     private static final String CURRENT_USERNAME_KEY = "com.example.project2.CURRENT_USERNAME_KEY";
 
     private final SharedPreferences preferences;
@@ -28,26 +29,30 @@ public class AccountStatusCheck {
 
     private static volatile AccountStatusCheck INSTANCE;
 
-    private AccountStatusCheck(Application application){
-        preferences = application.getApplicationContext()
+    private AccountStatusCheck(Context context){
+        preferences = context.getApplicationContext()
                 .getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
-
     }
 
     /**
      * singleton method to make sure theres only one instance of AccountStatusCheck class
      */
-    public static AccountStatusCheck getInstance(Application application){
+    public static void init(Context context){
         if (INSTANCE == null) {
             synchronized (AccountStatusCheck.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new AccountStatusCheck(application);
+                    INSTANCE = new AccountStatusCheck(context);
                 }
             }
         }
+    }
+
+
+    public static AccountStatusCheck getInstance(){
         return INSTANCE;
     }
+
 
 
     /**
@@ -92,5 +97,16 @@ public class AccountStatusCheck {
     public String getUserName(){
         return preferences.getString(CURRENT_USERNAME_KEY, null);
     }
+
+    public void setIsAdminStatus(boolean isAdmin) {
+        editor.putBoolean(CURRENT_STATUS_KEY, isAdmin);
+        editor.apply();
+    }
+
+    public boolean getIsAdminStatus(){
+        return preferences.getBoolean(CURRENT_STATUS_KEY, true);
+    }
+
+
 
 }

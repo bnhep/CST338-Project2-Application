@@ -8,92 +8,116 @@
     android:background="@drawable/background_activities"
     tools:context=".activities.MainActivity">
 
-    <ImageView
-        android:id="@+id/ratTitleLogoImageView"
-        android:layout_width="335dp"
-        android:layout_height="151dp"
+    <LinearLayout
+        android:id="@+id/loginCenterLayout"
+        android:layout_width="328dp"
+        android:layout_height="478dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.034"
-        app:srcCompat="@drawable/ratcolosseum"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/welcomeFighterLoginTextView"
-        android:layout_width="255dp"
-        android:layout_height="36dp"
-        android:layout_margin="16dip"
-        android:layout_marginTop="184dp"
-        android:layout_marginBottom="420dp"
-        android:gravity="center"
-        android:text="@string/welcome_fighter"
-        android:fontFamily="@font/playfair_bold"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/ratTitleLogoImageView"
+            android:layout_width="343dp"
+            android:layout_height="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.034"
+            app:srcCompat="@drawable/ratwithtitle"
+            tools:ignore="ContentDescription" />
+
+
+
+        <TextView
+            android:id="@+id/welcomeFighterLoginTextView"
+            android:layout_width="255dp"
+            android:layout_height="36dp"
+            android:layout_margin="16dip"
+            android:layout_marginTop="184dp"
+            android:layout_marginBottom="420dp"
+            android:fontFamily="@font/playfair_bold"
+            android:gravity="center"
+            android:text="@string/welcome_fighter"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratTitleLogoImageView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/startBattleButton"
+            android:layout_width="161dp"
+            android:layout_height="48dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="@string/start_battle"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeFighterLoginTextView" />
+
+        <Button
+            android:id="@+id/viewMonstersButton"
+            android:layout_width="161dp"
+            android:layout_height="48dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="@string/view_monsters"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startBattleButton" />
+
+        <Button
+            android:id="@+id/viewRecentBattleButton"
+            android:layout_width="161dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="@string/train_monsters"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewMonstersButton" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="161dp"
+            android:layout_height="48dp"
+            android:fontFamily="@font/playfair_bold"
+            android:text="@string/logout"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/userDisplaySpacer"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/usernameDisplayTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratTitleLogoImageView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/usernameDisplayTextView"
-        android:layout_width="136dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="90dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="username"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        android:fontFamily="@font/merriweather"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/startBattleButton"
-        android:layout_width="161dp"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:text="@string/start_battle"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeFighterLoginTextView" />
-
-    <Button
-        android:id="@+id/viewMonstersButton"
-        android:layout_width="161dp"
-        android:layout_height="48dp"
-        android:text="@string/view_monsters"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startBattleButton" />
-
-    <Button
-        android:layout_width="161dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/viewRecentBattleButton"
-        android:text="@string/train_monsters"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMonstersButton" />
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="161dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/logout"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewRecentBattleButton"
-        app:layout_constraintVertical_bias="1.0" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

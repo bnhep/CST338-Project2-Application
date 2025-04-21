@@ -28,7 +28,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        appRepository = ApplicationRepository.getRepository(getApplication());
+        appRepository = ApplicationRepository.getInstance();
 
         /*
          * This button calls getUserCredentials(), the method will validate username, if it exists
@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
         /*
          * This button calls the intent method of LoginActivity and swaps back to the login screen.
          */
-        binding.backButtonSignup.setOnClickListener(new View.OnClickListener() {
+        binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());

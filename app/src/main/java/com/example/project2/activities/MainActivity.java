@@ -29,30 +29,27 @@ public class MainActivity extends AppCompatActivity {
     private AccountStatusCheck accountManager;
 
     private static final int LOGGED_OUT_STATUS = -1;
+    private static final boolean ADMIN_STATUS = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        appRepository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
+        appRepository = ApplicationRepository.getInstance();
+        accountManager = AccountStatusCheck.getInstance();
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
-        /*
-        LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
-        userObserver.observe(this, new Observer<>() {
-            @Override
-            public void onChanged(User user) {
-                binding.welcomeFighterLoginTextView.setText("Welcome " + user.getUsername());
-                userObserver.removeObserver(this);
-            }
-        });
-         */
-        int temporaryStatusChecker = accountManager.getUserID();
+        binding.welcomeFighterLoginTextView.setText("Welcome " + accountManager.getUserName());
 
-        if(temporaryStatusChecker == LOGGED_OUT_STATUS) {
+        int idCheck = accountManager.getUserID();
+        boolean adminCheck = accountManager.getIsAdminStatus();
+
+        if(ADMIN_STATUS == adminCheck){
+            Intent intent =  AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
+            startActivity(intent);
+        }
+        if(idCheck == LOGGED_OUT_STATUS) {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }

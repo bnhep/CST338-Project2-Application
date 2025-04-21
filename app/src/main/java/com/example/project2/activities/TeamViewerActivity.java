@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.*;
 import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.CreatureDAO;
-import com.example.project2.database.ApplicationDatabase;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityTeamViewerBinding;
@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
-
+    private AccountStatusCheck accountManager;
     //TODO: just for testing. this will be removed later
     private final String TEMP_USER_ID = "testUserId";
     private String userId;
@@ -37,7 +37,8 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding = ActivityTeamViewerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        accountManager = AccountStatusCheck.getInstance();
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //update buttons to display team members
         updateTeamSlotButtons();
 

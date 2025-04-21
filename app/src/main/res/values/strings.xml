@@ -3,7 +3,7 @@
     <string name="creature_colosseum">CREATURE \nCOLOSSEUM</string>
     <string name="welcome_fighter">Welcome Fighter</string>
     <string name="start_battle">Start Battle</string>
-    <string name="view_monsters">View Monsters</string>
+    <string name="view_monsters">View Creatures</string>
     <string name="view_recent_battles">View Recent Battles</string>
     <string name="create_an_account">Create an Account</string>
     <string name="username">Username</string>
@@ -13,6 +13,6 @@
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign Up</string>
     <string name="back">Back</string>
-    <string name="train_monsters">Train Monsters</string>
+    <string name="train_monsters">Train Creatures</string>
     <string name="logout">Logout</string>
 </resources>

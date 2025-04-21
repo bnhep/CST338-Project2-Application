@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project2.CreatureCellAdapter;
 import com.example.project2.R;
 import com.example.project2.creatures.*;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityBuildCreatureToAddToTeamBinding;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
     private int slot;
     public static ArrayList<Creature> creatureList = new ArrayList<Creature>();
     private ListView listView;
+    private AccountStatusCheck accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,8 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
         binding = ActivityBuildCreatureToAddToTeamBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        accountManager = AccountStatusCheck.getInstance();
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {

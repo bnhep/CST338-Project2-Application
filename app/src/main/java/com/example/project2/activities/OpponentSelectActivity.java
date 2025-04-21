@@ -25,7 +25,6 @@ import java.util.Map;
 public class OpponentSelectActivity extends AppCompatActivity {
 
     ActivityOpponentSelectBinding binding;
-    private ApplicationRepository appRepository;
     private AccountStatusCheck accountManager;
     private boolean opponentSelectButtonsVisible = true;
     private boolean creatureSelectButtonsVisible = false;
@@ -40,8 +39,8 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding = ActivityOpponentSelectBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        appRepository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplication());
+
+        accountManager = AccountStatusCheck.getInstance();
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
 
         teamSlotButtons = new Button[] {

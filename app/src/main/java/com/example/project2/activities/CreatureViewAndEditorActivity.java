@@ -8,12 +8,15 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.UserTeamData;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityCreatureViewAndEditorBinding;
 
 public class CreatureViewAndEditorActivity extends AppCompatActivity {
 
     ActivityCreatureViewAndEditorBinding binding;
     private int slot;
+    private AccountStatusCheck accountManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,9 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding = ActivityCreatureViewAndEditorBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        accountManager = AccountStatusCheck.getInstance();
 
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
