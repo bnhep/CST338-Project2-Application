@@ -28,7 +28,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        appRepository = ApplicationRepository.getRepository(getApplication());
+        appRepository = ApplicationRepository.getInstance();
 
         /*
          * This button calls getUserCredentials(), the method will validate username, if it exists

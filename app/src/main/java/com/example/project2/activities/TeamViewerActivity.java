@@ -37,7 +37,7 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding = ActivityTeamViewerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
+        accountManager = AccountStatusCheck.getInstance();
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //update buttons to display team members
         updateTeamSlotButtons();

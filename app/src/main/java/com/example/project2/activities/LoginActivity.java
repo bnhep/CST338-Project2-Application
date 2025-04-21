@@ -30,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        repository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
+
+        repository = ApplicationRepository.getInstance();
+        accountManager = AccountStatusCheck.getInstance();
 
 
         /*

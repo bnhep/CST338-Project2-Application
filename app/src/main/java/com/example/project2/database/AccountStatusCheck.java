@@ -38,7 +38,7 @@ public class AccountStatusCheck {
     /**
      * singleton method to make sure theres only one instance of AccountStatusCheck class
      */
-    public static AccountStatusCheck getInstance(Context context){
+    public static void init(Context context){
         if (INSTANCE == null) {
             synchronized (AccountStatusCheck.class) {
                 if (INSTANCE == null) {
@@ -46,8 +46,13 @@ public class AccountStatusCheck {
                 }
             }
         }
+    }
+
+
+    public static AccountStatusCheck getInstance(){
         return INSTANCE;
     }
+
 
 
     /**
