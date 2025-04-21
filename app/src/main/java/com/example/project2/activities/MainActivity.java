@@ -36,20 +36,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        appRepository = ApplicationRepository.getRepository(getApplication());
-        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
+        appRepository = ApplicationRepository.getInstance();
+        accountManager = AccountStatusCheck.getInstance();
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
-        /*
-        LiveData<User> userObserver = appRepository.getUsernameByID(accountManager.getUserID());
-        userObserver.observe(this, new Observer<>() {
-            @Override
-            public void onChanged(User user) {
-                binding.welcomeFighterLoginTextView.setText("Welcome " + user.getUsername());
-                userObserver.removeObserver(this);
-            }
-        });
-         */
+        binding.welcomeFighterLoginTextView.setText("Welcome " + accountManager.getUserName());
+
         int idCheck = accountManager.getUserID();
         boolean adminCheck = accountManager.getIsAdminStatus();
 

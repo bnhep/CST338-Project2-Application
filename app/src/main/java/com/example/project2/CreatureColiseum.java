@@ -11,6 +11,8 @@ package com.example.project2;
 import android.app.Application;
 
 import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.AccountStatusCheck;
+import com.example.project2.database.ApplicationRepository;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.AbilityEntity;
 
@@ -28,6 +30,12 @@ public class CreatureColiseum extends Application {
         super.onCreate();
         //checking to see if this is being called correctly
         android.util.Log.d("CreatureColiseum", "Application onCreate called");
+
+        //Initializes shared preferences AccountStatusCheck(preferences manager)
+        AccountStatusCheck.init(this);
+
+        //Initializes ApplicationRepository to manipulate the user's information in database.
+        ApplicationRepository.init(this);
 
         //initialize DAOs on app start up
         DAOProvider.init(this);

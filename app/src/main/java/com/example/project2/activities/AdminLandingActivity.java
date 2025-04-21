@@ -25,7 +25,7 @@ public class AdminLandingActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
+        accountManager = AccountStatusCheck.getInstance();
         binding.textView.setText(String.format("Welcome %s", accountManager.getUserName()));
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {

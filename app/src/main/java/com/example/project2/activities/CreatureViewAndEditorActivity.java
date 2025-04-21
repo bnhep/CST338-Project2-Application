@@ -24,7 +24,8 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding = ActivityCreatureViewAndEditorBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
+        accountManager = AccountStatusCheck.getInstance();
+
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);

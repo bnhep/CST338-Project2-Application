@@ -90,28 +90,6 @@
     </LinearLayout>
 
     <Space
-        android:id="@+id/backButtonSpacer"
-        android:layout_width="225dp"
-        android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/backButton"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="40dp"
-        android:fontFamily="@font/playfair_bold"
-        android:text="back"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/backButtonSpacer"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <Space
         android:id="@+id/userDisplaySpacer"
         android:layout_width="225dp"
         android:layout_height="50dp"
@@ -134,5 +112,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Space
+        android:id="@+id/backButtonSpacer"
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/playfair_bold"
+        android:text="back"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameDisplayTextView"
+        app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

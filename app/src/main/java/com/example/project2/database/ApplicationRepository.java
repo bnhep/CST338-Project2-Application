@@ -19,7 +19,7 @@ public class ApplicationRepository {
         this.userDAO = db.UserDAO();
     }
 
-    public static ApplicationRepository getRepository(Application application){
+    public static void init(Application application){
         if (repository == null) {
             synchronized (ApplicationRepository.class) {
                 if (repository == null) {
@@ -27,8 +27,12 @@ public class ApplicationRepository {
                 }
             }
         }
+    }
+
+    public static ApplicationRepository getInstance(){
         return repository;
     }
+
 
     public void insertUser(User... user){
         ApplicationDatabase.databaseWriteExecutor.execute(() ->

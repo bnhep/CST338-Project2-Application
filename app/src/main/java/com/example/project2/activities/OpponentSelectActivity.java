@@ -28,7 +28,8 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding = ActivityOpponentSelectBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        accountManager = AccountStatusCheck.getInstance(getApplicationContext());
+
+        accountManager = AccountStatusCheck.getInstance();
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
 
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {

@@ -5,35 +5,73 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/betterbackground"
+    android:background="@drawable/secondbackground"
     tools:context=".activities.LoginActivity">
 
     <LinearLayout
         android:id="@+id/loginCenterLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811">
 
         <TextView
-            android:id="@+id/ratTitleLoginImageView"
+            android:id="@+id/noAccountLoginTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/merriweather"
+            android:layout_margin="12dp"
             android:gravity="center"
             android:shadowColor="@color/black"
-            android:shadowDx="8"
-            android:shadowDy="4"
-            android:shadowRadius="15"
-            android:text="@string/creature_colosseum"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="10"
+            android:text="@string/don_t_have_an_account_sign_up"
             android:textColor="@color/green"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="441dp" />
+
+        <Button
+            android:id="@+id/signUpButtonLoginMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_borders"
+            android:fontFamily="@font/playfair_bold"
+            android:text="@string/sign_up"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="120dp"
+            tools:layout_editor_absoluteY="475dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loginPopupCenterLayout"
+        android:layout_width="333dp"
+        android:layout_height="249dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/sign_in_menu_opacity"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/loginCenterLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratTitleLoginImageView"
+        app:layout_constraintVertical_bias="0.485">
 
         <TextView
             android:id="@+id/pleaseSignInLoginTextView"
@@ -45,7 +83,7 @@
             android:shadowColor="@color/black"
             android:shadowDx="8"
             android:shadowDy="4"
-            android:shadowRadius="15"
+            android:shadowRadius="9"
             android:text="@string/please_sign_in"
             android:textColor="@color/green"
             android:textSize="24sp"
@@ -53,7 +91,7 @@
 
         <EditText
             android:id="@+id/usernameLoginEditText"
-            android:layout_width="match_parent"
+            android:layout_width="303dp"
             android:layout_height="49dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/edittext_borders"
@@ -65,7 +103,7 @@
 
         <EditText
             android:id="@+id/passwordLoginEditTextView"
-            android:layout_width="match_parent"
+            android:layout_width="302dp"
             android:layout_height="49dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/edittext_borders"
@@ -77,44 +115,35 @@
 
         <Button
             android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_borders"
+            android:fontFamily="@font/playfair_bold"
             android:text="@string/log_in"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:fontFamily="@font/playfair_bold" />
-
-        <TextView
-            android:id="@+id/noAccountLoginTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/merriweather"
-            android:gravity="center"
-            android:shadowColor="@color/black"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="10"
-            android:text="@string/don_t_have_an_account_sign_up"
-            android:textColor="@color/green"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/signUpButtonLoginMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="54dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/button_borders"
-            android:fontFamily="@font/playfair_bold"
-            android:text="@string/sign_up"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/ratTitleLoginImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/merriweather"
+        android:gravity="center"
+        android:shadowColor="@color/black"
+        android:shadowDx="8"
+        android:shadowDy="4"
+        android:shadowRadius="15"
+        android:text="@string/creature_colosseum"
+        android:textColor="@color/green"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loginCenterLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
