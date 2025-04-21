@@ -8,22 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.example.project2.UserTeamData;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
-import com.example.project2.databinding.ActivityMainBinding;
+import com.example.project2.databinding.ActivityUserLandingBinding;
+import com.example.project2.databinding.ActivityUserLandingBinding;
 
 /**
  * Activity Menu where user will choose the options to battle, view monsters, view recent battles
  * //TODO implement the other activity layouts, A logout button should be here
  */
-public class MainActivity extends AppCompatActivity {
+public class UserLandingActivity extends AppCompatActivity {
     public static final String TAG = "Application_LOG";
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.project2.MAIN_ACTIVITY_USER_ID";
-    private ActivityMainBinding binding;
+    private ActivityUserLandingBinding binding;
     private ApplicationRepository appRepository; //Performs the queries for the database
 
     private AccountStatusCheck accountManager;
@@ -34,25 +34,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityUserLandingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getInstance();
         accountManager = AccountStatusCheck.getInstance();
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
         binding.welcomeFighterLoginTextView.setText("Welcome " + accountManager.getUserName());
-
-        int idCheck = accountManager.getUserID();
-        boolean adminCheck = accountManager.getIsAdminStatus();
-
-        if(ADMIN_STATUS == adminCheck){
-            Intent intent =  AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
-            startActivity(intent);
-        }
-        if(idCheck == LOGGED_OUT_STATUS) {
-            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-            startActivity(intent);
-        }
 
         //button functionality for Start Battle
         //TODO should have factory method to swap to StartBattle Activity
@@ -86,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Testing button please remove later
-                Toast.makeText(MainActivity.this, "View Recent Button works", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserLandingActivity.this, "View Recent Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -103,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     //MainIntentFactory that takes in a
-    public static Intent MainIntentFactory(Context context){
-        Intent intent = new Intent(context, MainActivity.class);
+    public static Intent UserLandingPageIntentFactory(Context context){
+        Intent intent = new Intent(context, UserLandingActivity.class);
         return intent;
     }
 
@@ -135,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logoutMain(){
         accountManager.logout();
+        UserTeamData.getInstance().clearTeam();
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
     }

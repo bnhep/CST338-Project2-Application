@@ -1,6 +1,8 @@
 package com.example.project2.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +42,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding.deleteCreatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserTeamData.getInstance().removeCreatureFromSlot(slot);
+                removeCreatureAlertDialog();
                 finish();
             }
         });
@@ -51,6 +53,28 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void removeCreatureAlertDialog(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setTitle("Confirm logout");
+        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + "?");
+
+        alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UserTeamData.getInstance().removeCreatureFromSlot(slot);
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.show();
     }
 
     public static Intent CreatureViewAndEditorIntentFactory(Context context) {
