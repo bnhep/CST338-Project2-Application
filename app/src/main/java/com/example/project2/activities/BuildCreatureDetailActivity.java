@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityBuildCreatureDetailBinding;
 
 import java.util.concurrent.Executors;
@@ -22,6 +23,7 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
     private int slot;
     int creatureArrayPosition;
     Creature selectedCreature;
+    private AccountStatusCheck accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         binding = ActivityBuildCreatureDetailBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        accountManager = AccountStatusCheck.getInstance();
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
