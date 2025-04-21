@@ -43,7 +43,6 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 removeCreatureAlertDialog();
-                finish();
             }
         });
 
@@ -66,6 +65,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 UserTeamData.getInstance().removeCreatureFromSlot(slot);
+                finish();
             }
         });
         alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
