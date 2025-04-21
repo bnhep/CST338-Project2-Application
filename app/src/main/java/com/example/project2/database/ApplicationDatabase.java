@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.project2.activities.MainActivity;
+import com.example.project2.activities.UserLandingActivity;
 import com.example.project2.database.entities.AbilityEntity;
 import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.database.entities.User;
@@ -61,7 +61,7 @@ public abstract class ApplicationDatabase extends RoomDatabase {
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
-            Log.i(MainActivity.TAG, "Database has been created");
+            Log.i(UserLandingActivity.TAG, "Database has been created");
             databaseWriteExecutor.execute(() -> {
                 //add users
                 UserDAO dao = INSTANCE.UserDAO();

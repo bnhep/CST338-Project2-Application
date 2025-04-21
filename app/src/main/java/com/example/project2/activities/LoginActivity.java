@@ -3,6 +3,7 @@ package com.example.project2.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,10 +11,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.project2.UserTeamData;
+import com.example.project2.creatures.Creature;
+import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivityLoginBinding;
+import com.example.project2.utilities.Converters;
+
+import java.util.List;
+import java.util.concurrent.Executors;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,10 +40,28 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         repository = ApplicationRepository.getInstance();
         accountManager = AccountStatusCheck.getInstance();
 
+        if (accountManager.getUserID() != -1) {
+            //user is already logged in
+            String userId = String.valueOf(accountManager.getUserID());
+            //load existing team by ID
+            loadTeam(userId);
+            //check if is admin
+            Intent intent = accountManager.getIsAdminStatus() ?
+                    AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext()) :
+                    UserLandingActivity.UserLandingPageIntentFactory(getApplicationContext());
+
+            startActivity(intent);
+            /**
+             * Im putting these finish() calls because everywhere I read they say try to always
+             * finish activities when youre done with them so that youre not
+             * just adding more layers of activities onto the stack
+             */
+            finish();
+            return;
+        }
 
         /*
          * This button calls userValidation(); the method will validate username and password,
@@ -102,14 +131,15 @@ public class LoginActivity extends AppCompatActivity {
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
-                            intent = MainActivity.MainIntentFactory(getApplicationContext());
-
+                            loadTeam(String.valueOf(user.getId()));
+                            intent = UserLandingActivity.UserLandingPageIntentFactory(getApplicationContext());
                         }
                         else{
                             //moves to the AdminLandingActivity page
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
+                            loadTeam(String.valueOf(user.getId()));
                             intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
                         }
                         startActivity(intent);
@@ -129,9 +159,48 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Creating Intent Factory to swap over to other activities
-     */
+    public void loadTeam(String userId){
+        //TODO: This is just here for testing. this should be moved to when the user logs in later
+        try {
+            //run on a background thread when making changes to the database
+            Executors.newSingleThreadExecutor().execute(() -> {
+
+                //clear any current data from the userTeam map
+                UserTeamData.getInstance().clearTeam();
+
+                //get reference to the CreatureDAO and AbilityDAO singletons
+                CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+                AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+                //TODO:later on we want to pass in the actual users generated id here
+                /**
+                 * Passing the users ID into the creatureDAO to collect a list of
+                 * creatures associated with the current user.
+                 */
+                List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId(userId);
+
+                //for each creature creature retrieved
+                for (CreatureEntity entity : creatureEntities) {
+                    /**
+                     * pass that entities information into the converter to 'rehydrate'
+                     * the creature object with the proper stats and abilities
+                     */
+                    Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
+                    //store the saved team slot
+                    int slot = entity.getTeamSlot();
+                    //add the now rehydrated creature object into the userTeam map in the remembered slot
+                    UserTeamData.getInstance().addCreatureToSlot(slot, creature);
+                }
+            });
+        } catch (Exception e) {
+            //im going to be sad if i see this
+            Log.e("TeamBuilder", "Error loading team", e);
+            runOnUiThread(() ->
+                    Toast.makeText(LoginActivity.this, "Failed to load", Toast.LENGTH_SHORT).show()
+            );
+        }
+    }
+
     public static Intent loginIntentFactory(Context context) {
         return new Intent(context, LoginActivity.class);
     }
