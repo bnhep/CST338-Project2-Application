@@ -15,9 +15,9 @@
         android:layout_marginStart="40dp"
         android:text="Flee Battle"
         android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/userDisplaySpacer"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
     <Space
@@ -42,78 +42,159 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/battleDisplayTextView"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:id="@+id/battlePromptTextView"
-        android:text="Creature Battle!"
-        android:textSize="36sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/userDisplaySpacer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/creatureViewSpacer"
-        app:layout_constraintTop_toBottomOf="@id/battlePromptTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <Button
-        android:layout_width="160dp"
-        android:layout_height="70dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/abilityTwoButton"
-        app:layout_constraintTop_toBottomOf="@id/creatureViewSpacer"
-        app:layout_constraintBottom_toTopOf="@id/abilityThreeButton"
-        android:text="Ability 1"
-        android:textSize="24sp"
-        android:id="@+id/abilityOneButton"/>
-
-    <Button
-        android:layout_width="160dp"
-        android:layout_height="70dp"
-        app:layout_constraintStart_toEndOf="@id/abilityOneButton"
-        app:layout_constraintTop_toBottomOf="@id/creatureViewSpacer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/abilityFourButton"
-        android:text="Ability 2"
-        android:textSize="24sp"
-        android:id="@+id/abilityTwoButton"/>
-
-    <Button
-        android:layout_width="160dp"
-        android:layout_height="70dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/abilityFourButton"
-        app:layout_constraintTop_toBottomOf="@id/abilityOneButton"
-        app:layout_constraintBottom_toTopOf="@id/bottomSpacer"
-        android:text="Ability 3"
-        android:textSize="24sp"
-        android:id="@+id/abilityThreeButton"/>
-
-    <Button
-        android:layout_width="160dp"
-        android:layout_height="70dp"
-        app:layout_constraintStart_toEndOf="@id/abilityThreeButton"
-        app:layout_constraintTop_toBottomOf="@id/abilityTwoButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomSpacer"
-        android:text="Ability 4"
-        android:textSize="24sp"
-        android:id="@+id/abilityFourButton"/>
-
-    <Space
-        android:id="@+id/bottomSpacer"
-        android:layout_width="225dp"
-        android:layout_height="80dp"
+        android:padding="8dp"
+        android:text="You have challenged [Opponent]!"
+        android:textSize="26sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/creatureViewLayout"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userDisplaySpacer"
+        app:layout_constraintVertical_bias="1">
+
+        <ImageView
+            android:id="@+id/playerCreatureImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="8dp"
+            android:src="@color/design_default_color_primary"
+            app:layout_constraintBottom_toTopOf="@id/playerNameTextView"
+            app:layout_constraintEnd_toStartOf="@id/opponentCreatureImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/playerNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playerCreatureImage"
+            app:layout_constraintBottom_toTopOf="@+id/playerHealthTextView"
+            app:layout_constraintEnd_toStartOf="@+id/opponentNameTextView"
+            android:textSize="16sp"
+            android:text="Creature name [lvl:]"
+            />
+
+        <TextView
+            android:id="@+id/playerHealthTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HP: 100/100"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/opponentHealthTextView"
+            app:layout_constraintTop_toBottomOf="@+id/playerNameTextView"
+             />
+
+        <ImageView
+            android:id="@+id/opponentCreatureImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="8dp"
+            android:src="@color/design_default_color_primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/playerCreatureImage"
+            app:layout_constraintBottom_toTopOf="@id/opponentNameTextView"
+             />
+
+        <TextView
+            android:id="@+id/opponentNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Creature name [Lvl:]"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/opponentCreatureImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/playerNameTextView"
+            app:layout_constraintBottom_toTopOf="@id/opponentHealthTextView"
+             />
+
+        <TextView
+            android:id="@+id/opponentHealthTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HP: 100/100"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/opponentNameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/playerHealthTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/battlePromptTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="What will [creature] do?"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creatureViewLayout" />
+
+    <GridLayout
+        android:id="@+id/abilityButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:padding="8dp"
+        android:rowCount="2"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/battlePromptTextView">
+
+        <Button
+            android:id="@+id/abilityOneButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:text="Ability 1"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/abilityTwoButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:text="Ability 2"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/abilityThreeButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:text="Ability 3"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/abilityFourButton"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_columnWeight="1"
+            android:text="Ability 4"
+            android:textSize="20sp" />
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
