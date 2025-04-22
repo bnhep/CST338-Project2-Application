@@ -112,6 +112,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onChanged(User user) {
                 if (newPassword.equalsIgnoreCase(confirmPassword)) {
+                    repository.setPasswordByUsername(newPassword, user.getUsername());
                     Toast.makeText(ForgotPasswordActivity.this,
                             "Success. Password has been changed.",
                             Toast.LENGTH_SHORT).show();
