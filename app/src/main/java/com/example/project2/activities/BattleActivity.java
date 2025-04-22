@@ -29,6 +29,7 @@ public class BattleActivity extends AppCompatActivity {
     private Creature playerCreature;
     private Creature opponentCreature;
     private int battleTextPromptStep = 0;
+    private int damageDealt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +91,9 @@ public class BattleActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //reset player creature health
-                playerCreature.setCurHealth(playerCreature.getHealthStat());
-                playerCreature.setFainted(false);
-                finish();
+                //TODO: eventually can turn this into a chance to escape the battle like in the game
+                //exit
+                handler.postDelayed(() -> exitBattle(), battleTextPromptStep+2000);;
             }
         });
     }
@@ -102,6 +102,7 @@ public class BattleActivity extends AppCompatActivity {
 
         binding.battleDisplayTextView.setVisibility(visible ? View.GONE : View.VISIBLE);
         binding.backButton.setVisibility(visible ? View.VISIBLE : View.GONE);
+        binding.usernameDisplayTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
         binding.xpBarTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
         binding.creatureViewLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         binding.battlePromptTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
@@ -188,9 +189,9 @@ public class BattleActivity extends AppCompatActivity {
         if (playerCreature.getSpeedStat() >= opponentCreature.getSpeedStat()) {
             //player attacks first, targeting opponent with selected ability
             updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName());
-            playerCreature.attack(opponentCreature, selectedAbility);
+            damageDealt = playerCreature.attack(opponentCreature, selectedAbility);
             updateOpponentHealth();
-            updateBattlePrompt(opponentCreature.getName() + " took damage!");
+            updateBattlePrompt(opponentCreature.getName() + " took " + damageDealt + " damage!");
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
                 playerWin();
@@ -199,9 +200,9 @@ public class BattleActivity extends AppCompatActivity {
             }
             //opponent attacks second, targeting player with randomly selected ability
             updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName());
-            opponentCreature.attack(playerCreature, opponentAbility);
+            damageDealt = opponentCreature.attack(playerCreature, opponentAbility);
             updatePlayerHealth();
-            updateBattlePrompt(playerCreature.getName() + " took damage!");
+            updateBattlePrompt(playerCreature.getName() + " took " + damageDealt + " damage!");
             //check if player has fainted
             if (playerCreature.isFainted()) {
                 playerLose();
@@ -212,9 +213,9 @@ public class BattleActivity extends AppCompatActivity {
         else {
             //opponent attacks first, targeting player with randomly selected ability
             updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName());
-            opponentCreature.attack(playerCreature, opponentAbility);
+            damageDealt = opponentCreature.attack(playerCreature, opponentAbility);
             updatePlayerHealth();
-            updateBattlePrompt(playerCreature.getName() + " took damage!");
+            updateBattlePrompt(playerCreature.getName() + " took " + damageDealt + " damage!");
             //check if player has fainted
             if (playerCreature.isFainted()) {
                 playerLose();
@@ -223,9 +224,9 @@ public class BattleActivity extends AppCompatActivity {
             }
             //player attacks second, targeting opponent with selected ability
             updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName());
-            playerCreature.attack(opponentCreature, selectedAbility);
+            damageDealt = playerCreature.attack(opponentCreature, selectedAbility);
             updateOpponentHealth();
-            updateBattlePrompt(opponentCreature.getName() + " took damage!");
+            updateBattlePrompt(opponentCreature.getName() + " took " + damageDealt + " damage!");
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
                 playerWin();
@@ -256,6 +257,9 @@ public class BattleActivity extends AppCompatActivity {
         //end battle screen
         binding.battleDisplayTextView.setText("You Win!");
         handler.postDelayed(() ->  setBattleViewVisible(false), battleTextPromptStep);
+
+        //exit
+        handler.postDelayed(() -> exitBattle(), battleTextPromptStep+2000);
     }
 
     private void playerLose() {
@@ -264,6 +268,16 @@ public class BattleActivity extends AppCompatActivity {
         //end battle screen
         binding.battleDisplayTextView.setText("You Lose");
         handler.postDelayed(() ->  setBattleViewVisible(false), battleTextPromptStep);
+
+        //exit
+        handler.postDelayed(() -> exitBattle(), battleTextPromptStep+2000);
+    }
+
+    private void exitBattle() {
+        //reset player creature health and fainted status
+        playerCreature.setCurHealth(playerCreature.getHealthStat());
+        playerCreature.setFainted(false);
+        finish();
     }
 
     public static Intent BattleIntentFactory(Context context) {
