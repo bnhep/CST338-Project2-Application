@@ -10,11 +10,18 @@ package com.example.project2;
 
 import android.app.Application;
 
+import com.example.project2.creatures.ElectricRat;
+import com.example.project2.creatures.FireLizard;
+import com.example.project2.creatures.FlowerDino;
+import com.example.project2.creatures.WeirdTurtle;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.AbilityEntity;
+import com.example.project2.database.entities.CreatureEntity;
+import com.example.project2.utilities.Converters;
 
 import java.util.List;
 
@@ -43,6 +50,9 @@ public class CreatureColiseum extends Application {
         //adds abilities to the database if not already there
         prepopulateAbilities();
 
+        //adds template creatures to the database if not already
+        prepopulateCreatures();
+
         //initialize UserTeamData information on start up
         UserTeamData.getInstance();
     }
@@ -66,6 +76,23 @@ public class CreatureColiseum extends Application {
                         new AbilityEntity("RAZORLEAF", "razor leaf", "GRASS", 25, 10, 100),
                         new AbilityEntity("SHOCK", "shock", "ELECTRIC", 25, 10, 100),
                         new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100)
+                ));
+            }
+        }).start();
+    }
+
+    private void prepopulateCreatures() {
+        //this is run on a background thread so that changes to the DB can be made properly
+        new Thread(() -> {
+            //getting reference to the CreatureDAO that has been established earlier
+            CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+
+            if (creatureDAO.getCreaturesByUserId("NONE").isEmpty()) {
+                creatureDAO.insertAll(List.of(
+                        Converters.convertCreatureToEntity(new ElectricRat(), "NONE", -1, 0),
+                        Converters.convertCreatureToEntity(new FireLizard(), "NONE", -1, 0),
+                        Converters.convertCreatureToEntity(new FlowerDino(), "NONE", -1, 0),
+                        Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0)
                 ));
             }
         }).start();

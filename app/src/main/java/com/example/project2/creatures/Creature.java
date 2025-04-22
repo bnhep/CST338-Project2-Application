@@ -49,7 +49,12 @@ public abstract class Creature {
     private int baseSpeed;
 
     public Creature() {
+        this.level = 1;
+        this.experienceNeededToLevel = calculateExperienceNeeded(level);
 
+        //All creatures start with tackle
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
     public Creature(String name, int level, ElementalType... types) {
@@ -60,13 +65,6 @@ public abstract class Creature {
 
         //All creatures start with tackle
         AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-
-        if (abilityDAO == null) {
-            Log.e("Creature", "AbilityDAO in Creature is null!");
-        } else {
-            Log.d("Creature", "AbilityDAO in Creature successfully retrieved");
-        }
-
         this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
