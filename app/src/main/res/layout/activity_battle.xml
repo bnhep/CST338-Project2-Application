@@ -70,18 +70,18 @@
         >
 
         <ImageView
-            android:id="@+id/userCreatureImage"
+            android:id="@+id/playerCreatureImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="8dp"
             android:src="@color/design_default_color_primary"
-            app:layout_constraintBottom_toTopOf="@id/userHealthTextView"
+            app:layout_constraintBottom_toTopOf="@id/playerHealthTextView"
             app:layout_constraintEnd_toStartOf="@id/opponentCreatureImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/userHealthTextView"
+            android:id="@+id/playerHealthTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HP: 100/100"
@@ -89,7 +89,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/opponentHealthTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userCreatureImage" />
+            app:layout_constraintTop_toBottomOf="@id/playerCreatureImage" />
 
         <ImageView
             android:id="@+id/opponentCreatureImage"
@@ -99,7 +99,7 @@
             android:src="@color/design_default_color_primary"
             app:layout_constraintBottom_toTopOf="@id/opponentHealthTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/userCreatureImage"
+            app:layout_constraintStart_toEndOf="@id/playerCreatureImage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -110,7 +110,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/userHealthTextView"
+            app:layout_constraintStart_toEndOf="@id/playerHealthTextView"
             app:layout_constraintTop_toBottomOf="@id/opponentCreatureImage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="What will [creature] do?"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/creatureViewLayout"
         app:layout_constraintStart_toStartOf="parent"
