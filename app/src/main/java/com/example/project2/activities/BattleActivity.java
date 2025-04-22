@@ -29,6 +29,7 @@ public class BattleActivity extends AppCompatActivity {
     private boolean battleScreenVisible = true;
     private Creature playerCreature;
     private Creature opponentCreature;
+    private int battleTextPromptStep = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,6 @@ public class BattleActivity extends AppCompatActivity {
         //TODO: temp opponent creature
         // ********** THIS IS JUST FOR TESTING **********
         opponentCreature = UserTeamData.getInstance().getUserTeam().get(6);
-
         opponentName = getIntent().getStringExtra("name");
 
         //update UI for battle screen
@@ -147,14 +147,14 @@ public class BattleActivity extends AppCompatActivity {
         //set up health
         updateHealth();
         //set up the battle prompt
-        updateBattlePrompt("What will " + playerCreature.getName() + " do?");
+        binding.battlePromptTextView.setText("What will " + playerCreature.getName() + " do?");
         //toggle the UI
         handler.postDelayed(() -> toggleBattleView(), 2000);
     }
 
     private void updateHealth() {
-        binding.playerHealthTextView.setText("Health: " + playerCreature.getCurHealth() + "/" + playerCreature.getHealthStat());
-        binding.opponentHealthTextView.setText("Health: " + opponentCreature.getCurHealth() + "/" + opponentCreature.getHealthStat());
+        handler.postDelayed(() -> binding.playerHealthTextView.setText("Health: " + playerCreature.getCurHealth() + "/" + playerCreature.getHealthStat()), battleTextPromptStep);
+        handler.postDelayed(() -> binding.opponentHealthTextView.setText("Health: " + opponentCreature.getCurHealth() + "/" + opponentCreature.getHealthStat()), battleTextPromptStep);
     }
 
     private void battleUiUpdate() {
@@ -162,7 +162,9 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     private void updateBattlePrompt(String text) {
-        binding.battlePromptTextView.setText(text);
+        //increment another 2 second delay from last prompt
+        battleTextPromptStep += 2000;
+        handler.postDelayed(() -> binding.battlePromptTextView.setText(text), battleTextPromptStep);
     }
 
     private void battleLogic(Ability selectedAbility) {
@@ -172,58 +174,62 @@ public class BattleActivity extends AppCompatActivity {
         //check whose speed is faster
         if (playerCreature.getSpeedStat() >= opponentCreature.getSpeedStat()) {
             //player attacks first, targeting opponent with selected ability
-            handler.postDelayed(() -> updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName()), 2000);
+            updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName());
             playerCreature.attack(opponentCreature, selectedAbility);
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
-                handler.postDelayed(() -> updateHealth(), 4000);
-                handler.postDelayed(() -> updateBattlePrompt(opponentCreature.getName() + " has fainted!"), 4000);
+                updateBattlePrompt(opponentCreature.getName() + " has fainted!");
+                updateHealth();
                 //TODO:add win condition
-                handler.postDelayed(() -> updateBattlePrompt("You win!"), 6000);
+                updateBattlePrompt("You win!");
                 //opponent doesnt attack if fainted
                 return;
             }
             //opponent attacks second, targeting player with randomly selected ability
-            handler.postDelayed(() -> updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName()), 4000);
+            updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName());
             opponentCreature.attack(playerCreature, opponentAbility);
             //check if player has fainted
             if (playerCreature.isFainted()) {
-                handler.postDelayed(() -> updateHealth(), 6000);
-                handler.postDelayed(() -> updateBattlePrompt(playerCreature.getName() + " has fainted!"), 6000);
+                updateBattlePrompt(playerCreature.getName() + " has fainted!");
+                updateHealth();
                 //TODO:add lose condition
-                handler.postDelayed(() -> updateBattlePrompt("You lose"), 8000);
+                updateBattlePrompt("You lose");
                 return;
             }
-            handler.postDelayed(() -> updateHealth(), 6000);
-            handler.postDelayed(() -> updateBattlePrompt("creatures take took damage!"), 6000); //temp
+            updateBattlePrompt("creatures take took damage!"); //temp
+            updateHealth();
         }
         else {
             //opponent attacks first, targeting player with randomly selected ability
-            handler.postDelayed(() -> updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName()), 2000);
+            updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName());
             opponentCreature.attack(playerCreature, opponentAbility);
             //check if player has fainted
             if (playerCreature.isFainted()) {
-                handler.postDelayed(() -> updateHealth(), 4000);
-                handler.postDelayed(() -> updateBattlePrompt(playerCreature.getName() + " has fainted!"), 4000);
+                updateBattlePrompt(playerCreature.getName() + " has fainted!");
+                updateHealth();
                 //TODO:add lose condition
-                handler.postDelayed(() -> updateBattlePrompt("You win!"), 6000);
+                updateBattlePrompt("You win!");
                 //player doesnt attack if fainted
                 return;
             }
             //player attacks second, targeting opponent with selected ability
-            handler.postDelayed(() -> updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName()), 4000);
+            updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName());
             playerCreature.attack(opponentCreature, selectedAbility);
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
-                handler.postDelayed(() -> updateHealth(), 6000);
-                handler.postDelayed(() -> updateBattlePrompt(opponentCreature.getName() + " has fainted!"), 6000);
+                updateBattlePrompt(opponentCreature.getName() + " has fainted!");
+                updateHealth();
                 //TODO:add win condition
-                handler.postDelayed(() -> updateBattlePrompt("You win!"), 8000);
+                updateBattlePrompt("You win!");
                 return;
             }
-            handler.postDelayed(() -> updateHealth(), 6000);
-            handler.postDelayed(() -> updateBattlePrompt("creatures take took damage!"), 6000); //temp
+            updateBattlePrompt("creatures take took damage!"); //temp
+            updateHealth();
         }
+
+        updateBattlePrompt("What will " + playerCreature.getName() + " do?");
+        //reset the step counter
+        battleTextPromptStep = 0;
     }
 
     private void toastMaker(String s) {
