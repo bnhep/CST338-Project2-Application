@@ -57,9 +57,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/creatureViewLayout"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toTopOf="@id/battlePromptTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDisplaySpacer"
@@ -74,15 +74,16 @@
             app:layout_constraintBottom_toTopOf="@id/playerNameTextView"
             app:layout_constraintEnd_toStartOf="@id/opponentCreatureImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
             android:id="@+id/playerNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerCreatureImage"
-            app:layout_constraintBottom_toTopOf="@+id/playerHealthTextView"
             app:layout_constraintEnd_toStartOf="@+id/opponentNameTextView"
             android:textSize="16sp"
             android:text="Creature name [lvl:]"
@@ -94,7 +95,6 @@
             android:layout_height="wrap_content"
             android:text="HP: 100/100"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/opponentHealthTextView"
             app:layout_constraintTop_toBottomOf="@+id/playerNameTextView"
@@ -121,7 +121,7 @@
             app:layout_constraintTop_toBottomOf="@id/opponentCreatureImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/playerNameTextView"
-            app:layout_constraintBottom_toTopOf="@id/opponentHealthTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
              />
 
         <TextView
@@ -133,7 +133,6 @@
             app:layout_constraintTop_toBottomOf="@id/opponentNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/playerHealthTextView"
-            app:layout_constraintBottom_toBottomOf="parent"
              />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -141,14 +140,25 @@
         android:id="@+id/battlePromptTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="What will [creature] do?"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
+        app:layout_constraintBottom_toTopOf="@+id/xpBarTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/creatureViewLayout" />
+
+    <TextView
+        android:id="@+id/xpBarTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="[XP 100/100]"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/battlePromptTextView" />
 
     <GridLayout
         android:id="@+id/abilityButtonsLayout"
@@ -162,7 +172,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/battlePromptTextView">
+        app:layout_constraintTop_toBottomOf="@id/xpBarTextView">
 
         <Button
             android:id="@+id/abilityOneButton"
