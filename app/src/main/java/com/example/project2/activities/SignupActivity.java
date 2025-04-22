@@ -50,8 +50,6 @@ public class SignupActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-                startActivity(intent);
                 finish();
             }
         });
@@ -75,8 +73,8 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
         if (usernameEnter.isEmpty()) {
-            Toast.makeText(SignupActivity.this, "Username is blank. \nPlease enter a username",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignupActivity.this,
+                    "Username is blank. \nPlease enter a username", Toast.LENGTH_SHORT).show();
             return;
         }
         if (passwordEnter.isEmpty()) {
@@ -99,8 +97,6 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Sign up successful",
                             Toast.LENGTH_SHORT).show();
                     //Takes you back to the login screen after a successful account creation
-                    Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-                    startActivity(intent);
                     finish();
                 }
                 // Remove the observer after the first change to avoid repeated checks

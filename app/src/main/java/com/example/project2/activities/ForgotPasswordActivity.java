@@ -25,7 +25,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private String usernameEnter = "";
 
 
-
     boolean clickCondition = false;
 
     @Override
@@ -39,21 +38,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-                startActivity(intent);
                 finish();
             }
         });
 
 
-
         binding.enterUsernameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!clickCondition) {
+                if (!clickCondition) {
                     validateUsername();
-                }
-                else{
+                } else {
                     updatePassword();
                 }
             }
@@ -77,11 +72,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 if (user != null) {
                     //Changes the menu to a menu to enter the passwords and confirm.
-                    binding.enterUsernameButton.setText("Update");
+                    binding.enterUsernameButton.setText("Reset Password");
                     binding.usernameSignUpEditText.setVisibility(View.GONE);
                     binding.newPasswordEditText.setVisibility(View.VISIBLE);
                     binding.confirmPasswordSignUpEditTextView.setVisibility(View.VISIBLE);
                     clickCondition = true;
+                    Toast.makeText(ForgotPasswordActivity.this, "Success. Username is valid.",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ForgotPasswordActivity.this, "Username does not exist",
                             Toast.LENGTH_SHORT).show();
@@ -97,30 +94,33 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void updatePassword() {
         String newPassword = binding.newPasswordEditText.getText().toString();
         String confirmPassword = binding.confirmPasswordSignUpEditTextView.getText().toString();
-        if(confirmPassword.isEmpty()){
+        if (newPassword.isEmpty()) {
             Toast.makeText(ForgotPasswordActivity.this,
                     "New Password is blank.",
                     Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (confirmPassword.isEmpty()) {
+            Toast.makeText(ForgotPasswordActivity.this,
+                    "Confirm Password is blank.",
+                    Toast.LENGTH_SHORT).show();
+            return;
         }
         LiveData<User> userObserver = repository.getUserByUserName(usernameEnter);
         userObserver.observe(this, new Observer<>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(User user) {
-                if(newPassword.equalsIgnoreCase(confirmPassword)){
+                if (newPassword.equalsIgnoreCase(confirmPassword)) {
                     Toast.makeText(ForgotPasswordActivity.this,
-                            "Match changing password.",
+                            "Success. Password has been changed.",
                             Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else{
+                } else {
                     Toast.makeText(ForgotPasswordActivity.this,
-                            "No Match.",
+                            "Passwords do not match.",
                             Toast.LENGTH_SHORT).show();
                 }
-
-
-
                 userObserver.removeObserver(this);
             }
         });

@@ -85,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -97,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = ForgotPasswordActivity.forgotPasswordIntentFactory(getApplicationContext());
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -119,8 +117,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if (username.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Username is blank. \nPlease enter a username",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this,
+                    "Username is blank. \nPlease enter a username", Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.isEmpty()) {
@@ -135,12 +133,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 if (user != null) {
                     if (password.equals(user.getPassword())) {
-                        //TODO: ADD A IF/ELSE TO DETERMINE IN USER IS AN ADMIN OR NOT
-                        // IF THEY ARE AN ADMIN GO TO ADMIN SCREEN
                         Intent intent;
                         adminCheck = user.isAdmin();
                         if(!adminCheck) {
-                            //moves to the MainActivity(basic user) page
+                            //moves to the UserLandingActivity page
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
@@ -158,8 +154,8 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Password is incorrect.",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,
+                                "Password is incorrect.", Toast.LENGTH_SHORT).show();
                         binding.passwordLoginEditTextView.setSelection(0);
                     }
                 } else {
@@ -210,7 +206,8 @@ public class LoginActivity extends AppCompatActivity {
             //im going to be sad if i see this
             Log.e("TeamBuilder", "Error loading team", e);
             runOnUiThread(() ->
-                    Toast.makeText(LoginActivity.this, "Failed to load", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(LoginActivity.this,
+                            "Failed to load", Toast.LENGTH_SHORT).show()
             );
         }
     }
