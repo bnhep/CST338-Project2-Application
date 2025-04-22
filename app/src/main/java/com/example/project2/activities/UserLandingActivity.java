@@ -62,7 +62,7 @@ public class UserLandingActivity extends AppCompatActivity {
 
                 Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                 startActivity(intent);
-
+                finish();
                 //Testing button please remove later
                 //Toast.makeText(MainActivity.this, "View Monster Button works", Toast.LENGTH_SHORT).show();
             }
@@ -110,6 +110,7 @@ public class UserLandingActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 logoutMain();
+                finish();
             }
         });
         alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -126,6 +127,7 @@ public class UserLandingActivity extends AppCompatActivity {
         UserTeamData.getInstance().clearTeam();
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
+        finishAffinity();
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.project2.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +85,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = SignupActivity.signUpIntentFactory(getApplicationContext());
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        /**
+         * Forgot password button leading to ForgotPasswordActivity
+         */
+        binding.forgotPassWordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ForgotPasswordActivity.forgotPasswordIntentFactory(getApplicationContext());
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -119,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
         userObserver.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
-
                 if (user != null) {
                     if (password.equals(user.getPassword())) {
                         //TODO: ADD A IF/ELSE TO DETERMINE IN USER IS AN ADMIN OR NOT
@@ -143,8 +156,9 @@ public class LoginActivity extends AppCompatActivity {
                             intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
                         }
                         startActivity(intent);
+                        finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Password Invalid. Please Enter a Password",
+                        Toast.makeText(LoginActivity.this, "Password is incorrect.",
                                 Toast.LENGTH_SHORT).show();
                         binding.passwordLoginEditTextView.setSelection(0);
                     }
