@@ -15,11 +15,10 @@
         android:layout_marginStart="40dp"
         android:text="Flee Battle"
         android:textSize="14sp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/userDisplaySpacer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <Space
         android:id="@+id/userDisplaySpacer"
@@ -40,8 +39,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/battleDisplayTextView"
@@ -51,12 +49,11 @@
         android:padding="8dp"
         android:text="You have challenged [Opponent]!"
         android:textSize="26sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/creatureViewLayout"
@@ -66,8 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDisplaySpacer"
-        app:layout_constraintVertical_bias="1"
-        >
+        app:layout_constraintVertical_bias="1">
 
         <ImageView
             android:id="@+id/playerCreatureImage"
@@ -75,10 +71,22 @@
             android:layout_height="150dp"
             android:layout_margin="8dp"
             android:src="@color/design_default_color_primary"
-            app:layout_constraintBottom_toTopOf="@id/playerHealthTextView"
+            app:layout_constraintBottom_toTopOf="@id/playerNameTextView"
             app:layout_constraintEnd_toStartOf="@id/opponentCreatureImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/playerNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playerCreatureImage"
+            app:layout_constraintBottom_toTopOf="@+id/playerHealthTextView"
+            app:layout_constraintEnd_toStartOf="@+id/opponentNameTextView"
+            android:textSize="16sp"
+            android:text="Creature name [lvl:]"
+            />
 
         <TextView
             android:id="@+id/playerHealthTextView"
@@ -87,9 +95,10 @@
             android:text="HP: 100/100"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/opponentHealthTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/playerCreatureImage" />
+            app:layout_constraintEnd_toStartOf="@+id/opponentHealthTextView"
+            app:layout_constraintTop_toBottomOf="@+id/playerNameTextView"
+             />
 
         <ImageView
             android:id="@+id/opponentCreatureImage"
@@ -97,10 +106,23 @@
             android:layout_height="150dp"
             android:layout_margin="8dp"
             android:src="@color/design_default_color_primary"
-            app:layout_constraintBottom_toTopOf="@id/opponentHealthTextView"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/playerCreatureImage"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/opponentNameTextView"
+             />
+
+        <TextView
+            android:id="@+id/opponentNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Creature name [Lvl:]"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/opponentCreatureImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/playerNameTextView"
+            app:layout_constraintBottom_toTopOf="@id/opponentHealthTextView"
+             />
 
         <TextView
             android:id="@+id/opponentHealthTextView"
@@ -108,25 +130,25 @@
             android:layout_height="wrap_content"
             android:text="HP: 100/100"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/opponentNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/playerHealthTextView"
-            app:layout_constraintTop_toBottomOf="@id/opponentCreatureImage" />
+            app:layout_constraintBottom_toBottomOf="parent"
+             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/battlePromptTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="What will [creature] do?"
         android:textSize="24sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/creatureViewLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
-        android:layout_marginTop="8dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creatureViewLayout" />
 
     <GridLayout
         android:id="@+id/abilityButtonsLayout"
@@ -134,14 +156,13 @@
         android:layout_height="wrap_content"
         android:alignmentMode="alignMargins"
         android:columnCount="2"
+        android:padding="8dp"
         android:rowCount="2"
         android:useDefaultMargins="true"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/battlePromptTextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/battlePromptTextView">
 
         <Button
             android:id="@+id/abilityOneButton"

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.Ability;
+import com.example.project2.OpponentTeamData;
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.creatures.FlowerDino;
@@ -49,8 +50,7 @@ public class BattleActivity extends AppCompatActivity {
         //opponentCreature = something that well pass in from opponent select
         //TODO: temp opponent creature
         // ********** THIS IS JUST FOR TESTING **********
-        opponentCreature = UserTeamData.getInstance().getUserTeam().get(6);
-        opponentName = getIntent().getStringExtra("name");
+        opponentCreature = OpponentTeamData.getOpponentCreature();
 
         //update UI for battle screen
         battleUiSetup();
@@ -139,15 +139,17 @@ public class BattleActivity extends AppCompatActivity {
     private void battleUiSetup() {
         toggleBattleView(); //TODO: flips the currently being worked on more complex battle screen into just a text view
         //set opponent challenge text
-        binding.battleDisplayTextView.setText("You have challenged " + opponentName);
-
+        binding.battleDisplayTextView.setText(getIntent().getStringExtra("opponentIntro"));
 
         //set up button text
         updateAbilityButtons();
+        //set creature names and level
+        binding.playerNameTextView.setText(playerCreature.getName() + " [lvl]: " + playerCreature.getLevel());
+        binding.opponentNameTextView.setText(opponentCreature.getName() + " [lvl]: " + opponentCreature.getLevel());
         //set up health
         updateHealth();
         //set up the battle prompt
-        binding.battlePromptTextView.setText("What will " + playerCreature.getName() + " do?");
+        updateBattlePrompt("What will " + playerCreature.getName() + " do?");
         //toggle the UI
         handler.postDelayed(() -> toggleBattleView(), 2000);
     }
@@ -163,11 +165,13 @@ public class BattleActivity extends AppCompatActivity {
 
     private void updateBattlePrompt(String text) {
         //increment another 2 second delay from last prompt
-        battleTextPromptStep += 2000;
         handler.postDelayed(() -> binding.battlePromptTextView.setText(text), battleTextPromptStep);
+        battleTextPromptStep += 2000;
     }
 
     private void battleLogic(Ability selectedAbility) {
+        //reset the step counter
+        battleTextPromptStep = 0;
         //choose a random ability for the opponent creature to use
         Ability opponentAbility = opponentCreature.getAbilityList().get(Dice.roll(0, (opponentCreature.getAbilityList().size()-1)));
 
@@ -178,8 +182,8 @@ public class BattleActivity extends AppCompatActivity {
             playerCreature.attack(opponentCreature, selectedAbility);
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
-                updateBattlePrompt(opponentCreature.getName() + " has fainted!");
                 updateHealth();
+                updateBattlePrompt(opponentCreature.getName() + " has fainted!");
                 //TODO:add win condition
                 updateBattlePrompt("You win!");
                 //opponent doesnt attack if fainted
@@ -190,14 +194,14 @@ public class BattleActivity extends AppCompatActivity {
             opponentCreature.attack(playerCreature, opponentAbility);
             //check if player has fainted
             if (playerCreature.isFainted()) {
-                updateBattlePrompt(playerCreature.getName() + " has fainted!");
                 updateHealth();
+                updateBattlePrompt(playerCreature.getName() + " has fainted!");
                 //TODO:add lose condition
                 updateBattlePrompt("You lose");
                 return;
             }
-            updateBattlePrompt("creatures take took damage!"); //temp
             updateHealth();
+            updateBattlePrompt("creatures take took damage!"); //temp
         }
         else {
             //opponent attacks first, targeting player with randomly selected ability
@@ -205,8 +209,8 @@ public class BattleActivity extends AppCompatActivity {
             opponentCreature.attack(playerCreature, opponentAbility);
             //check if player has fainted
             if (playerCreature.isFainted()) {
-                updateBattlePrompt(playerCreature.getName() + " has fainted!");
                 updateHealth();
+                updateBattlePrompt(playerCreature.getName() + " has fainted!");
                 //TODO:add lose condition
                 updateBattlePrompt("You win!");
                 //player doesnt attack if fainted
@@ -217,19 +221,17 @@ public class BattleActivity extends AppCompatActivity {
             playerCreature.attack(opponentCreature, selectedAbility);
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
-                updateBattlePrompt(opponentCreature.getName() + " has fainted!");
                 updateHealth();
+                updateBattlePrompt(opponentCreature.getName() + " has fainted!");
                 //TODO:add win condition
                 updateBattlePrompt("You win!");
                 return;
             }
-            updateBattlePrompt("creatures take took damage!"); //temp
             updateHealth();
+            updateBattlePrompt("creatures take took damage!"); //temp
         }
 
         updateBattlePrompt("What will " + playerCreature.getName() + " do?");
-        //reset the step counter
-        battleTextPromptStep = 0;
     }
 
     private void toastMaker(String s) {
