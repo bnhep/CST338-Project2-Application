@@ -364,6 +364,7 @@ public abstract class Creature {
         }
 
         if (this.getCurHealth() <= 0) {
+            this.curHealth = 0;
             //TODO:System.out.println(this.getName() + " has lost consciousness. It's passed out.");
             this.setFainted(true);
         }
