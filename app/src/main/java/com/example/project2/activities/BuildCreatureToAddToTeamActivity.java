@@ -12,10 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project2.CreatureCellAdapter;
 import com.example.project2.R;
 import com.example.project2.creatures.*;
+import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityBuildCreatureToAddToTeamBinding;
+import com.example.project2.utilities.Converters;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
@@ -74,33 +80,27 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
     }
 
     private void setUpData() {
-        /** TODO: this will all be handles properly later. Eventually all of the creatures
-         *   will be instantiated from a table called something like CREATURE_TYPE_TABLE
-         */
-        if (creatureList.isEmpty()) {
-            Executors.newSingleThreadExecutor().execute(() -> {
-                ElectricRat electricRat = new ElectricRat("Electric Rat", 1);
-                FireLizard fireLizard = new FireLizard("Fire Lizard", 1);
-                FlowerDino flowerDino = new FlowerDino("Flower Dino", 1);
-                WeirdTurtle weirdTurtle = new WeirdTurtle("Weird Turtle", 1);
-                //this is just to populate the list with more options
-                WeirdTurtle weirdTurtle1 = new WeirdTurtle("Another Weird Turtle", 1);
-                WeirdTurtle weirdTurtle2 = new WeirdTurtle("And another", 1);
-                WeirdTurtle weirdTurtle3 = new WeirdTurtle("Just for testing", 1);
-                WeirdTurtle weirdTurtle4 = new WeirdTurtle("The scrolling on", 1);
-                WeirdTurtle weirdTurtle5 = new WeirdTurtle("This Menu", 1);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+            AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
-                creatureList.add(electricRat);
-                creatureList.add(fireLizard);
-                creatureList.add(flowerDino);
-                creatureList.add(weirdTurtle);
-                creatureList.add(weirdTurtle1);
-                creatureList.add(weirdTurtle2);
-                creatureList.add(weirdTurtle3);
-                creatureList.add(weirdTurtle4);
-                creatureList.add(weirdTurtle5);
-            });
-        }
+            //pull from creature database only if the list is empty
+            if (creatureList.isEmpty()) {
+                List<CreatureEntity> templateEntities = creatureDAO.getCreaturesByUserId("NONE");
+
+                for (CreatureEntity entity : templateEntities) {
+                    //convert entity into creature
+                    Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
+                    creatureList.add(creature);
+                }
+
+                //send to the adapter on the UI thread
+                runOnUiThread(() -> {
+                    CreatureCellAdapter adapter = new CreatureCellAdapter(getApplicationContext(), 0, creatureList);
+                    listView.setAdapter(adapter);
+                });
+            }
+        });
     }
 
     public static Intent BuildCreatureToAddToTeamIntentFactory(Context context) {
