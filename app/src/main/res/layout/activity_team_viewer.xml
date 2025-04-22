@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/playfair_bold"
-            android:text="Load (temp button)"
+            android:text="[Team slot 5]"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@id/backButtonSpacer"
             app:layout_constraintEnd_toEndOf="parent"
@@ -168,20 +168,6 @@
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/usernameDisplayTextView"
         app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/loadTeamButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:fontFamily="@font/playfair_bold"
-        android:text="Load Team"
-        android:textSize="16sp"
-
-        app:layout_constraintBaseline_toBaselineOf="@+id/saveTeamButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

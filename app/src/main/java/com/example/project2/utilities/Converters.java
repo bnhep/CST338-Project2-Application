@@ -128,6 +128,8 @@ public class Converters {
         // Restore abilities from their IDs
         List<String> abilityIds = entity.getAbilityList();
         if (abilityIds != null) {
+            //clear out ability list before adding saved abilities
+            creature.getAbilityList().clear();
             for (String id : abilityIds) {
                 AbilityEntity abilityEntity = abilityDAO.getAbilityById(id);
                 if (abilityEntity != null) {
