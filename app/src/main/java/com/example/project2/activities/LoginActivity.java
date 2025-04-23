@@ -1,7 +1,9 @@
 package com.example.project2.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,11 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     boolean adminCheck = false;
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(binding.getRoot());
+
         repository = ApplicationRepository.getInstance();
         accountManager = AccountStatusCheck.getInstance();
 
@@ -123,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (password.isEmpty()) {
             Toast.makeText(LoginActivity.this,
-                    "Password is blank.\nPlease enter a password",
+                    "Please enter a password",
                     Toast.LENGTH_SHORT).show();
             return;
         }
