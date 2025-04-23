@@ -21,13 +21,19 @@ public class ElectricRat extends Creature {
     private final int SPEED_MAX = 60;
 
     public ElectricRat() {
+        super("Electric Rat", 1, ElementalType.ELECTRIC);
+        setType(this.getClass().getSimpleName());
+        setPhrase(PHRASE);
+        setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
+        updateStats();
+        setCurHealth(this.getHealthStat());
 
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        if (abilityDAO != null) {
+            this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("SHOCK")));
+        }
     }
 
-    /**
-     * This is the constructor for the creatures.ElectricRat class
-     * @param name is what the monster object will be called
-     */
     public ElectricRat(String name, int level) {
         super(name, level, ElementalType.ELECTRIC);
 

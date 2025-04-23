@@ -10,11 +10,17 @@ package com.example.project2;
 
 import android.app.Application;
 
+import com.example.project2.creatures.ElectricRat;
+import com.example.project2.creatures.FireLizard;
+import com.example.project2.creatures.FlowerDino;
+import com.example.project2.creatures.WeirdTurtle;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.AbilityEntity;
+import com.example.project2.utilities.Converters;
 
 import java.util.List;
 
@@ -40,24 +46,26 @@ public class CreatureColiseum extends Application {
         //initialize DAOs on app start up
         DAOProvider.init(this);
 
-        //adds abilities to the database if not already there
-        prepopulateAbilities();
+        //adds abilities and creatures to the database if not already there
+        prepopulateCreaturesAndAbilities();
 
         //initialize UserTeamData information on start up
         UserTeamData.getInstance();
     }
 
-    private void prepopulateAbilities() {
+    private void prepopulateCreaturesAndAbilities() {
         //this is run on a background thread so that changes to the DB can be made properly
         new Thread(() -> {
+            //getting reference to the CreatureDAO that has been established earlier
+            CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
             //getting reference to the AbilityDAO that has been established earlier
             AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
             /**
-             * This checks to see if data for these pre established moves already exist in the
-             * database. If they already exist, it means the DB has been initialized before and
-             * therefore we do not need to add them again. If the app is freshly installed this
-             * will run and populate the ability table with this information
+             * This checks to see if data for these pre established moves and creatures already
+             * exist in the database. If they already exist, it means the DB has been initialized
+             * before and therefore we do not need to add them again. If the app is freshly
+             * installed these will run and populate the tables with needed information
              */
             if (abilityDAO.getAll().isEmpty()) {
                 abilityDAO.insertAll(List.of(
@@ -66,6 +74,15 @@ public class CreatureColiseum extends Application {
                         new AbilityEntity("RAZORLEAF", "razor leaf", "GRASS", 25, 10, 100),
                         new AbilityEntity("SHOCK", "shock", "ELECTRIC", 25, 10, 100),
                         new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100)
+                ));
+            }
+
+            if (creatureDAO.getCreaturesByUserId("NONE").isEmpty()) {
+                creatureDAO.insertAll(List.of(
+                        Converters.convertCreatureToEntity(new ElectricRat(), "NONE", -1, 0),
+                        Converters.convertCreatureToEntity(new FireLizard(), "NONE", -1, 0),
+                        Converters.convertCreatureToEntity(new FlowerDino(), "NONE", -1, 0),
+                        Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0)
                 ));
             }
         }).start();

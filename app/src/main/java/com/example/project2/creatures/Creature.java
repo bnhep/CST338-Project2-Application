@@ -49,7 +49,12 @@ public abstract class Creature {
     private int baseSpeed;
 
     public Creature() {
+        this.level = 1;
+        this.experienceNeededToLevel = calculateExperienceNeeded(level);
 
+        //All creatures start with tackle
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
     public Creature(String name, int level, ElementalType... types) {
@@ -60,13 +65,6 @@ public abstract class Creature {
 
         //All creatures start with tackle
         AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-
-        if (abilityDAO == null) {
-            Log.e("Creature", "AbilityDAO in Creature is null!");
-        } else {
-            Log.d("Creature", "AbilityDAO in Creature successfully retrieved");
-        }
-
         this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
@@ -230,16 +228,11 @@ public abstract class Creature {
             return;
         }
 
-        //TODO:System.out.println("current XP: " + curExperiencePoints);
-        //TODO:System.out.println("XP needed to level: " + experienceNeededToLevel);
-        //TODO:System.out.println(this.getName() + " gained " + experience + " XP");
         curExperiencePoints += experience;
         if (curExperiencePoints >= experienceNeededToLevel) {
             curExperiencePoints = curExperiencePoints-experienceNeededToLevel;
             levelUp();
         }
-        //TODO:System.out.println("current XP: " + curExperiencePoints);
-        //TODO:System.out.println("XP needed to level: " + experienceNeededToLevel);
     }
 
     public int calculateExperienceNeeded(int level) {
@@ -253,16 +246,14 @@ public abstract class Creature {
         updateStats();
         curHealth = healthStat;
         experienceNeededToLevel = calculateExperienceNeeded(this.getLevel());
-        //TODO:System.out.println(this.getName() + " leveled up!");
     }
 
-    //TODO: Add accuracy and crit chance into the attack and calculateDamage modifiers respectively
-    public void attack(Creature target, Ability ability) {
-        //TODO:System.out.println(this.getPhrase());
-        //TODO:System.out.println(this.getName() + " uses " + ability.getAbilityName());
+    public int attack(Creature target, Ability ability) {
 
         int attackValue = (int) Math.round(calculateDamage(target, ability));
         target.takeDamage(attackValue);
+
+        return attackValue;
     }
 
     public double calculateDamage(Creature target, Ability ability) {
@@ -356,20 +347,12 @@ public abstract class Creature {
     public void takeDamage(int damage) {
         //make sure the attack dealt damage
         if (damage > 0) {
-            //TODO:System.out.println(this.getName() + " is hit for " + damage + " damage!");
             this.curHealth = this.curHealth - damage;
-        }
-        else {
-            //TODO:System.out.println(this.getName() + " avoided the attack!");
         }
 
         if (this.getCurHealth() <= 0) {
             this.curHealth = 0;
-            //TODO:System.out.println(this.getName() + " has lost consciousness. It's passed out.");
             this.setFainted(true);
-        }
-        else {
-            //TODO:System.out.println(this.getName() + " has " + this.getCurHealth() + "/" + this.healthStat + " remaining");
         }
     }
 }

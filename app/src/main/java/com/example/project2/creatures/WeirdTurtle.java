@@ -19,13 +19,19 @@ public class WeirdTurtle extends Creature {
     private final int SPEED_MAX = 35;
 
     public WeirdTurtle() {
+        super("Weird Turtle", 1, ElementalType.WATER);
+        setType(this.getClass().getSimpleName());
+        setPhrase(PHRASE);
+        setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
+        updateStats();
+        setCurHealth(this.getHealthStat());
 
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        if (abilityDAO != null) {
+            this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("WATERJET")));
+        }
     }
 
-    /**
-     * This is the constructor for the creatures.WeirdTurtle class
-     * @param name is what the monster object will be called
-     */
     public WeirdTurtle(String name, int level) {
         super(name, level, ElementalType.WATER);
 
