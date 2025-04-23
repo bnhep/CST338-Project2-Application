@@ -94,13 +94,15 @@ public class OpponentSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Executors.newSingleThreadExecutor().execute(() -> {
                     opponentCreature = new FlowerDino("Flower Dino", 4);
-                });
 
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentIntro = "You challenged Rock!";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "You challenged Rock!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
@@ -109,13 +111,15 @@ public class OpponentSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Executors.newSingleThreadExecutor().execute(() -> {
                     opponentCreature = new WeirdTurtle("Weird Turtle", 8);
-                });
 
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentIntro = "You challenged Christy!";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "You challenged Christy!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
@@ -124,13 +128,15 @@ public class OpponentSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Executors.newSingleThreadExecutor().execute(() -> {
                     opponentCreature = new ElectricRat("Electric Rat", 12);
-                });
 
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentIntro = "You challenged The Champ!";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "You challenged The Champ!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
