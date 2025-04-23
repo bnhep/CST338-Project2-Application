@@ -19,13 +19,19 @@ public class FireLizard extends Creature {
     private final int SPEED_MAX = 40;
 
     public FireLizard() {
+        super("Fire Lizard", 1, ElementalType.FIRE);
+        setType(this.getClass().getSimpleName());
+        setPhrase(PHRASE);
+        setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
+        updateStats();
+        setCurHealth(this.getHealthStat());
 
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        if (abilityDAO != null) {
+            this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("FLAMETHROWER")));
+        }
     }
 
-    /**
-     * This is the constructor for the creatures.FireLizard class
-     * @param name is what the monster object will be called
-     */
     public FireLizard(String name, int level) {
         super(name, level, ElementalType.FIRE);
 

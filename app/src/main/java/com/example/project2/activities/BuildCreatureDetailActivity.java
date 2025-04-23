@@ -11,8 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
+import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityBuildCreatureDetailBinding;
+import com.example.project2.utilities.Converters;
 
 import java.util.concurrent.Executors;
 
@@ -21,8 +26,8 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
     ActivityBuildCreatureDetailBinding binding;
 
     private int slot;
-    int creatureArrayPosition;
     Creature selectedCreature;
+    String userId;
     private AccountStatusCheck accountManager;
 
     @Override
@@ -32,6 +37,9 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         accountManager = AccountStatusCheck.getInstance();
+        CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+
+        userId = String.valueOf(accountManager.getUserID());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
@@ -42,21 +50,18 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         
         getSelectedCreature();
 
-        setValues();
-
         binding.addToTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //this is all just for testing at the moment
                 Executors.newSingleThreadExecutor().execute(() -> {
+                    selectedCreature.setCreatureId(0);
                     UserTeamData.getInstance().addCreatureToSlot(slot, selectedCreature);
-
-                    runOnUiThread(() ->
-                            Toast.makeText(BuildCreatureDetailActivity.this, selectedCreature.getName() + " added to team in slot " + slot, Toast.LENGTH_SHORT).show()
-                    );
 
                     Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                     startActivity(intent);
+                    //CreatureEntity entity = Converters.convertCreatureToEntity(selectedCreature, userId, slot, 0);
+                    //creatureDAO.insert(entity);
                 });
             }
         });
@@ -72,12 +77,26 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
     }
 
     private void getSelectedCreature() {
-        creatureArrayPosition = getIntent().getIntExtra("positionInArray", -1);
-        selectedCreature = BuildCreatureToAddToTeamActivity.creatureList.get(creatureArrayPosition);
+        int creatureId = getIntent().getIntExtra("creatureId", -1);
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+            AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+            CreatureEntity entity = creatureDAO.getCreatureById(creatureId);
+            selectedCreature = Converters.convertEntityToCreature(entity, abilityDAO);
+
+            runOnUiThread(this::setValues);
+        });
     }
 
     @SuppressLint("SetTextI18n")
     private void setValues() {
+        if (selectedCreature == null) {
+            Toast.makeText(this, "Failed to load creature data.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //update the text view values to that of the creatures
         binding.creatureNameTextView.setText(selectedCreature.getName());
         binding.creatureBaseHealthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());

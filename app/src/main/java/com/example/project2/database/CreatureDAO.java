@@ -15,8 +15,14 @@ public interface CreatureDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(CreatureEntity creature);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<CreatureEntity> creatureEntities);
+
     @Query("SELECT * FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE creatureId = :id")
-    CreatureEntity getCreatureById(String id);
+    CreatureEntity getCreatureById(int id);
+
+    @Query("SELECT * FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE userId = 'NONE' AND type = :type")
+    CreatureEntity getCreatureTemplateByType(String type);
 
     @Query("SELECT * FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE userId = :userId")
     List<CreatureEntity> getCreaturesByUserId(String userId);

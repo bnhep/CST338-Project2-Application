@@ -19,13 +19,19 @@ public class FlowerDino extends Creature {
     private final int SPEED_MAX = 25;
 
     public FlowerDino() {
+        super("Flower Dino", 1, ElementalType.GRASS);
+        setType(this.getClass().getSimpleName());
+        setPhrase(PHRASE);
+        setBaseStats(HEALTH_MAX, ATTACK_MAX, DEFENSE_MAX, SPEED_MAX);
+        updateStats();
+        setCurHealth(this.getHealthStat());
 
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        if (abilityDAO != null) {
+            this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("RAZORLEAF")));
+        }
     }
 
-    /**
-     * This is the constructor for the creatures.FlowerDino class
-     * @param name is what the monster object will be called
-     */
     public FlowerDino(String name, int level) {
         super(name, level, ElementalType.GRASS);
 
