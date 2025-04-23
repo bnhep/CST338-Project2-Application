@@ -21,9 +21,16 @@ import com.example.project2.creatures.ElectricRat;
 import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
 import com.example.project2.creatures.WeirdTurtle;
+import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityOpponentSelectBinding;
+import com.example.project2.utilities.Converters;
+import com.example.project2.utilities.Dice;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
@@ -69,6 +76,23 @@ public class OpponentSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Executors.newSingleThreadExecutor().execute(() -> {
+                    generateRandomEncounter();
+
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "A wild " + opponentCreature.getName() + " appears!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
+            }
+        });
+
+        binding.opponentTwoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Executors.newSingleThreadExecutor().execute(() -> {
                     opponentCreature = new FlowerDino("Flower Dino", 4);
                 });
 
@@ -80,7 +104,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
             }
         });
 
-        binding.opponentTwoButton.setOnClickListener(new View.OnClickListener() {
+        binding.opponentThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Executors.newSingleThreadExecutor().execute(() -> {
@@ -95,7 +119,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
             }
         });
 
-        binding.opponentThreeButton.setOnClickListener(new View.OnClickListener() {
+        binding.opponentFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Executors.newSingleThreadExecutor().execute(() -> {
@@ -105,22 +129,6 @@ public class OpponentSelectActivity extends AppCompatActivity {
                 toggleOpponentSelectButtons();
                 updateTeamSlotButtons();
                 opponentIntro = "You challenged The Champ!";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
-            }
-        });
-
-        binding.opponentFourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Executors.newSingleThreadExecutor().execute(() -> {
-                    //this will eventually be made random
-                    opponentCreature = new FireLizard("Fire Lizard", 1);
-                });
-
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentIntro = "A wild " + opponentCreature.getName() + " appears!";
                 updateTextView("Select your creature");
                 toggleCreatureSelectButtons();
             }
@@ -174,6 +182,21 @@ public class OpponentSelectActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void generateRandomEncounter() {
+        //get DAOs
+        CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+        //create a list of all template creature entities
+        List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("NONE");
+        //roll for which one based on list size
+        int encounterRoll = Dice.roll(0, creatureEntities.size()-1);
+        //get the creature entity from the list associated with the number rolled
+        CreatureEntity generatedCreature = creatureEntities.get(encounterRoll);
+        //convert that entity into a full creature object and set it to be the opponent
+        opponentCreature = Converters.convertEntityToCreature(generatedCreature, abilityDAO);
     }
 
     private void startBattleOpponent(int slot, String opponentIntro) {
