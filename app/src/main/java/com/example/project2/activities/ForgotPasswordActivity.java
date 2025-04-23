@@ -71,14 +71,18 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onChanged(User user) {
                 if (user != null) {
-                    //Changes the menu to a menu to enter the passwords and confirm.
-                    binding.enterUsernameButton.setText("Reset Password");
-                    binding.usernameSignUpEditText.setVisibility(View.GONE);
-                    binding.newPasswordEditText.setVisibility(View.VISIBLE);
-                    binding.confirmPasswordSignUpEditTextView.setVisibility(View.VISIBLE);
-                    clickCondition = true;
-                    Toast.makeText(ForgotPasswordActivity.this, "Success. Username is valid.",
-                            Toast.LENGTH_SHORT).show();
+                    if (!user.isAdmin()) {//Changes the menu to a menu to enter the passwords and confirm.
+                        binding.enterUsernameButton.setText("Reset Password");
+                        binding.usernameSignUpEditText.setVisibility(View.GONE);
+                        binding.newPasswordEditText.setVisibility(View.VISIBLE);
+                        binding.confirmPasswordSignUpEditTextView.setVisibility(View.VISIBLE);
+                        clickCondition = true;
+                        Toast.makeText(ForgotPasswordActivity.this, "Success. Username is valid.",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ForgotPasswordActivity.this, "Username is invalid",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(ForgotPasswordActivity.this, "Username does not exist",
                             Toast.LENGTH_SHORT).show();
