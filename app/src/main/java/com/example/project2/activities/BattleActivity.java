@@ -91,15 +91,15 @@ public class BattleActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: eventually can turn this into a chance to escape the battle like in the game
+                //TODO: eventually can turn this into a chance to escape the battle like in the real game
                 //exit
-                handler.postDelayed(() -> exitBattle(), battleTextPromptStep+2000);;
+                handler.postDelayed(() -> exitBattle(), 2000);;
             }
         });
     }
 
     private void setBattleViewVisible(boolean visible) {
-
+        //advanced if/else statement makes this look way cleaner
         binding.battleDisplayTextView.setVisibility(visible ? View.GONE : View.VISIBLE);
         binding.backButton.setVisibility(visible ? View.VISIBLE : View.GONE);
         binding.usernameDisplayTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
