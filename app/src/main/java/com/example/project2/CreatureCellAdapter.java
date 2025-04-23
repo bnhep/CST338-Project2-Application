@@ -20,24 +20,21 @@ import com.example.project2.creatures.Creature;
 
 import java.util.List;
 
-public class CreatureCellAdapter extends ArrayAdapter<Creature> {
-
-    public CreatureCellAdapter(Context context, int resource, List<Creature> creatureList) {
-        super(context, resource, creatureList);
+public class CreatureCellAdapter extends ArrayAdapter<String> {
+    public CreatureCellAdapter(Context context, int resource, List<String> creatureNames) {
+        super(context, resource, creatureNames);
     }
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Creature creature = getItem(position);
+        String name = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell_creature_preview, parent, false);
         }
 
         TextView creatureNameTextView = convertView.findViewById(R.id.creatureNameCellTextView);
-
-        //use the creature that was passed in and grab their name
-        creatureNameTextView.setText(creature.getName());
+        creatureNameTextView.setText(name);
 
         return convertView;
     }

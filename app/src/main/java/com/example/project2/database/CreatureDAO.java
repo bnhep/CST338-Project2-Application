@@ -19,7 +19,7 @@ public interface CreatureDAO {
     void insertAll(List<CreatureEntity> creatureEntities);
 
     @Query("SELECT * FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE creatureId = :id")
-    CreatureEntity getCreatureById(String id);
+    CreatureEntity getCreatureById(int id);
 
     @Query("SELECT * FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE userId = 'NONE' AND type = :type")
     CreatureEntity getCreatureTemplateByType(String type);

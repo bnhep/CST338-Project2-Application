@@ -28,7 +28,7 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
 
     ActivityBuildCreatureToAddToTeamBinding binding;
     private int slot;
-    public static ArrayList<Creature> creatureList = new ArrayList<Creature>();
+    private List<CreatureEntity> templateEntities = new ArrayList<>();
     private ListView listView;
     private AccountStatusCheck accountManager;
 
@@ -57,16 +57,17 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
         listView = binding.creatureTypeListView;
 
         //get reference to the CreatureCellAdapter
-        CreatureCellAdapter adapter = new CreatureCellAdapter(getApplicationContext(), 0, creatureList);
-        listView.setAdapter(adapter);
+        //CreatureCellAdapter adapter = new CreatureCellAdapter(getApplicationContext(), 0, creatureList);
+        //listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int creatureId = templateEntities.get(position).getCreatureId();
+
                 Intent intent = new Intent(getApplicationContext(), BuildCreatureDetailActivity.class);
-                //pass in both the slot number and the position in the array the creature was in
-                intent.putExtra("positionInArray", position);
                 intent.putExtra("slotNumber", slot);
+                intent.putExtra("creatureId", creatureId);
                 startActivity(intent);
             }
         });
@@ -82,24 +83,21 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
     private void setUpData() {
         Executors.newSingleThreadExecutor().execute(() -> {
             CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
-            AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
-            //pull from creature database only if the list is empty
-            if (creatureList.isEmpty()) {
-                List<CreatureEntity> templateEntities = creatureDAO.getCreaturesByUserId("NONE");
+            List<CreatureEntity> templates = creatureDAO.getCreaturesByUserId("NONE");
 
-                for (CreatureEntity entity : templateEntities) {
-                    //convert entity into creature
-                    Creature creature = Converters.convertEntityToCreature(entity, abilityDAO);
-                    creatureList.add(creature);
+            templateEntities.clear();
+            templateEntities.addAll(templates);
+
+            runOnUiThread(() -> {
+                List<String> creatureNames = new ArrayList<>();
+                for (CreatureEntity e : templateEntities) {
+                    creatureNames.add(e.getName());
                 }
 
-                //send to the adapter on the UI thread
-                runOnUiThread(() -> {
-                    CreatureCellAdapter adapter = new CreatureCellAdapter(getApplicationContext(), 0, creatureList);
-                    listView.setAdapter(adapter);
-                });
-            }
+                CreatureCellAdapter adapter = new CreatureCellAdapter(getApplicationContext(), 0, creatureNames);
+                listView.setAdapter(adapter);
+            });
         });
     }
 
