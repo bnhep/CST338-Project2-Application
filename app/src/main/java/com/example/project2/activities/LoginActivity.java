@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                         binding.passwordLoginEditTextView.setSelection(0);
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, username + " is invalid.",
+                    Toast.makeText(LoginActivity.this, username + " does not exist.",
                             Toast.LENGTH_SHORT).show();
                     binding.usernameLoginEditText.setSelection(0);
                 }
