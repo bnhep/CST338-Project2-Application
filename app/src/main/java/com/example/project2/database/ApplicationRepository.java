@@ -49,10 +49,4 @@ public class ApplicationRepository {
         return userDAO.getUsernameByID(id);
     }
 
-    public void setPasswordByUsername(String newPassword, String username) {
-        ApplicationDatabase.databaseWriteExecutor.execute(() ->
-        {
-            userDAO.setPasswordByUsername(newPassword,username);
-        });
-    }
 }

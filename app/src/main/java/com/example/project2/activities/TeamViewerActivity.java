@@ -196,6 +196,7 @@ public class TeamViewerActivity extends AppCompatActivity {
                 //store the creatures unique ID for retrieval
                 int id = creature.getCreatureId();
 
+                //TODO:later on we want to pass in the actual users generated id here
                 /**
                  * passing the information about the creature along with user ID into
                  * the converter to 'dehydrate' the creature class into simple data

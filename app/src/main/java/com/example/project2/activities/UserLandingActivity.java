@@ -52,6 +52,7 @@ public class UserLandingActivity extends AppCompatActivity {
 
                 Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
                 startActivity(intent);
+
             }
         });
 
@@ -63,6 +64,7 @@ public class UserLandingActivity extends AppCompatActivity {
 
                 Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                 startActivity(intent);
+
                 //Testing button please remove later
                 //Toast.makeText(MainActivity.this, "View Monster Button works", Toast.LENGTH_SHORT).show();
             }
@@ -74,12 +76,13 @@ public class UserLandingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Testing button please remove later
-                Toast.makeText(UserLandingActivity.this,
-                        "View Recent Button works", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserLandingActivity.this, "View Recent Button works", Toast.LENGTH_SHORT).show();
             }
         });
 
-        binding.trainCreaturesButton.setOnClickListener(v -> {
+        Button trainButton = findViewById(R.id.trainCreaturesButton);
+
+        trainButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserLandingActivity.this, TrainCreatureActivity.class);
             startActivity(intent);
         });
@@ -132,7 +135,6 @@ public class UserLandingActivity extends AppCompatActivity {
         UserTeamData.getInstance().clearTeam();
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
-        finishAffinity();
     }
 
 }

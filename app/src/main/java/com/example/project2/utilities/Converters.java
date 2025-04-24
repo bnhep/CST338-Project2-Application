@@ -81,18 +81,9 @@ public class Converters {
                 creature.getExperienceNeededToLevel(),
                 creature.getCurHealth(),
                 creature.getHealthStat(),
-                creature.getBaseHealth(),
                 creature.getAttackStat(),
-                creature.getBaseAttack(),
                 creature.getDefenseStat(),
-                creature.getBaseDefense(),
                 creature.getSpeedStat(),
-                creature.getBaseSpeed(),
-                creature.getBonusPointTotal(),
-                creature.getBonusHealth(),
-                creature.getBonusAttack(),
-                creature.getBonusDefense(),
-                creature.getBonusSpeed(),
                 teamSlot
         );
     }
@@ -114,9 +105,6 @@ public class Converters {
             case "WeirdTurtle":
                 creature = new WeirdTurtle(entity.getName(), entity.getLevel());
                 break;
-            case "CustomCreature":
-                creature = new CustomCreature(entity.getName(), entity.getLevel());
-                break;
             default:
                 throw new IllegalArgumentException("creature type not found: " + entity.getType());
         }
@@ -133,19 +121,9 @@ public class Converters {
         //set stats
         creature.setCurHealth(entity.getCurHealth());
         creature.setHealthStat(entity.getHealthStat());
-        creature.setBaseHealth(entity.getBaseHealth());
         creature.setAttackStat(entity.getAttackStat());
-        creature.setBaseAttack(entity.getBaseAttack());
         creature.setDefenseStat(entity.getDefenseStat());
-        creature.setBaseDefense(entity.getBaseDefense());
         creature.setSpeedStat(entity.getSpeedStat());
-        creature.setBaseSpeed(entity.getBaseSpeed());
-        //bonuses
-        creature.setBonusPointTotal(entity.getBonusPointTotal());
-        creature.setBonusHealth(entity.getBonusHealth());
-        creature.setBonusAttack(entity.getBonusAttack());
-        creature.setBonusDefense(entity.getBonusDefense());
-        creature.setBonusSpeed(entity.getBonusSpeed());
 
         // Restore abilities from their IDs
         List<String> abilityIds = entity.getAbilityList();

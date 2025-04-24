@@ -28,8 +28,9 @@ public abstract class Creature {
     private List<ElementalType> elements = new ArrayList<ElementalType>();
     private List<Ability> abilityList = new ArrayList<Ability>();
 
-    private int level;
+    private int level = 1;
     private final int LEVEL_MAX = 20;
+
     private int curExperiencePoints = 0;
     private int experienceNeededToLevel = 10;
 
@@ -37,19 +38,15 @@ public abstract class Creature {
     private int curHealth;
     private int healthStat;
     private int baseHealth;
+
     private int attackStat;
     private int baseAttack;
+
     private int defenseStat;
     private int baseDefense;
+
     private int speedStat;
     private int baseSpeed;
-
-    //bonus points used for training
-    private int bonusPointTotal;
-    private int bonusHealth;
-    private int bonusAttack;
-    private int bonusDefense;
-    private int bonusSpeed;
 
     public Creature() {
         this.level = 1;
@@ -123,6 +120,8 @@ public abstract class Creature {
         return abilityList;
     }
 
+
+
     public int getLevel() {
         return level;
     }
@@ -147,14 +146,6 @@ public abstract class Creature {
         this.experienceNeededToLevel = experienceNeededToLevel;
     }
 
-    public int getCurHealth() {
-        return curHealth;
-    }
-
-    public void setCurHealth(int curHealth) {
-        this.curHealth = curHealth;
-    }
-
     public int getHealthStat() {
         return healthStat;
     }
@@ -163,12 +154,16 @@ public abstract class Creature {
         this.healthStat = healthStat;
     }
 
-    public int getBaseHealth() {
-        return baseHealth;
+    public int getCurHealth() {
+        return curHealth;
     }
 
-    public void setBaseHealth(int baseHealth) {
-        this.baseHealth = baseHealth;
+    public void setCurHealth(int curHealth) {
+        this.curHealth = curHealth;
+    }
+
+    public int getBaseHealth() {
+        return baseHealth;
     }
 
     public int getAttackStat() {
@@ -183,10 +178,6 @@ public abstract class Creature {
         return baseAttack;
     }
 
-    public void setBaseAttack(int baseAttack) {
-        this.baseAttack = baseAttack;
-    }
-
     public int getDefenseStat() {
         return defenseStat;
     }
@@ -197,10 +188,6 @@ public abstract class Creature {
 
     public int getBaseDefense() {
         return baseDefense;
-    }
-
-    public void setBaseDefense(int baseDefense) {
-        this.baseDefense = baseDefense;
     }
 
     public int getSpeedStat() {
@@ -215,49 +202,7 @@ public abstract class Creature {
         return baseSpeed;
     }
 
-    public void setBaseSpeed(int baseSpeed) {
-        this.baseSpeed = baseSpeed;
-    }
 
-    public int getBonusPointTotal() {
-        return bonusPointTotal;
-    }
-
-    public void setBonusPointTotal(int bonusPointTotal) {
-        this.bonusPointTotal = bonusPointTotal;
-    }
-
-    public int getBonusHealth() {
-        return bonusHealth;
-    }
-
-    public void setBonusHealth(int bonusHealth) {
-        this.bonusHealth = bonusHealth;
-    }
-
-    public int getBonusAttack() {
-        return bonusAttack;
-    }
-
-    public void setBonusAttack(int bonusAttack) {
-        this.bonusAttack = bonusAttack;
-    }
-
-    public int getBonusDefense() {
-        return bonusDefense;
-    }
-
-    public void setBonusDefense(int bonusDefense) {
-        this.bonusDefense = bonusDefense;
-    }
-
-    public int getBonusSpeed() {
-        return bonusSpeed;
-    }
-
-    public void setBonusSpeed(int bonusSpeed) {
-        this.bonusSpeed = bonusSpeed;
-    }
 
     public void setBaseStats(int baseHealth, int baseAttack, int baseDefense, int baseSpeed) {
         this.baseHealth = baseHealth;
@@ -266,15 +211,15 @@ public abstract class Creature {
         this.baseSpeed = baseSpeed;
     }
 
-    public int calculateStat(int baseStat, int bonusStat) {
-        return Math.round((baseStat + bonusStat) * ((float) level / LEVEL_MAX));
+    public int calculateStat(int baseStat) {
+        return Math.round(baseStat * ((float) level / LEVEL_MAX));
     }
 
     public void updateStats() {
-        healthStat = (calculateStat(baseHealth, bonusHealth)*2)+this.getLevel();
-        attackStat = calculateStat(baseAttack, bonusAttack);
-        defenseStat = calculateStat(baseDefense, bonusDefense);
-        speedStat = calculateStat(baseSpeed, bonusSpeed);
+        healthStat = (calculateStat(baseHealth)*2)+this.getLevel();
+        attackStat = calculateStat(baseAttack);
+        defenseStat = calculateStat(baseDefense);
+        speedStat = calculateStat(baseSpeed);
     }
 
     public void gainExperience(int experience) {
