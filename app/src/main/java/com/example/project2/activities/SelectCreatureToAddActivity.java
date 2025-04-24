@@ -10,23 +10,19 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.CreatureCellAdapter;
-import com.example.project2.R;
-import com.example.project2.creatures.*;
-import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.CreatureEntity;
-import com.example.project2.databinding.ActivityBuildCreatureToAddToTeamBinding;
-import com.example.project2.utilities.Converters;
+import com.example.project2.databinding.ActivitySelectCreatureToAddBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
+public class SelectCreatureToAddActivity extends AppCompatActivity {
 
-    ActivityBuildCreatureToAddToTeamBinding binding;
+    ActivitySelectCreatureToAddBinding binding;
     private int slot;
     private List<CreatureEntity> templateEntities = new ArrayList<>();
     private ListView listView;
@@ -35,7 +31,7 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityBuildCreatureToAddToTeamBinding.inflate(getLayoutInflater());
+        binding = ActivitySelectCreatureToAddBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         accountManager = AccountStatusCheck.getInstance();
@@ -53,19 +49,14 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
          */
         setUpData();
 
-        //
         listView = binding.creatureTypeListView;
-
-        //get reference to the CreatureCellAdapter
-        //CreatureCellAdapter adapter = new CreatureCellAdapter(getApplicationContext(), 0, creatureList);
-        //listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int creatureId = templateEntities.get(position).getCreatureId();
 
-                Intent intent = new Intent(getApplicationContext(), BuildCreatureDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CreatureDetailActivity.class);
                 intent.putExtra("slotNumber", slot);
                 intent.putExtra("creatureId", creatureId);
                 startActivity(intent);
@@ -101,8 +92,8 @@ public class BuildCreatureToAddToTeamActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent BuildCreatureToAddToTeamIntentFactory(Context context) {
-        Intent intent = new Intent(context, BuildCreatureToAddToTeamActivity.class);
+    public static Intent SelectCreatureToAddIntentFactory(Context context) {
+        Intent intent = new Intent(context, SelectCreatureToAddActivity.class);
 
         return intent;
     }

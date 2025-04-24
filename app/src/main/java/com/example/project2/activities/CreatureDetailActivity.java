@@ -1,6 +1,5 @@
 package com.example.project2.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,14 +15,14 @@ import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.CreatureEntity;
-import com.example.project2.databinding.ActivityBuildCreatureDetailBinding;
+import com.example.project2.databinding.ActivityCreatureDetailBinding;
 import com.example.project2.utilities.Converters;
 
 import java.util.concurrent.Executors;
 
-public class BuildCreatureDetailActivity extends AppCompatActivity {
+public class CreatureDetailActivity extends AppCompatActivity {
 
-    ActivityBuildCreatureDetailBinding binding;
+    ActivityCreatureDetailBinding binding;
 
     private int slot;
     Creature selectedCreature;
@@ -33,11 +32,10 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityBuildCreatureDetailBinding.inflate(getLayoutInflater());
+        binding = ActivityCreatureDetailBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         accountManager = AccountStatusCheck.getInstance();
-        CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
 
         userId = String.valueOf(accountManager.getUserID());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
@@ -53,15 +51,13 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         binding.addToTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //this is all just for testing at the moment
+                //add creature to team
                 Executors.newSingleThreadExecutor().execute(() -> {
                     selectedCreature.setCreatureId(0);
                     UserTeamData.getInstance().addCreatureToSlot(slot, selectedCreature);
 
                     Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                     startActivity(intent);
-                    //CreatureEntity entity = Converters.convertCreatureToEntity(selectedCreature, userId, slot, 0);
-                    //creatureDAO.insert(entity);
                 });
             }
         });
@@ -69,9 +65,7 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = BuildCreatureToAddToTeamActivity.BuildCreatureToAddToTeamIntentFactory(getApplicationContext());
-                intent.putExtra("slotNumber", slot);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -90,7 +84,6 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("SetTextI18n")
     private void setValues() {
         if (selectedCreature == null) {
             Toast.makeText(this, "Failed to load creature data.", Toast.LENGTH_SHORT).show();
@@ -99,14 +92,14 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
 
         //update the text view values to that of the creatures
         binding.creatureNameTextView.setText(selectedCreature.getName());
-        binding.creatureBaseHealthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());
-        binding.creatureBaseAttackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());
-        binding.creatureBaseDefenseStatTextView.setText("Defense: " + selectedCreature.getBaseDefense());
-        binding.creatureBaseSpeedStatTextView.setText("Speed: " + selectedCreature.getBaseSpeed());
+        binding.healthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());
+        binding.attackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());
+        binding.defenseStatTextView.setText("Defense: " + selectedCreature.getBaseDefense());
+        binding.speedStatTextView.setText("Speed: " + selectedCreature.getBaseSpeed());
     }
 
     public static Intent BuildCreatureDetailIntentFactory(Context context) {
-        Intent intent = new Intent(context, BuildCreatureDetailActivity.class);
+        Intent intent = new Intent(context, CreatureDetailActivity.class);
         return intent;
     }
 }

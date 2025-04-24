@@ -31,8 +31,8 @@ public class AbilityCellAdapter extends ArrayAdapter<String> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell_ability_preview, parent, false);
         }
 
-        TextView creatureNameTextView = convertView.findViewById(R.id.abilityNameCellTextView);
-        creatureNameTextView.setText(name);
+        TextView abilityNameTextView = convertView.findViewById(R.id.abilityNameCellTextView);
+        abilityNameTextView.setText(name);
 
         return convertView;
     }
