@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.R;
 import com.example.project2.databinding.ActivityAddMonstersBinding;
-
+//commit comment
 public class AddMonstersActivity extends AppCompatActivity {
    String creatureName = "";
     String creatureType = "";
