@@ -35,6 +35,50 @@ public class AdminLandingActivity extends AppCompatActivity {
             }
         });
 
+        binding.addMonsterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AddMonstersActivity.AddMonsterIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+        binding.startBattleButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+        binding.viewCreaturesButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+        /* Need from Lex
+        binding.trainCreature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = trainCreatureActivity.TrainCreatureIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+        */
+
+         /* Need from Austin
+        binding.editStatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = editStatsActivity.editStatsIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+        * */
+
     }
 
 
@@ -62,9 +106,14 @@ public class AdminLandingActivity extends AppCompatActivity {
     static Intent AdminLandingIntentFactory(Context context) {
         return new Intent(context, AdminLandingActivity.class);
     }
+
     private void logoutMain(){
         accountManager.logout();
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
+    }
+
+    public static Intent adminLandingIntentFactory(Context context) {
+        return new Intent(context, AdminLandingActivity.class);
     }
 }
