@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+import com.example.project2.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -70,12 +72,19 @@ public class UserLandingActivity extends AppCompatActivity {
 
         //button functionality for View recent battles
         //TODO should have factory method to swap to Recent Battles(BASICALLY A STUB BUTTON)
-        binding.viewRecentBattleButton.setOnClickListener(new View.OnClickListener() {
+        binding.trainCreaturesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Testing button please remove later
                 Toast.makeText(UserLandingActivity.this, "View Recent Button works", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        Button trainButton = findViewById(R.id.trainCreaturesButton);
+
+        trainButton.setOnClickListener(v -> {
+            Intent intent = new Intent(UserLandingActivity.this, TrainCreatureActivity.class);
+            startActivity(intent);
         });
 
 

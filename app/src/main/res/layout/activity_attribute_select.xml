@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select an Attribute to Train"
+        android:textSize="22sp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btn_train_attack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Train Attack" />
+
+    <Button
+        android:id="@+id/btn_train_defense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Train Defense"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btn_train_health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Train Health"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btn_train_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Train Speed"
+        android:layout_marginTop="12dp" />
+
+</LinearLayout>
