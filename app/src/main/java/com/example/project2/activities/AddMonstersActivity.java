@@ -8,11 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.R;
 import com.example.project2.databinding.ActivityAddMonstersBinding;
@@ -21,8 +17,8 @@ public class AddMonstersActivity extends AppCompatActivity {
    String creatureName = "";
     String creatureType = "";
     int atkStat = 0;
+    int speedStat = 0;
     int dfenseStat = 0;
-    int modStat = 0;
     int hpStat = 0;
 
     ActivityAddMonstersBinding binding;
@@ -75,6 +71,17 @@ public class AddMonstersActivity extends AppCompatActivity {
             }
 
         });
+        binding.normalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                creatureType = "Normal";
+                binding.typeViewer.setText(creatureType);
+                Toast toast = Toast.makeText(AddMonstersActivity.this, "Type Changed", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
+                toast.show();
+            }
+
+        });
         binding.createMonsterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,14 +89,13 @@ public class AddMonstersActivity extends AppCompatActivity {
 
                 try {
                     atkStat = Integer.parseInt(((EditText) findViewById(R.id.attackStat)).getText().toString().trim());
+                    speedStat = Integer.parseInt(((EditText) findViewById(R.id.speedStat)).getText().toString().trim()) ;
                     dfenseStat = Integer.parseInt(((EditText) findViewById(R.id.defenseStat)).getText().toString().trim());
-                    modStat = Integer.parseInt(((EditText) findViewById(R.id.modifierStat)).getText().toString().trim()) ;
                     hpStat = Integer.parseInt(((EditText) findViewById(R.id.healthStat)).getText().toString().trim());
                     // code will stop here if an exception is thrown
                     Intent intent = AdminLandingActivity.adminLandingIntentFactory(getApplicationContext());
                     startActivity(intent);
-                    //make add monster function - take stats and add to database
-                    //return to the previous menu
+                    //Converters.convertCreatureToEntity(new [name] , , , , "NONE", -1, 0 )
                 }catch (NumberFormatException e){
                     Toast toast = Toast.makeText(AddMonstersActivity.this, "Invalid Number in Edit Stats", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast

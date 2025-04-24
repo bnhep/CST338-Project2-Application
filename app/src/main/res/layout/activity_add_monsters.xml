@@ -135,6 +135,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.277" />
 
+    <Button
+        android:id="@+id/normalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.352" />
+
     <TextView
         android:id="@+id/typeViewer"
         android:layout_width="wrap_content"
@@ -195,7 +207,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/playfair_bold"
-        android:text="Attack Modifier"
+        android:text="Speed"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -218,11 +230,11 @@
         app:layout_constraintVertical_bias="0.932" />
 
     <EditText
-        android:id="@+id/modifierStat"
+        android:id="@+id/speedStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_borders"
-        android:hint="Enter Modifier"
+        android:hint="Enter Speed"
         android:inputType="text"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -318,5 +330,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.531" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
