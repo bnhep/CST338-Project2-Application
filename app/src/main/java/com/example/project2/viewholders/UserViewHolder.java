@@ -1,7 +1,6 @@
 package com.example.project2.viewholders;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import com.example.project2.R;
 
 public class UserViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView iconView;
     TextView usernameTextView;
     TextView passwordTextView;
     public UserViewHolder(@NonNull View itemView) {

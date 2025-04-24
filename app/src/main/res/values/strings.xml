@@ -62,4 +62,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="viewing_users">Viewing Users</string>
+    <string name="usernamecolon">Username:</string>
+    <string name="passwordcolon">Password:</string>
 </resources>

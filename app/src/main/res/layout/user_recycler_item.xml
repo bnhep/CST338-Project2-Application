@@ -2,57 +2,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primaryContainer"
+    android:background="@color/white"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/usernameTitleRecyclerTextView"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usernameRecyclerViewText"
+        android:layout_marginBottom="-21dp"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/usernamecolon"
+        android:textColor="@color/black"
+        android:background="#EAC3C3" />
 
 
     <TextView
-        android:id="@+id/usernameRecyclerViewText"
-        android:layout_width="match_parent"
+        android:id="@+id/passwordTitleRecyclerTextView"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/usernameTitleRecyclerTextView"
+        android:layout_above="@+id/usernameRecyclerViewText"
+        android:layout_marginBottom="-47dp"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/passwordcolon"
+        android:textColor="@color/black"
+/>
+
+    <TextView
+        android:id="@+id/usernameRecyclerViewText"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/usernameTitleRecyclerTextView"
         android:background="@drawable/background_activities"
         android:fontFamily="@font/merriweather"
         android:text="@string/username"
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/usernameTitleRecyclerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/usernameRecyclerViewText"
-        android:layout_marginBottom="-28dp"
-        android:text="@string/username" />
-
-    <TextView
-        android:id="@+id/passwordTitleRecyclerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomSpacer"
-        android:text="@string/password" />
-
-    <TextView
         android:id="@+id/passwordRecyclerViewText"
-        android:layout_width="match_parent"
+        android:layout_width="253dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/usernameRecyclerViewText"
-        android:layout_marginStart="3dp"
-        android:layout_marginBottom="-43dp"
-        android:layout_toEndOf="@id/usernameTitleRecyclerTextView"
+        android:layout_alignBottom="@+id/usernameRecyclerViewText"
+        android:layout_toRightOf="@+id/passwordTitleRecyclerTextView"
+        android:layout_marginBottom="-23dp"
         android:background="@drawable/background_activities"
         android:fontFamily="@font/merriweather"
         android:text="@string/password"
         android:textColor="@color/black" />
 
     <LinearLayout
+        android:id="@+id/bottomSpacer"
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:id="@+id/bottomSpacer"
-        android:layout_below="@+id/passwordRecyclerViewText"
-        android:layout_marginTop="43dp"
-        android:background="@color/black"
-        android:orientation="vertical" />
+        android:layout_marginTop="50dp"
+        android:background="#A99494"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

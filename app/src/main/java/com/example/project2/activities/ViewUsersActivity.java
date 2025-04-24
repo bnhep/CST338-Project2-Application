@@ -31,18 +31,19 @@ public class ViewUsersActivity extends AppCompatActivity {
 
     private AccountStatusCheck accountManager;
 
+    RecyclerView recyclerView;
     private UserViewAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityViewUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        RecyclerView recyclerView = findViewById(R.id.userRecyclerView);
+        appRepository = ApplicationRepository.getInstance();
+        recyclerView = findViewById(R.id.userRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UserViewAdapter(this, new ArrayList<>());
         recyclerView.setAdapter(adapter);
-        appRepository = ApplicationRepository.getInstance();
         appRepository.getAllUsers().observe(this, users -> {
             Log.d(TAG, "Size of the list " + users.size() + " users");
             adapter.setUsers(users);
@@ -51,7 +52,7 @@ public class ViewUsersActivity extends AppCompatActivity {
     }
 
 
-    public static Intent userViewAdminIntentFactory(Context context){
+    public static Intent userViewAdminIntentFactory(Context context) {
         Intent intent = new Intent(context, ViewUsersActivity.class);
         return intent;
     }
