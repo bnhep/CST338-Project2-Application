@@ -17,10 +17,6 @@
             android:name=".activities.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.TrainingSelection"
-            android:exported="false"
-            android:theme="@style/Theme.Project2" />
-        <activity
             android:name=".activities.BattleActivity"
             android:exported="false" />
         <activity

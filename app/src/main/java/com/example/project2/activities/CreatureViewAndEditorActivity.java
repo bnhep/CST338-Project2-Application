@@ -122,7 +122,6 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
          *  after passing in the slot# from TeamViewer get reference
          *  to UserData to get the hashmap userTeam and set creature stats
          */
-
         //name
         binding.creatureNameTextView.setText(playerCreature.getName());
         //type
@@ -141,7 +140,6 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding.defenseStatTextView.setText("Defense: " + playerCreature.getDefenseStat());
         //speed
         binding.speedStatTextView.setText("Speed: " + playerCreature.getSpeedStat());
-
     }
 
     private void updateAbilityButtons() {
