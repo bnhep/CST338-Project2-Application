@@ -10,7 +10,6 @@ package com.example.project2;
 
 import android.app.Application;
 
-import com.example.project2.creatures.CustomCreature;
 import com.example.project2.creatures.ElectricRat;
 import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
@@ -83,9 +82,7 @@ public class CreatureColiseum extends Application {
                         Converters.convertCreatureToEntity(new ElectricRat(), "NONE", -1, 0),
                         Converters.convertCreatureToEntity(new FireLizard(), "NONE", -1, 0),
                         Converters.convertCreatureToEntity(new FlowerDino(), "NONE", -1, 0),
-                        Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0),
-                        //Custom creature test
-                        Converters.convertCreatureToEntity(new CustomCreature("Custom", ElementalType.NORMAL, 40, 50, 60, 70), "NONE", -1, 0)
+                        Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0)
                 ));
             }
         }).start();

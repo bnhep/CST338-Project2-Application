@@ -34,14 +34,9 @@ public class CreatureEntity {
     private int baseDefense;
     private int speedStat;
     private int baseSpeed;
-    private int bonusPointTotal;
-    private int bonusHealth;
-    private int bonusAttack;
-    private int bonusDefense;
-    private int bonusSpeed;
     private int teamSlot;
 
-    public CreatureEntity(int creatureId, String userId, String type, String name, String phrase, boolean fainted, List<ElementalType> elements, List<String> abilityList, int level, int curExperiencePoints, int experienceNeededToLevel, int curHealth, int healthStat, int baseHealth, int attackStat, int baseAttack, int defenseStat, int baseDefense, int speedStat, int baseSpeed, int bonusPointTotal, int bonusHealth, int bonusAttack, int bonusDefense, int bonusSpeed, int teamSlot) {
+    public CreatureEntity(int creatureId, String userId, String type, String name, String phrase, boolean fainted, List<ElementalType> elements, List<String> abilityList, int level, int curExperiencePoints, int experienceNeededToLevel, int curHealth, int healthStat, int attackStat, int defenseStat, int speedStat, int teamSlot) {
         this.creatureId = creatureId;
         this.userId = userId;
         this.type = type;
@@ -55,18 +50,9 @@ public class CreatureEntity {
         this.experienceNeededToLevel = experienceNeededToLevel;
         this.curHealth = curHealth;
         this.healthStat = healthStat;
-        this.baseHealth = baseHealth;
         this.attackStat = attackStat;
-        this.baseAttack = baseAttack;
         this.defenseStat = defenseStat;
-        this.baseDefense = baseDefense;
         this.speedStat = speedStat;
-        this.baseSpeed = baseSpeed;
-        this.bonusPointTotal = bonusPointTotal;
-        this.bonusHealth = bonusHealth;
-        this.bonusAttack = bonusAttack;
-        this.bonusDefense = bonusDefense;
-        this.bonusSpeed = bonusSpeed;
         this.teamSlot = teamSlot;
     }
 
@@ -228,46 +214,6 @@ public class CreatureEntity {
 
     public void setBaseSpeed(int baseSpeed) {
         this.baseSpeed = baseSpeed;
-    }
-
-    public int getBonusPointTotal() {
-        return bonusPointTotal;
-    }
-
-    public void setBonusPointTotal(int bonusPointTotal) {
-        this.bonusPointTotal = bonusPointTotal;
-    }
-
-    public int getBonusHealth() {
-        return bonusHealth;
-    }
-
-    public void setBonusHealth(int bonusHealth) {
-        this.bonusHealth = bonusHealth;
-    }
-
-    public int getBonusAttack() {
-        return bonusAttack;
-    }
-
-    public void setBonusAttack(int bonusAttack) {
-        this.bonusAttack = bonusAttack;
-    }
-
-    public int getBonusDefense() {
-        return bonusDefense;
-    }
-
-    public void setBonusDefense(int bonusDefense) {
-        this.bonusDefense = bonusDefense;
-    }
-
-    public int getBonusSpeed() {
-        return bonusSpeed;
-    }
-
-    public void setBonusSpeed(int bonusSpeed) {
-        this.bonusSpeed = bonusSpeed;
     }
 
     public int getTeamSlot() {

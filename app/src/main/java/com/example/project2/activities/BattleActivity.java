@@ -24,6 +24,7 @@ public class BattleActivity extends AppCompatActivity {
     ActivityBattleBinding binding;
     private Handler handler = new Handler(Looper.getMainLooper());
     private int slot;
+    private String opponentName;
     private Button[] abilityButtons;
     private Creature playerCreature;
     private Creature opponentCreature;
@@ -51,8 +52,8 @@ public class BattleActivity extends AppCompatActivity {
                 binding.abilityFourButton,
         };
 
-        //get reference to both player and opponent creatures
         playerCreature = UserTeamData.getInstance().getUserTeam().get(slot);
+
         opponentCreature = OpponentTeamData.getOpponentCreature();
 
         //update UI for battle screen
@@ -173,7 +174,6 @@ public class BattleActivity extends AppCompatActivity {
     private void updateBattlePrompt(String text) {
         //increment another 2 second delay from last prompt
         handler.postDelayed(() -> binding.battlePromptTextView.setText(text), battleTextPromptStep);
-        //this is used to automatically adjust the UI delay based on prompts passed in
         battleTextPromptStep += 2000;
     }
 
@@ -192,7 +192,7 @@ public class BattleActivity extends AppCompatActivity {
             updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName());
             damageDealt = playerCreature.attack(opponentCreature, selectedAbility);
             updateOpponentHealth();
-            creatureAttackResultPrompt(opponentCreature, damageDealt);
+            creatureAttackResultPrompt(damageDealt);
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
                 playerWin();
@@ -203,7 +203,7 @@ public class BattleActivity extends AppCompatActivity {
             updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName());
             damageDealt = opponentCreature.attack(playerCreature, opponentAbility);
             updatePlayerHealth();
-            creatureAttackResultPrompt(playerCreature, damageDealt);
+            creatureAttackResultPrompt(damageDealt);
             //check if player has fainted
             if (playerCreature.isFainted()) {
                 playerLose();
@@ -216,7 +216,7 @@ public class BattleActivity extends AppCompatActivity {
             updateBattlePrompt(opponentCreature.getName() + " used " + opponentAbility.getAbilityName());
             damageDealt = opponentCreature.attack(playerCreature, opponentAbility);
             updatePlayerHealth();
-            creatureAttackResultPrompt(playerCreature, damageDealt);
+            creatureAttackResultPrompt(damageDealt);
             //check if player has fainted
             if (playerCreature.isFainted()) {
                 playerLose();
@@ -227,7 +227,7 @@ public class BattleActivity extends AppCompatActivity {
             updateBattlePrompt(playerCreature.getName() + " used " + selectedAbility.getAbilityName());
             damageDealt = playerCreature.attack(opponentCreature, selectedAbility);
             updateOpponentHealth();
-            creatureAttackResultPrompt(opponentCreature, damageDealt);
+            creatureAttackResultPrompt(damageDealt);
             //check if the opponent has fainted
             if (opponentCreature.isFainted()) {
                 playerWin();
@@ -239,7 +239,7 @@ public class BattleActivity extends AppCompatActivity {
         updateBattlePrompt("What will " + playerCreature.getName() + " do?");
     }
 
-    private void creatureAttackResultPrompt(Creature creature, double[] damageDealt) {
+    private void creatureAttackResultPrompt(double[] damageDealt) {
         //check if attack dealt damage
         if (damageDealt[0] > 0) {
             //check for super effective
@@ -250,11 +250,11 @@ public class BattleActivity extends AppCompatActivity {
                 updateBattlePrompt("Its not very effective...");
             }
             //show damage
-            updateBattlePrompt(creature.getName() + " took " + Math.round(damageDealt[0]) + " damage");
+            updateBattlePrompt(opponentCreature.getName() + " took " + Math.round(damageDealt[0]) + " damage");
         }
         else {
             //show attack missed
-            updateBattlePrompt(creature.getName() + " avoided the attack!");
+            updateBattlePrompt(opponentCreature.getName() + " avoided the attack!");
         }
     }
 

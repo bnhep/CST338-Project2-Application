@@ -70,9 +70,6 @@ public abstract class ApplicationDatabase extends RoomDatabase {
                 User admin = new User("admin1", "admin1");
                 admin.setAdmin(true);
                 dao.insert(admin);
-                User admin2 = new User("admin2", "admin2");
-                admin2.setAdmin(true);
-                dao.insert(admin2);
                 //Pre-populated testuser1
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
