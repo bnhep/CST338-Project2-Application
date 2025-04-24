@@ -39,6 +39,14 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         //set UI with creature information
         setUiStats();
 
+        binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SelectAbilityToAddActivity.SelectAbilityToAddIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
         binding.deleteCreatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
