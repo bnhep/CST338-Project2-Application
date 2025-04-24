@@ -79,9 +79,7 @@ public class UserLandingActivity extends AppCompatActivity {
             }
         });
 
-        Button trainButton = findViewById(R.id.trainCreaturesButton);
-
-        trainButton.setOnClickListener(v -> {
+        binding.trainCreaturesButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserLandingActivity.this, TrainCreatureActivity.class);
             startActivity(intent);
         });
