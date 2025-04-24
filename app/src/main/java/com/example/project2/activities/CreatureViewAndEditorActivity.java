@@ -36,8 +36,8 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
             finish();
         }
 
-        //after passing in the slot# from TeamViewer get reference to UserData to get the hashmap userTeam and get the creature from that slot#'s name
-        binding.creatureNameTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getName());
+        //set UI with creature information
+        setUiStats();
 
         binding.deleteCreatureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +52,34 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setUiStats() {
+        /**
+         *  after passing in the slot# from TeamViewer get reference
+         *  to UserData to get the hashmap userTeam and set creature stats
+         */
+
+        //name
+        binding.creatureNameTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getName());
+        //type
+        binding.typeTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getType());
+        //elements
+        binding.elementTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getElements().toString());
+        //level
+        binding.levelTextview.setText("Level: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getLevel());
+        //current XP
+        binding.curXpTextView.setText("XP: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getCurExperiencePoints() +
+                "/" +UserTeamData.getInstance().getCreatureAtSlot(slot).getExperienceNeededToLevel());
+        //health
+        binding.healthStatTextView.setText("Health: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getHealthStat());
+        //attack
+        binding.attackStatTextView.setText("Attack: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getAttackStat());
+        //defense
+        binding.defenseStatTextView.setText("Defense: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getDefenseStat());
+        //speed
+        binding.speedStatTextView.setText("Speed: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getSpeedStat());
+
     }
 
     private void removeCreatureAlertDialog(){

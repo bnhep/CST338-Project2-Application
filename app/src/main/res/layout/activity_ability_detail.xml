@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_activities"
+    tools:context=".activities.CreatureDetailActivity">
+
+
+    <Space
+        android:id="@+id/userDisplaySpacer"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/usernameDisplayTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/usernameDisplayTextView"
+        android:layout_width="90dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="username"
+        android:textSize="16sp"
+        android:fontFamily="@font/merriweather"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Space
+        android:id="@+id/backButtonSpacer"
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/playfair_bold"
+        android:text="back"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameDisplayTextView"
+        app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/abilityNameTextView"
+        android:layout_width="259dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/merriweather"
+        android:gravity="center"
+        android:text="Ability Name"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/usernameDisplayTextView"
+        app:layout_constraintBottom_toTopOf="@id/abilityStatsGridLayout" />
+
+    <GridLayout
+        android:id="@+id/abilityStatsGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:padding="8dp"
+        android:rowCount="3"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toTopOf="@id/addAbilityButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/abilityNameTextView">
+
+        <TextView
+            android:id="@+id/elementStatTextView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_columnWeight="1"
+            android:text="[Element]"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/powerStatTextView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_columnWeight="1"
+            android:text="[Power]"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/critStatTextView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_columnWeight="1"
+            android:text="[Crit Change]"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/accuracyStatTextView"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_columnWeight="1"
+            android:text="[Accuracy]"
+            android:gravity="center"
+            android:textSize="20sp" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/addAbilityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/playfair_bold"
+        android:gravity="center"
+        android:text="Add Ability"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/abilityStatsGridLayout"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
