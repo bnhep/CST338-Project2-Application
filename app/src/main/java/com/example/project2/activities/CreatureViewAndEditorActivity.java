@@ -54,6 +54,34 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         //and creature abilities
         updateAbilityButtons();
 
+        binding.abilityOneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(0);
+            }
+        });
+
+        binding.abilityTwoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(1);
+            }
+        });
+
+        binding.abilityThreeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(2);
+            }
+        });
+
+        binding.abilityFourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(3);
+            }
+        });
+
         binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,13 +158,36 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         updateAbilityButtons();
     }
 
+    private void removeAbilityAlertDialog(int ability){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setTitle("Remove Ability");
+        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + "?");
+
+        alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UserTeamData.getInstance().getUserTeam().get(slot).getAbilityList().remove(ability);
+                updateAbilityButtons();
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.show();
+    }
+
 
     private void removeCreatureAlertDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog alertDialog = alertBuilder.create();
 
-        alertBuilder.setTitle("Confirm logout");
-        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + "?");
+        alertBuilder.setTitle("Remove Creature");
+        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + " from your team?");
 
         alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
             @Override
