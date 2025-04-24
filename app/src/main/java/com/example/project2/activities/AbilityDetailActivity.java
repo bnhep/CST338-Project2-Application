@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.Ability;
 import com.example.project2.R;
+import com.example.project2.UserTeamData;
+import com.example.project2.creatures.Creature;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
@@ -28,6 +30,8 @@ public class AbilityDetailActivity extends AppCompatActivity {
 
     ActivityAbilityDetailBinding binding;
     Ability selectedAbility;
+    private int slot;
+    private Creature playerCreature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +40,34 @@ public class AbilityDetailActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
+            finish();
+        }
+
+        //get reference to chosen creature
+        playerCreature = UserTeamData.getInstance().getUserTeam().get(slot);
+
         //pull Ability by ID
         getSelectedAbility();
+
+        binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!playerCreature.getAbilityList().contains(selectedAbility)) {
+                    playerCreature.getAbilityList().add(selectedAbility);
+
+                    Intent intent = new Intent(getApplicationContext(), CreatureViewAndEditorActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("slotNumber", slot);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(AbilityDetailActivity.this, "Creature already has this ability", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override

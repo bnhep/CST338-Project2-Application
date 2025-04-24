@@ -249,7 +249,7 @@ public abstract class Creature {
     }
 
     public double[] attack(Creature target, Ability ability) {
-        //store the result of calculateDamage
+        //store the results of calculateDamage
         double[] result = calculateDamage(target, ability);
 
         //convert into int
@@ -265,6 +265,7 @@ public abstract class Creature {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
+        double critMult = 1.0;
 
         if (this.elements.contains(ability.getAbilityElement())) {
             STABModifier = 1.5;

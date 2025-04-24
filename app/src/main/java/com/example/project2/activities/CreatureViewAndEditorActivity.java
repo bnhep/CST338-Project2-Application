@@ -6,18 +6,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.Ability;
 import com.example.project2.UserTeamData;
+import com.example.project2.creatures.Creature;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityCreatureViewAndEditorBinding;
+
+import java.util.List;
 
 public class CreatureViewAndEditorActivity extends AppCompatActivity {
 
     ActivityCreatureViewAndEditorBinding binding;
     private int slot;
     private AccountStatusCheck accountManager;
+    private Button[] abilityButtons;
+    private Creature playerCreature;
 
 
     @Override
@@ -36,14 +44,61 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
             finish();
         }
 
+        //assign array of buttons
+        abilityButtons = new Button[] {
+                binding.abilityOneButton,
+                binding.abilityTwoButton,
+                binding.abilityThreeButton,
+                binding.abilityFourButton,
+        };
+
+        //get reference to chosen creature
+        playerCreature = UserTeamData.getInstance().getUserTeam().get(slot);
+
         //set UI with creature information
         setUiStats();
+        //and creature abilities
+        updateAbilityButtons();
+
+        binding.abilityOneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(0);
+            }
+        });
+
+        binding.abilityTwoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(1);
+            }
+        });
+
+        binding.abilityThreeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(2);
+            }
+        });
+
+        binding.abilityFourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAbilityAlertDialog(3);
+            }
+        });
 
         binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreatureViewAndEditorActivity.this, SelectAbilityToAddActivity.class);
-                startActivity(intent);
+                if (playerCreature.getAbilityList().size() < 4) {
+                    Intent intent = new Intent(CreatureViewAndEditorActivity.this, SelectAbilityToAddActivity.class);
+                    intent.putExtra("slotNumber", slot);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(CreatureViewAndEditorActivity.this, "Must remove an ability first", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -67,35 +122,80 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
          *  after passing in the slot# from TeamViewer get reference
          *  to UserData to get the hashmap userTeam and set creature stats
          */
-
         //name
-        binding.creatureNameTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getName());
+        binding.creatureNameTextView.setText(playerCreature.getName());
         //type
-        binding.typeTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getType());
+        binding.typeTextView.setText(playerCreature.getType());
         //elements
-        binding.elementTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getElements().toString());
+        binding.elementTextView.setText(playerCreature.getElements().toString());
         //level
-        binding.levelTextview.setText("Level: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getLevel());
+        binding.levelTextview.setText("Level: " + playerCreature.getLevel());
         //current XP
-        binding.curXpTextView.setText("XP: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getCurExperiencePoints() +
-                "/" +UserTeamData.getInstance().getCreatureAtSlot(slot).getExperienceNeededToLevel());
+        binding.curXpTextView.setText("XP: " + playerCreature.getCurExperiencePoints() + "/" + playerCreature.getExperienceNeededToLevel());
         //health
-        binding.healthStatTextView.setText("Health: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getHealthStat());
+        binding.healthStatTextView.setText("Health: " + playerCreature.getHealthStat());
         //attack
-        binding.attackStatTextView.setText("Attack: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getAttackStat());
+        binding.attackStatTextView.setText("Attack: " + playerCreature.getAttackStat());
         //defense
-        binding.defenseStatTextView.setText("Defense: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getDefenseStat());
+        binding.defenseStatTextView.setText("Defense: " + playerCreature.getDefenseStat());
         //speed
-        binding.speedStatTextView.setText("Speed: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getSpeedStat());
-
+        binding.speedStatTextView.setText("Speed: " + playerCreature.getSpeedStat());
     }
+
+    private void updateAbilityButtons() {
+        List<Ability> abilities = playerCreature.getAbilityList();
+
+        //iterate through the buttons
+        for (int i = 0; i < abilityButtons.length; i++) {
+            if (i < abilities.size() && abilities.get(i) != null) {
+                abilityButtons[i].setText(abilities.get(i).getAbilityName());
+                //enable only if there's an ability
+                abilityButtons[i].setEnabled(true);
+            } else {
+                abilityButtons[i].setText("——————");
+                //disable if there's no ability
+                abilityButtons[i].setEnabled(false);
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //refresh names every time activity regains focus
+        updateAbilityButtons();
+    }
+
+    private void removeAbilityAlertDialog(int ability){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setTitle("Remove Ability");
+        alertBuilder.setMessage("Are you sure you want to remove " + playerCreature.getAbilityList().get(ability).getAbilityName() + "?");
+
+        alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                playerCreature.getAbilityList().remove(ability);
+                updateAbilityButtons();
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.show();
+    }
+
 
     private void removeCreatureAlertDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog alertDialog = alertBuilder.create();
 
-        alertBuilder.setTitle("Confirm logout");
-        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + "?");
+        alertBuilder.setTitle("Remove Creature");
+        alertBuilder.setMessage("Are you sure you want to remove " + playerCreature.getName() + " from your team?");
 
         alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
             @Override
