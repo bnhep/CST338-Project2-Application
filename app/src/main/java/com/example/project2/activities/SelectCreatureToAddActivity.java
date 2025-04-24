@@ -43,10 +43,7 @@ public class SelectCreatureToAddActivity extends AppCompatActivity {
             finish();
         }
 
-        /**
-         *  TODO: this is only temporary. eventually this will be replaced with a call
-         *   to a table containing all creature types.
-         */
+        //populate list with creatures saved in database
         setUpData();
 
         listView = binding.creatureTypeListView;

@@ -1,7 +1,7 @@
 package com.example.project2.creatures;
 /**
  * Name: Austin Shatswell
- * Date: --/--/25
+ * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
  */
 
@@ -248,15 +248,20 @@ public abstract class Creature {
         experienceNeededToLevel = calculateExperienceNeeded(this.getLevel());
     }
 
-    public int attack(Creature target, Ability ability) {
+    public double[] attack(Creature target, Ability ability) {
+        //store the result of calculateDamage
+        double[] result = calculateDamage(target, ability);
 
-        int attackValue = (int) Math.round(calculateDamage(target, ability));
+        //convert into int
+        int attackValue = (int) Math.round(result[0]);
+        //pass the damage result onto the deal damage to the target
         target.takeDamage(attackValue);
 
-        return attackValue;
+        //return result to be used in battle prompt
+        return result;
     }
 
-    public double calculateDamage(Creature target, Ability ability) {
+    public double[] calculateDamage(Creature target, Ability ability) {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
@@ -269,20 +274,14 @@ public abstract class Creature {
             elementalModifier *= elementalDamageModifier(target.elements.get(i), ability.getAbilityElement());
         }
 
-        if (elementalModifier >= 2.0) {
-            System.out.println("It's super effective!");
-        }
-        else if (elementalModifier < 1.0) {
-            System.out.println("It's not very effective");
-        }
-
         //damage formula
         double attackDefenseRatio = Math.pow((double) this.getAttackStat() / (this.getAttackStat() + target.getDefenseStat()), .85);
         double baseDamage = (this.getLevel() / 2.0) * ability.getPower();
         double modifierBonus = Math.pow(elementalModifier * STABModifier, .85);
         damageTotal = baseDamage * attackDefenseRatio * modifierBonus / 4;
 
-        return damageTotal;
+        //return a double that stores both the damage and modifier
+        return new double[] {damageTotal, elementalModifier};
     }
 
     double elementalDamageModifier(ElementalType defending, ElementalType abilityElement) {

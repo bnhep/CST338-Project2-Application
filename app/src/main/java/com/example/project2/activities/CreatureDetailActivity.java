@@ -45,7 +45,8 @@ public class CreatureDetailActivity extends AppCompatActivity {
             //if the number failed to pass in correctly just cancel
             finish();
         }
-        
+
+        //pull Creature by ID
         getSelectedCreature();
 
         binding.addToTeamButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +81,7 @@ public class CreatureDetailActivity extends AppCompatActivity {
             CreatureEntity entity = creatureDAO.getCreatureById(creatureId);
             selectedCreature = Converters.convertEntityToCreature(entity, abilityDAO);
 
+            //set the UI to display creature stats
             runOnUiThread(this::setValues);
         });
     }
@@ -98,7 +100,7 @@ public class CreatureDetailActivity extends AppCompatActivity {
         binding.speedStatTextView.setText("Speed: " + selectedCreature.getBaseSpeed());
     }
 
-    public static Intent BuildCreatureDetailIntentFactory(Context context) {
+    public static Intent CreatureDetailIntentFactory(Context context) {
         Intent intent = new Intent(context, CreatureDetailActivity.class);
         return intent;
     }
