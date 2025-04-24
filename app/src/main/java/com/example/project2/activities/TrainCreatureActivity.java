@@ -37,8 +37,6 @@ public class TrainCreatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attribute_select);
 
-        trainee = new ElectricRat(); //temporary trainee
-
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -49,6 +47,15 @@ public class TrainCreatureActivity extends AppCompatActivity {
                 .build();
         tapSoundId = soundPool.load(this, R.raw.tap_sound, 1);
 
+        new Thread(() -> {
+            trainee = new ElectricRat(); //temporary before team select
+            runOnUiThread(() -> {
+                setupUI();
+            });
+        }).start();
+    }
+
+    private void setupUI() {
         findViewById(R.id.btn_train_attack).setOnClickListener(v -> tryAttribute("attack"));
         findViewById(R.id.btn_train_defense).setOnClickListener(v -> tryAttribute("defense"));
         findViewById(R.id.btn_train_health).setOnClickListener(v -> tryAttribute("health"));
