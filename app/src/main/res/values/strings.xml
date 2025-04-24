@@ -15,5 +15,4 @@
     <string name="back">Back</string>
     <string name="train_monsters">Train Creatures</string>
     <string name="logout">Logout</string>
-    <string name="creatureName">Enter Name</string>
 </resources>
