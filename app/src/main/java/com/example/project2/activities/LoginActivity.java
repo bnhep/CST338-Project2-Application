@@ -160,7 +160,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loadTeam(String userId){
-        //TODO: This is just here for testing. this should be moved to when the user logs in later
         try {
             //run on a background thread when making changes to the database
             Executors.newSingleThreadExecutor().execute(() -> {
@@ -171,8 +170,6 @@ public class LoginActivity extends AppCompatActivity {
                 //get reference to the CreatureDAO and AbilityDAO singletons
                 CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
                 AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-
-                //TODO:later on we want to pass in the actual users generated id here
                 /**
                  * Passing the users ID into the creatureDAO to collect a list of
                  * creatures associated with the current user.
