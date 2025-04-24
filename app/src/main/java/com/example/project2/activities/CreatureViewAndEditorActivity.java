@@ -42,7 +42,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = SelectAbilityToAddActivity.SelectAbilityToAddIntentFactory(getApplicationContext());
+                Intent intent = new Intent(CreatureViewAndEditorActivity.this, SelectAbilityToAddActivity.class);
                 startActivity(intent);
             }
         });
