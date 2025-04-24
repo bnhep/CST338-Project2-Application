@@ -45,4 +45,16 @@ public class FireLizard extends Creature {
         AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
         this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("FLAMETHROWER")));
     }
+    public int getHEALTH_MAX(){
+        return HEALTH_MAX;
+    }
+    public int getATTACK_MAX(){
+        return ATTACK_MAX;
+    }
+    public int getDEFENSE_MAX(){
+        return DEFENSE_MAX;
+    }
+    public int getSPEED_MAX(){
+        return SPEED_MAX;
+    }
 }
