@@ -51,8 +51,8 @@ public class BattleActivity extends AppCompatActivity {
                 binding.abilityFourButton,
         };
 
+        //get reference to both player and opponent creatures
         playerCreature = UserTeamData.getInstance().getUserTeam().get(slot);
-
         opponentCreature = OpponentTeamData.getOpponentCreature();
 
         //update UI for battle screen

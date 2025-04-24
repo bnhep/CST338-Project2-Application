@@ -6,18 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.Ability;
 import com.example.project2.UserTeamData;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityCreatureViewAndEditorBinding;
+
+import java.util.List;
 
 public class CreatureViewAndEditorActivity extends AppCompatActivity {
 
     ActivityCreatureViewAndEditorBinding binding;
     private int slot;
     private AccountStatusCheck accountManager;
+    private Button[] abilityButtons;
 
 
     @Override
@@ -36,13 +41,24 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
             finish();
         }
 
+        //assign array of buttons
+        abilityButtons = new Button[] {
+                binding.abilityOneButton,
+                binding.abilityTwoButton,
+                binding.abilityThreeButton,
+                binding.abilityFourButton,
+        };
+
         //set UI with creature information
         setUiStats();
+        //and creature abilities
+        updateAbilityButtons();
 
         binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CreatureViewAndEditorActivity.this, SelectAbilityToAddActivity.class);
+                intent.putExtra("slotNumber", slot);
                 startActivity(intent);
             }
         });
@@ -88,6 +104,23 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         //speed
         binding.speedStatTextView.setText("Speed: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getSpeedStat());
 
+    }
+
+    private void updateAbilityButtons() {
+        List<Ability> abilities = UserTeamData.getInstance().getUserTeam().get(slot).getAbilityList();
+
+        //iterate through the buttons
+        for (int i = 0; i < abilityButtons.length; i++) {
+            if (i < abilities.size() && abilities.get(i) != null) {
+                abilityButtons[i].setText(abilities.get(i).getAbilityName());
+                //enable only if there's an ability
+                abilityButtons[i].setEnabled(true);
+            } else {
+                abilityButtons[i].setText("——————");
+                //disable if there's no ability
+                abilityButtons[i].setEnabled(false);
+            }
+        }
     }
 
     private void removeCreatureAlertDialog(){
