@@ -1,8 +1,8 @@
 package com.example.project2;
 /**
  * This class exists to help form the list that
- * will display all of the creatures available
- * in the BuildCreatureToAddToTeam activities ListView
+ * will display all of the abilities available
+ * to a creature in the ViewAndEditCreature activity
  * -Austin
  */
 
@@ -16,13 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.project2.creatures.Creature;
-
 import java.util.List;
 
-public class CreatureCellAdapter extends ArrayAdapter<String> {
-    public CreatureCellAdapter(Context context, int resource, List<String> creatureNames) {
-        super(context, resource, creatureNames);
+public class AbilityCellAdapter extends ArrayAdapter<String> {
+    public AbilityCellAdapter(Context context, int resource, List<String> abilityNames) {
+        super(context, resource, abilityNames);
     }
 
     @Override
@@ -30,11 +28,11 @@ public class CreatureCellAdapter extends ArrayAdapter<String> {
         String name = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell_creature_preview, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell_ability_preview, parent, false);
         }
 
-        TextView creatureNameTextView = convertView.findViewById(R.id.creatureNameCellTextView);
-        creatureNameTextView.setText(name);
+        TextView abilityNameTextView = convertView.findViewById(R.id.abilityNameCellTextView);
+        abilityNameTextView.setText(name);
 
         return convertView;
     }

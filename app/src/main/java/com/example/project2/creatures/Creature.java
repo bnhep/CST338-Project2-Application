@@ -1,7 +1,7 @@
 package com.example.project2.creatures;
 /**
  * Name: Austin Shatswell
- * Date: --/--/25
+ * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
  */
 
@@ -49,7 +49,12 @@ public abstract class Creature {
     private int baseSpeed;
 
     public Creature() {
+        this.level = 1;
+        this.experienceNeededToLevel = calculateExperienceNeeded(level);
 
+        //All creatures start with tackle
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+        this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
     public Creature(String name, int level, ElementalType... types) {
@@ -60,13 +65,6 @@ public abstract class Creature {
 
         //All creatures start with tackle
         AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
-
-        if (abilityDAO == null) {
-            Log.e("Creature", "AbilityDAO in Creature is null!");
-        } else {
-            Log.d("Creature", "AbilityDAO in Creature successfully retrieved");
-        }
-
         this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
@@ -230,16 +228,11 @@ public abstract class Creature {
             return;
         }
 
-        System.out.println("current XP: " + curExperiencePoints);
-        System.out.println("XP needed to level: " + experienceNeededToLevel);
-        System.out.println(this.getName() + " gained " + experience + " XP");
         curExperiencePoints += experience;
         if (curExperiencePoints >= experienceNeededToLevel) {
             curExperiencePoints = curExperiencePoints-experienceNeededToLevel;
             levelUp();
         }
-        System.out.println("current XP: " + curExperiencePoints);
-        System.out.println("XP needed to level: " + experienceNeededToLevel);
     }
 
     public int calculateExperienceNeeded(int level) {
@@ -253,19 +246,22 @@ public abstract class Creature {
         updateStats();
         curHealth = healthStat;
         experienceNeededToLevel = calculateExperienceNeeded(this.getLevel());
-        System.out.println(this.getName() + " leveled up!");
     }
 
-    //TODO: Add accuracy and crit chance into the attack and calculateDamage modifiers respectively
-    public void attack(Creature target, Ability ability) {
-        //System.out.println(this.getPhrase());
-        System.out.println(this.getName() + " uses " + ability.getAbilityName());
+    public double[] attack(Creature target, Ability ability) {
+        //store the result of calculateDamage
+        double[] result = calculateDamage(target, ability);
 
-        int attackValue = (int) Math.round(calculateDamage(target, ability));
+        //convert into int
+        int attackValue = (int) Math.round(result[0]);
+        //pass the damage result onto the deal damage to the target
         target.takeDamage(attackValue);
+
+        //return result to be used in battle prompt
+        return result;
     }
 
-    public double calculateDamage(Creature target, Ability ability) {
+    public double[] calculateDamage(Creature target, Ability ability) {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
@@ -278,20 +274,14 @@ public abstract class Creature {
             elementalModifier *= elementalDamageModifier(target.elements.get(i), ability.getAbilityElement());
         }
 
-        if (elementalModifier >= 2.0) {
-            System.out.println("It's super effective!");
-        }
-        else if (elementalModifier < 1.0) {
-            System.out.println("It's not very effective");
-        }
-
         //damage formula
         double attackDefenseRatio = Math.pow((double) this.getAttackStat() / (this.getAttackStat() + target.getDefenseStat()), .85);
         double baseDamage = (this.getLevel() / 2.0) * ability.getPower();
         double modifierBonus = Math.pow(elementalModifier * STABModifier, .85);
         damageTotal = baseDamage * attackDefenseRatio * modifierBonus / 4;
 
-        return damageTotal;
+        //return a double that stores both the damage and modifier
+        return new double[] {damageTotal, elementalModifier};
     }
 
     double elementalDamageModifier(ElementalType defending, ElementalType abilityElement) {
@@ -356,19 +346,12 @@ public abstract class Creature {
     public void takeDamage(int damage) {
         //make sure the attack dealt damage
         if (damage > 0) {
-            System.out.println(this.getName() + " is hit for " + damage + " damage!");
             this.curHealth = this.curHealth - damage;
-        }
-        else {
-            System.out.println(this.getName() + " avoided the attack!");
         }
 
         if (this.getCurHealth() <= 0) {
-            System.out.println(this.getName() + " has lost consciousness. It's passed out.");
+            this.curHealth = 0;
             this.setFainted(true);
-        }
-        else {
-            //System.out.println(this.getName() + " has " + this.getCurHealth() + "/" + this.healthStat + " remaining");
         }
     }
 }

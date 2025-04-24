@@ -1,6 +1,5 @@
 package com.example.project2.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,27 +10,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
+import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
-import com.example.project2.databinding.ActivityBuildCreatureDetailBinding;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.database.entities.CreatureEntity;
+import com.example.project2.databinding.ActivityCreatureDetailBinding;
+import com.example.project2.utilities.Converters;
 
 import java.util.concurrent.Executors;
 
-public class BuildCreatureDetailActivity extends AppCompatActivity {
+public class CreatureDetailActivity extends AppCompatActivity {
 
-    ActivityBuildCreatureDetailBinding binding;
+    ActivityCreatureDetailBinding binding;
 
     private int slot;
-    int creatureArrayPosition;
     Creature selectedCreature;
+    String userId;
     private AccountStatusCheck accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityBuildCreatureDetailBinding.inflate(getLayoutInflater());
+        binding = ActivityCreatureDetailBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         accountManager = AccountStatusCheck.getInstance();
+
+        userId = String.valueOf(accountManager.getUserID());
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //store the passed in slot number
         slot = getIntent().getIntExtra("slotNumber", -1);
@@ -39,21 +45,17 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
             //if the number failed to pass in correctly just cancel
             finish();
         }
-        
-        getSelectedCreature();
 
-        setValues();
+        //pull Creature by ID
+        getSelectedCreature();
 
         binding.addToTeamButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //this is all just for testing at the moment
+                //add creature to team
                 Executors.newSingleThreadExecutor().execute(() -> {
+                    selectedCreature.setCreatureId(0);
                     UserTeamData.getInstance().addCreatureToSlot(slot, selectedCreature);
-
-                    runOnUiThread(() ->
-                            Toast.makeText(BuildCreatureDetailActivity.this, selectedCreature.getName() + " added to team in slot " + slot, Toast.LENGTH_SHORT).show()
-                    );
 
                     Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                     startActivity(intent);
@@ -64,30 +66,42 @@ public class BuildCreatureDetailActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = BuildCreatureToAddToTeamActivity.BuildCreatureToAddToTeamIntentFactory(getApplicationContext());
-                intent.putExtra("slotNumber", slot);
-                startActivity(intent);
+                finish();
             }
         });
     }
 
     private void getSelectedCreature() {
-        creatureArrayPosition = getIntent().getIntExtra("positionInArray", -1);
-        selectedCreature = BuildCreatureToAddToTeamActivity.creatureList.get(creatureArrayPosition);
+        int creatureId = getIntent().getIntExtra("creatureId", -1);
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+            AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+            CreatureEntity entity = creatureDAO.getCreatureById(creatureId);
+            selectedCreature = Converters.convertEntityToCreature(entity, abilityDAO);
+
+            //set the UI to display creature stats
+            runOnUiThread(this::setValues);
+        });
     }
 
-    @SuppressLint("SetTextI18n")
     private void setValues() {
+        if (selectedCreature == null) {
+            Toast.makeText(this, "Failed to load creature data.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //update the text view values to that of the creatures
         binding.creatureNameTextView.setText(selectedCreature.getName());
-        binding.creatureBaseHealthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());
-        binding.creatureBaseAttackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());
-        binding.creatureBaseDefenseStatTextView.setText("Defense: " + selectedCreature.getBaseDefense());
-        binding.creatureBaseSpeedStatTextView.setText("Speed: " + selectedCreature.getBaseSpeed());
+        binding.healthStatTextView.setText("Health: " + selectedCreature.getBaseHealth());
+        binding.attackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());
+        binding.defenseStatTextView.setText("Defense: " + selectedCreature.getBaseDefense());
+        binding.speedStatTextView.setText("Speed: " + selectedCreature.getBaseSpeed());
     }
 
-    public static Intent BuildCreatureDetailIntentFactory(Context context) {
-        Intent intent = new Intent(context, BuildCreatureDetailActivity.class);
+    public static Intent CreatureDetailIntentFactory(Context context) {
+        Intent intent = new Intent(context, CreatureDetailActivity.class);
         return intent;
     }
 }

@@ -23,11 +23,14 @@ public class AccountStatusCheck {
     private static final String CURRENT_STATUS_KEY = "com.example.project2.CURRENT_STATUS_KEY ";
     private static final String CURRENT_USERNAME_KEY = "com.example.project2.CURRENT_USERNAME_KEY";
 
+    private static final String TEAM_LOADED_KEY = "com.example.project2.TEAM_LOADED";
+
     private final SharedPreferences preferences;
 
     private final SharedPreferences.Editor editor;
 
     private static volatile AccountStatusCheck INSTANCE;
+
 
     private AccountStatusCheck(Context context){
         preferences = context.getApplicationContext()
@@ -107,6 +110,13 @@ public class AccountStatusCheck {
         return preferences.getBoolean(CURRENT_STATUS_KEY, true);
     }
 
+    public boolean isTeamLoaded() {
+        return preferences.getBoolean(TEAM_LOADED_KEY, false);
+    }
 
+    public void setTeamLoaded(boolean loaded) {
+        editor.putBoolean(TEAM_LOADED_KEY, loaded);
+        editor.apply();
+    }
 
 }

@@ -14,13 +14,25 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.OpponentTeamData;
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
+import com.example.project2.creatures.ElectricRat;
+import com.example.project2.creatures.FireLizard;
+import com.example.project2.creatures.FlowerDino;
+import com.example.project2.creatures.WeirdTurtle;
+import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
-import com.example.project2.database.ApplicationRepository;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
+import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityOpponentSelectBinding;
+import com.example.project2.utilities.Converters;
+import com.example.project2.utilities.Dice;
 
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 public class OpponentSelectActivity extends AppCompatActivity {
 
@@ -29,7 +41,8 @@ public class OpponentSelectActivity extends AppCompatActivity {
     private boolean opponentSelectButtonsVisible = true;
     private boolean creatureSelectButtonsVisible = false;
 
-    private String opponentName;
+    private String opponentIntro;
+    private Creature opponentCreature;
     Button[] teamSlotButtons;
     Button[] opponentButtons;
 
@@ -62,86 +75,110 @@ public class OpponentSelectActivity extends AppCompatActivity {
         binding.opponentOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentName = "Brock";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    generateRandomEncounter();
+
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "A wild " + opponentCreature.getName() + " appears!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
         binding.opponentTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentName = "Misty";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    opponentCreature = new FlowerDino("Flower Dino", 4);
+
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "You challenged Rock!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
         binding.opponentThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentName = "Red";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    opponentCreature = new WeirdTurtle("Weird Turtle", 8);
+
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "You challenged Christy!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
         binding.opponentFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleOpponentSelectButtons();
-                updateTeamSlotButtons();
-                opponentName = "Random";
-                updateTextView("Select your creature");
-                toggleCreatureSelectButtons();
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    opponentCreature = new ElectricRat("Electric Rat", 12);
+
+                    runOnUiThread(() -> {
+                        toggleOpponentSelectButtons();
+                        updateTeamSlotButtons();
+                        opponentIntro = "You challenged The Champ!";
+                        updateTextView("Select your creature");
+                        toggleCreatureSelectButtons();
+                    });
+                });
             }
         });
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(1, opponentName);
+                startBattleOpponent(1, opponentIntro);
             }
         });
 
         binding.teamSlotTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(2, opponentName);
+                startBattleOpponent(2, opponentIntro);
             }
         });
 
         binding.teamSlotThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(3, opponentName);
+                startBattleOpponent(3, opponentIntro);
             }
         });
 
         binding.teamSlotFourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(4, opponentName);
+                startBattleOpponent(4, opponentIntro);
             }
         });
 
         binding.teamSlotFiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(5, opponentName);
+                startBattleOpponent(5, opponentIntro);
             }
         });
 
         binding.teamSlotSixButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startBattleOpponent(6, opponentName);
+                startBattleOpponent(6, opponentIntro);
             }
         });
 
@@ -153,13 +190,31 @@ public class OpponentSelectActivity extends AppCompatActivity {
         });
     }
 
-    private void startBattleOpponent(int slot, String opponentName) {
+    private void generateRandomEncounter() {
+        //get DAOs
+        CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+        AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+        //TODO:eventually can make this set the random creatures level to be similar to the playerCreatures
+
+        //create a list of all template creature entities
+        List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("NONE");
+        //roll for which one based on list size
+        int encounterRoll = Dice.roll(0, creatureEntities.size()-1);
+        //get the creature entity from the list associated with the number rolled
+        CreatureEntity generatedCreature = creatureEntities.get(encounterRoll);
+        //convert that entity into a full creature object and set it to be the opponent
+        opponentCreature = Converters.convertEntityToCreature(generatedCreature, abilityDAO);
+    }
+
+    private void startBattleOpponent(int slot, String opponentIntro) {
         Creature creature = UserTeamData.getInstance().getUserTeam().get(slot);
+        OpponentTeamData.setOpponentCreature(opponentCreature);
 
         if (creature != null) {
             Intent intent = new Intent(this, BattleActivity.class);
             //add opponent info here
-            intent.putExtra("name", opponentName);
+            intent.putExtra("opponentIntro", opponentIntro);
             //add creature chosen here
             intent.putExtra("slotNumber", slot);
             startActivity(intent);

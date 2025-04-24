@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_activities"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.UserLandingActivity">
 
     <LinearLayout
         android:id="@+id/loginCenterLayout"
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/startBattleButton" />
 
         <Button
-            android:id="@+id/viewRecentBattleButton"
+            android:id="@+id/trainCreaturesButton"
             android:layout_width="161dp"
             android:layout_height="48dp"
             android:layout_marginBottom="20dp"

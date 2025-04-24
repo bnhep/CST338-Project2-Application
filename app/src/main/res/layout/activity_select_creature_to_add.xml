@@ -6,29 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_activities"
-    tools:context=".activities.BuildCreatureToAddToTeamActivity">
-
-    <TextView
-        android:id="@+id/selectCreatureTextView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:text="Select a creature type"
-        android:textColor="@color/black"
-        android:fontFamily="@font/merriweather"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userDisplaySpacer" />
-
-    <ListView
-        android:id="@+id/creatureTypeListView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectCreatureTextView" />
+    tools:context=".activities.SelectCreatureToAddActivity">
 
     <Space
         android:id="@+id/userDisplaySpacer"
@@ -54,7 +32,6 @@
         app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <Space
         android:id="@+id/backButtonSpacer"
         android:layout_width="225dp"
@@ -73,5 +50,27 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/usernameDisplayTextView"
         app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/selectCreatureTextView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="Select a creature type"
+        android:textColor="@color/black"
+        android:fontFamily="@font/merriweather"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userDisplaySpacer" />
+
+    <ListView
+        android:id="@+id/creatureTypeListView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectCreatureTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
