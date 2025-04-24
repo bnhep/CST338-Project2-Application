@@ -7,6 +7,7 @@ import androidx.room.Query;
 
 import com.example.project2.database.entities.User;
 
+import java.util.List;
 
 
 public class ApplicationRepository {
@@ -55,4 +56,10 @@ public class ApplicationRepository {
             userDAO.setPasswordByUsername(newPassword,username);
         });
     }
+
+    public LiveData<List<User>> getAllUsers(){
+        return userDAO.getAllUsers();
+    }
+
+
 }

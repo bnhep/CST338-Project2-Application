@@ -1,35 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/primaryContainer"
+    android:orientation="vertical">
+
 
     <TextView
+        android:id="@+id/usernameRecyclerViewText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/usernameTitleRecyclerTextView"
+        android:background="@drawable/background_activities"
+        android:fontFamily="@font/merriweather"
         android:text="@string/username"
-        android:layout_toEndOf="@id/iconForUsers"
-        android:id="@+id/usernameRecyclerViewText"/>
-
-    <ImageView
-        android:id="@+id/iconForUsers"
-        android:layout_width="48dp"
-        android:layout_height="48dp" />
+        android:textColor="@color/black" />
 
     <TextView
-        android:layout_width="309dp"
+        android:id="@+id/usernameTitleRecyclerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usernameRecyclerViewText"
+        android:layout_marginBottom="-28dp"
+        android:text="@string/username" />
+
+    <TextView
+        android:id="@+id/passwordTitleRecyclerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomSpacer"
+        android:text="@string/password" />
+
+    <TextView
+        android:id="@+id/passwordRecyclerViewText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/usernameRecyclerViewText"
-        android:layout_marginBottom="-29dp"
-        android:layout_toEndOf="@id/iconForUsers"
-        android:id="@+id/passwordRecyclerViewText"
-        android:text="@string/password" />
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="-43dp"
+        android:layout_toEndOf="@id/usernameTitleRecyclerTextView"
+        android:background="@drawable/background_activities"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/password"
+        android:textColor="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:layout_below="@+id/iconForUsers"
-        android:background="@color/black" />
+        android:id="@+id/bottomSpacer"
+        android:layout_below="@+id/passwordRecyclerViewText"
+        android:layout_marginTop="43dp"
+        android:background="@color/black"
+        android:orientation="vertical" />
 
 
 </RelativeLayout>

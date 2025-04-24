@@ -1,12 +1,13 @@
-package com.example.project2;
+package com.example.project2.viewholders;
 
-import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project2.R;
 
 public class UserViewHolder extends RecyclerView.ViewHolder {
 
@@ -15,7 +16,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
     TextView passwordTextView;
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
-        iconView = itemView.findViewById(R.id.iconForUsers);
         usernameTextView = itemView.findViewById(R.id.usernameRecyclerViewText);
         passwordTextView = itemView.findViewById(R.id.passwordRecyclerViewText);
     }
