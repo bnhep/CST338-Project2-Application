@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.Ability;
 import com.example.project2.R;
+import com.example.project2.UserTeamData;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
@@ -28,6 +29,7 @@ public class AbilityDetailActivity extends AppCompatActivity {
 
     ActivityAbilityDetailBinding binding;
     Ability selectedAbility;
+    private int slot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,25 @@ public class AbilityDetailActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
+            finish();
+        }
+
         //pull Ability by ID
         getSelectedAbility();
+
+        binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserTeamData.getInstance().getUserTeam().get(slot).getAbilityList().add(selectedAbility);
+
+                Intent intent = CreatureViewAndEditorActivity.CreatureViewAndEditorIntentFactory(getApplicationContext());
+                intent.putExtra("slotNumber", slot);
+                startActivity(intent);
+            }
+        });
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override

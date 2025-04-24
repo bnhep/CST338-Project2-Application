@@ -32,6 +32,7 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
     ActivitySelectAbilityToAddBinding binding;
     private List<AbilityEntity> abilityEntities = new ArrayList<>();
     private ListView listView;
+    private int slot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,12 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
         binding = ActivitySelectAbilityToAddBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
+            finish();
+        }
 
         setUpData();
 
@@ -51,6 +58,7 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), AbilityDetailActivity.class);
                 intent.putExtra("abilityId", abilityId);
+                intent.putExtra("slotNumber", slot);
                 startActivity(intent);
             }
         });
