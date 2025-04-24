@@ -123,6 +123,14 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //refresh names every time activity regains focus
+        updateAbilityButtons();
+    }
+
+
     private void removeCreatureAlertDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog alertDialog = alertBuilder.create();

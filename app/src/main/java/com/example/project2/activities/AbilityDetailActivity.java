@@ -51,6 +51,10 @@ public class AbilityDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserTeamData.getInstance().getUserTeam().get(slot).getAbilityList().add(selectedAbility);
+
+                Intent intent = CreatureViewAndEditorActivity.CreatureViewAndEditorIntentFactory(getApplicationContext());
+                intent.putExtra("slotNumber", slot);
+                startActivity(intent);
             }
         });
 
