@@ -15,6 +15,10 @@
     <string name="back">Back</string>
     <string name="train_monsters">Train Creatures</string>
     <string name="logout">Logout</string>
+    <string name="forgot_password"><u>Forgot password?</u></string>
+    <string name="sign_in">Sign in</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
