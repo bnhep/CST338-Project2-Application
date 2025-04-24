@@ -105,8 +105,7 @@ public class TeamViewerActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = UserLandingActivity.UserLandingPageIntentFactory(getApplicationContext());
-                startActivity(intent);
+                finish();
             }
         });
     }

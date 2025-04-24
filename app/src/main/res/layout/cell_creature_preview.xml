@@ -11,6 +11,7 @@
         android:id="@+id/creatureNameCellTextView"
         android:gravity="center"
         android:text="creature name"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"/>
