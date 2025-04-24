@@ -195,6 +195,8 @@ public class OpponentSelectActivity extends AppCompatActivity {
         CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
         AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
+        //TODO:eventually can make this set the random creatures level to be similar to the playerCreatures
+
         //create a list of all template creature entities
         List<CreatureEntity> creatureEntities = creatureDAO.getCreaturesByUserId("NONE");
         //roll for which one based on list size
