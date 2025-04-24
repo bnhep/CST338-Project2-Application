@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.Ability;
 import com.example.project2.UserTeamData;
+import com.example.project2.creatures.Creature;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityCreatureViewAndEditorBinding;
 
@@ -23,6 +25,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
     private int slot;
     private AccountStatusCheck accountManager;
     private Button[] abilityButtons;
+    private Creature playerCreature;
 
 
     @Override
@@ -48,6 +51,9 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
                 binding.abilityThreeButton,
                 binding.abilityFourButton,
         };
+
+        //get reference to chosen creature
+        playerCreature = UserTeamData.getInstance().getUserTeam().get(slot);
 
         //set UI with creature information
         setUiStats();
@@ -85,9 +91,14 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding.addAbilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreatureViewAndEditorActivity.this, SelectAbilityToAddActivity.class);
-                intent.putExtra("slotNumber", slot);
-                startActivity(intent);
+                if (playerCreature.getAbilityList().size() < 4) {
+                    Intent intent = new Intent(CreatureViewAndEditorActivity.this, SelectAbilityToAddActivity.class);
+                    intent.putExtra("slotNumber", slot);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(CreatureViewAndEditorActivity.this, "Must remove an ability first", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -113,29 +124,28 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
          */
 
         //name
-        binding.creatureNameTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getName());
+        binding.creatureNameTextView.setText(playerCreature.getName());
         //type
-        binding.typeTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getType());
+        binding.typeTextView.setText(playerCreature.getType());
         //elements
-        binding.elementTextView.setText(UserTeamData.getInstance().getCreatureAtSlot(slot).getElements().toString());
+        binding.elementTextView.setText(playerCreature.getElements().toString());
         //level
-        binding.levelTextview.setText("Level: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getLevel());
+        binding.levelTextview.setText("Level: " + playerCreature.getLevel());
         //current XP
-        binding.curXpTextView.setText("XP: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getCurExperiencePoints() +
-                "/" +UserTeamData.getInstance().getCreatureAtSlot(slot).getExperienceNeededToLevel());
+        binding.curXpTextView.setText("XP: " + playerCreature.getCurExperiencePoints() + "/" + playerCreature.getExperienceNeededToLevel());
         //health
-        binding.healthStatTextView.setText("Health: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getHealthStat());
+        binding.healthStatTextView.setText("Health: " + playerCreature.getHealthStat());
         //attack
-        binding.attackStatTextView.setText("Attack: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getAttackStat());
+        binding.attackStatTextView.setText("Attack: " + playerCreature.getAttackStat());
         //defense
-        binding.defenseStatTextView.setText("Defense: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getDefenseStat());
+        binding.defenseStatTextView.setText("Defense: " + playerCreature.getDefenseStat());
         //speed
-        binding.speedStatTextView.setText("Speed: " + UserTeamData.getInstance().getCreatureAtSlot(slot).getSpeedStat());
+        binding.speedStatTextView.setText("Speed: " + playerCreature.getSpeedStat());
 
     }
 
     private void updateAbilityButtons() {
-        List<Ability> abilities = UserTeamData.getInstance().getUserTeam().get(slot).getAbilityList();
+        List<Ability> abilities = playerCreature.getAbilityList();
 
         //iterate through the buttons
         for (int i = 0; i < abilityButtons.length; i++) {
@@ -163,12 +173,12 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertBuilder.create();
 
         alertBuilder.setTitle("Remove Ability");
-        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + "?");
+        alertBuilder.setMessage("Are you sure you want to remove " + playerCreature.getAbilityList().get(ability).getAbilityName() + "?");
 
         alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                UserTeamData.getInstance().getUserTeam().get(slot).getAbilityList().remove(ability);
+                playerCreature.getAbilityList().remove(ability);
                 updateAbilityButtons();
             }
         });
@@ -187,7 +197,7 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertBuilder.create();
 
         alertBuilder.setTitle("Remove Creature");
-        alertBuilder.setMessage("Are you sure you want to remove " + UserTeamData.getInstance().getUserTeam().get(slot).getName() + " from your team?");
+        alertBuilder.setMessage("Are you sure you want to remove " + playerCreature.getName() + " from your team?");
 
         alertBuilder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
             @Override
