@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_activities"
-    tools:context=".activities.SelectCreatureToAddActivity">
-
+    tools:context=".activities.AdminStatEditorActivity">
     <Space
         android:id="@+id/userDisplaySpacer"
         android:layout_width="225dp"
@@ -51,26 +50,5 @@
         app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/selectCreatureTextView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:text="Select The Creature You Want to Edit"
-        android:textColor="@color/black"
-        android:fontFamily="@font/merriweather"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userDisplaySpacer" />
-
-    <ListView
-        android:id="@+id/creatureTypeListView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectCreatureTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
