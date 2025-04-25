@@ -53,6 +53,9 @@ public class TrainCreatureActivity extends AppCompatActivity {
     private final int MAX_INDIVIDUAL_BONUS = 20;
 
 
+    /**
+     * Creation method to set up content view, trainee, audio, and call the UI setup
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -130,8 +133,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the
-     *
+     * Sets up the mini game page and counts the button clicks
      */
     private void initTrainingViews(){
         buttonMash = findViewById(R.id.button_mash);
@@ -157,6 +159,9 @@ public class TrainCreatureActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Performs math for the scale of the goal, then calls evaluation of the result
+     */
     private void startTraining(){
         tapCount = 0;
         result.setText("");
@@ -187,6 +192,11 @@ public class TrainCreatureActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Simple method that returns the level of selected attribute to be used in math computation
+     * @param attribute the attribute whose level is being checked
+     * @return int of the current level of the selected attribute
+     */
     private int getAttributeLevel(String attribute){
         switch(attribute){
             case "attack": return trainee.getAttackStat();
@@ -197,6 +207,9 @@ public class TrainCreatureActivity extends AppCompatActivity {
         return 0;
     }
 
+    /**
+     * Evaluates the result of the training mini game, outputs success or failure and shows back button
+     */
     private void evaluateTraining(){
         if(tapCount >= tapGoal){
             switch (selectedAttribute){
@@ -217,10 +230,19 @@ public class TrainCreatureActivity extends AppCompatActivity {
         }
         buttonBackToMain.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Simple method to capitalize the first letter of a string
+     * @param s the string to be capitalized
+     * @return a string with the now capitalized letter in front
+     */
     private String capitalize(String s){
         return s.substring(0,1).toUpperCase()+s.substring(1);
     }
 
+    /**
+     * Breakdown method
+     */
     @Override
     protected void onDestroy(){
         super.onDestroy();
