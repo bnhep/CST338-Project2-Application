@@ -56,6 +56,13 @@ public class ApplicationRepository {
         });
     }
 
+    public void setUsernameByUsername(String newUsername, String username) {
+        ApplicationDatabase.databaseWriteExecutor.execute(() ->
+        {
+            userDAO.setUsernameByUsername(newUsername,username);
+        });
+    }
+
     public LiveData<List<User>> getAllUsers(){
         return userDAO.getAllUsers();
     }

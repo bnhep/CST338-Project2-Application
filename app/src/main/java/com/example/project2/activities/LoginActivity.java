@@ -104,6 +104,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //TODO TESTING PLEASE REMOVE LATER
+        binding.ratTitleLoginImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ViewUsersActivity.userViewAdminIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     /**
@@ -123,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (username.isEmpty()) {
             Toast.makeText(LoginActivity.this,
-                    "Username is blank. \nPlease enter a username", Toast.LENGTH_SHORT).show();
+                    "Please enter a username", Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.isEmpty()) {
@@ -164,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                         binding.passwordLoginEditTextView.setSelection(0);
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, username + " is invalid.",
+                    Toast.makeText(LoginActivity.this, username + " does not exist.",
                             Toast.LENGTH_SHORT).show();
                     binding.usernameLoginEditText.setSelection(0);
                 }
