@@ -67,16 +67,15 @@ public class AdminLandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         //lex button
-       /* binding.trainCreaturesButton.setOnClickListener(new View.OnClickListener() {
+        binding.trainCreaturesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TrainCreatureActivity.(getApplicationContext());
+                Intent intent = new Intent(AdminLandingActivity.this, TrainTeamViewerActivity.class);
                 startActivity(intent);
             }
         });
-        */
-
     }
 
 
