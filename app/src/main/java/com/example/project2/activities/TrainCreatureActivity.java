@@ -21,21 +21,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.creatures.Creature;
 
+/**
+* Activity that trains a selected creature via a button mashing game
+* @author Alexis Wogoman
+* @date 24 April 2025
+ */
 public class TrainCreatureActivity extends AppCompatActivity {
     private Button buttonMash;
     private Button buttonBackToMain;
+
     private TextView timer;
     private TextView goal;
     private TextView counter;
     private TextView result;
+
     private Creature trainee;
     private String selectedAttribute = "";
+
     private int tapGoal;
     private int tapCount = 0;
+
     private CountDownTimer countDownTimer;
     private static final int TIME_LIMIT = 20000;
+
     private SoundPool soundPool;
     private int tapSoundId;
+
     private int slot;
 
     private final int MAX_OVERALL_BONUS = 30;
@@ -47,14 +58,16 @@ public class TrainCreatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attribute_select);
 
+        //get the passed selected creature from the menu
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
             //if the number failed to pass in correctly just cancel
             finish();
         }
-
+        //set your trainee to be the creature selected from menu
         trainee = UserTeamData.getInstance().getCreatureAtSlot(slot);
 
+        //button sound setup
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -65,8 +78,13 @@ public class TrainCreatureActivity extends AppCompatActivity {
                 .build();
         tapSoundId = soundPool.load(this, R.raw.tap_sound, 1);
 
+        setupUI();
     }
 
+    /**
+     * Sets up buttons to test if the chosen attribute is maxed out
+     * Made separately for clarity in setting up user interface
+     */
     private void setupUI() {
         findViewById(R.id.btn_train_attack).setOnClickListener(v -> tryAttribute("attack"));
         findViewById(R.id.btn_train_defense).setOnClickListener(v -> tryAttribute("defense"));
@@ -74,6 +92,11 @@ public class TrainCreatureActivity extends AppCompatActivity {
         findViewById(R.id.btn_train_speed).setOnClickListener(v -> tryAttribute("speed"));
     }
 
+    /**
+     * Checks if selected attribute is maxed out by calling isMaxed, if so, display an error message
+     * if not maxed, begin the training mini game
+     * @param attribute the attribute selected for training from the menu options
+     */
     private void tryAttribute(String attribute){
         if(isMaxed(attribute)){
             Toast.makeText(this, attribute + " is already at max level!", Toast.LENGTH_SHORT).show();
@@ -85,22 +108,31 @@ public class TrainCreatureActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if selected attribute is at max level or if the overall number of bonus points is at max
+     * @param attribute the attribute being checked
+     * @return true if attribute is at max, false if not
+     */
     private boolean isMaxed(String attribute){
         if(trainee.getBonusAttack() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
-            //do not allow increment + toast maxxed, return true
+            return true;
         }
         if(trainee.getBonusDefense() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
-
+            return true;
         }
         if(trainee.getBonusHealth() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
-
+            return true;
         }
         if(trainee.getBonusSpeed() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
-
+            return true;
         }
         return false;
     }
 
+    /**
+     * Sets up the
+     *
+     */
     private void initTrainingViews(){
         buttonMash = findViewById(R.id.button_mash);
         timer = findViewById(R.id.timer);
@@ -129,7 +161,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
         tapCount = 0;
         result.setText("");
         int levelScale = getAttributeLevel(selectedAttribute);
-        tapGoal = 30 + (levelScale * 3); //check if too hard lol
+        tapGoal = 30 + (levelScale * 20); //check if too hard lol
         goal.setTextColor(getResources().getColor(android.R.color.black));
 
         goal.setText("Tap Goal: " + tapGoal);
