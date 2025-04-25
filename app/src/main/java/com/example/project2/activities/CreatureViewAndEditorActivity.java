@@ -1,4 +1,11 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity that will display a selected creatures
+ *  stats and abilities
+ */
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -117,6 +124,10 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to set the UI to display the stats of the creature
+     * selected from the users available team
+     */
     private void setUiStats() {
         /**
          *  after passing in the slot# from TeamViewer get reference
@@ -142,6 +153,11 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         binding.speedStatTextView.setText("Speed: " + playerCreature.getSpeedStat());
     }
 
+    /**
+     * updates the ability buttons so that names of the
+     * abilities are displayed and disables them if
+     * there is no ability associated with it
+     */
     private void updateAbilityButtons() {
         List<Ability> abilities = playerCreature.getAbilityList();
 
@@ -159,6 +175,9 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * updates the buttons when the activity is resumed
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -166,6 +185,11 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         updateAbilityButtons();
     }
 
+    /**
+     * alert dialog to ask the user if they wish to remove
+     * an ability from the selected creature
+     * @param ability
+     */
     private void removeAbilityAlertDialog(int ability){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog alertDialog = alertBuilder.create();
@@ -189,7 +213,10 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         alertBuilder.show();
     }
 
-
+    /**
+     * alert dialog to ask the user if they with to remove
+     * the creature from the users team
+     */
     private void removeCreatureAlertDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog alertDialog = alertBuilder.create();
@@ -213,6 +240,11 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
         alertBuilder.show();
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent CreatureViewAndEditorIntentFactory(Context context) {
         Intent intent = new Intent(context, CreatureViewAndEditorActivity.class);
 

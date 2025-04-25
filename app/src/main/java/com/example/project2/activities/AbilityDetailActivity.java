@@ -1,4 +1,11 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity that will display all of a specific
+ *  Abilities stats
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,21 +13,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.Ability;
-import com.example.project2.R;
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.database.AbilityDAO;
-import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.AbilityEntity;
-import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityAbilityDetailBinding;
 import com.example.project2.utilities.Converters;
 
@@ -77,6 +77,10 @@ public class AbilityDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to retrieve an ability from the database depending on
+     * which ability was selected in the previous activity
+     */
     private void getSelectedAbility() {
         String abilityId = getIntent().getStringExtra("abilityId");
 
@@ -91,6 +95,10 @@ public class AbilityDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to set the UI to display the stats of the creature
+     * retrieved from the database
+     */
     private void setValues() {
         if (selectedAbility == null) {
             Toast.makeText(this, "Failed to load ability data.", Toast.LENGTH_SHORT).show();
@@ -105,6 +113,11 @@ public class AbilityDetailActivity extends AppCompatActivity {
         binding.accuracyStatTextView.setText("Accuracy: " + selectedAbility.getAccuracy());
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent AbilityDetailIntentFactory(Context context) {
         Intent intent = new Intent(context, AbilityDetailActivity.class);
         return intent;

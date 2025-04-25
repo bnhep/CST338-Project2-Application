@@ -1,4 +1,11 @@
 package com.example.project2.database.entities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  entity class used for storing Creature data
+ *  as an entity that can be handled by the database
+ */
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,8 +15,10 @@ import com.example.project2.database.ApplicationDatabase;
 
 import java.util.List;
 
+//assign the table that it will be used with
 @Entity(tableName = ApplicationDatabase.CREATURE_TABLE)
 public class CreatureEntity {
+    //primary key
     @PrimaryKey(autoGenerate = true)
     private int creatureId;
 
@@ -41,6 +50,11 @@ public class CreatureEntity {
     private int bonusSpeed;
     private int teamSlot;
 
+    /**
+     * a very long, very ugly, constructor that is used to help convert
+     * and store all the information found inside of a Creature into
+     * an entity that can be handled by the database
+     */
     public CreatureEntity(
             int creatureId,
             String userId,

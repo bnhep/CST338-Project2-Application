@@ -1,8 +1,11 @@
 package com.example.project2.activities;
 /**
  * Name: Austin Shatswell
- * Date: --/--/25
+ * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
+ *  activity that is used to display a list of opponents
+ *  for the user to battle against and then select
+ *  which creature to use in the battle
  */
 
 import android.content.Context;
@@ -16,11 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.OpponentTeamData;
 import com.example.project2.UserTeamData;
-import com.example.project2.creatures.Creature;
-import com.example.project2.creatures.ElectricRat;
-import com.example.project2.creatures.FireLizard;
-import com.example.project2.creatures.FlowerDino;
-import com.example.project2.creatures.WeirdTurtle;
+import com.example.project2.creatures.*;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.CreatureDAO;
@@ -190,6 +189,10 @@ public class OpponentSelectActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to generate a random creature based on a list that
+     * is populated by creature templates pulled from the database
+     */
     private void generateRandomEncounter() {
         //get DAOs
         CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
@@ -205,6 +208,13 @@ public class OpponentSelectActivity extends AppCompatActivity {
         opponentCreature = Converters.convertEntityToCreature(generatedCreature, abilityDAO);
     }
 
+    /**
+     * called when the creature to be used in battle is selected. used
+     * to start the battle activity and pass in information that will
+     * be needed in that activity
+     * @param slot
+     * @param opponentIntro
+     */
     private void startBattleOpponent(int slot, String opponentIntro) {
         Creature creature = UserTeamData.getInstance().getUserTeam().get(slot);
         OpponentTeamData.setOpponentCreature(opponentCreature);
@@ -222,6 +232,9 @@ public class OpponentSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * used to hide or un-hide opponent select buttons
+     */
     private void toggleOpponentSelectButtons() {
         //flip boolean
         opponentSelectButtonsVisible = !opponentSelectButtonsVisible;
@@ -236,6 +249,9 @@ public class OpponentSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * used to hide or un-hide creature select buttons
+     */
     private void toggleCreatureSelectButtons() {
         //flip boolean
         creatureSelectButtonsVisible = !creatureSelectButtonsVisible;
@@ -251,7 +267,7 @@ public class OpponentSelectActivity extends AppCompatActivity {
     }
 
     /**
-     * This method collects all of the buttons and assigns their
+     * this method collects all of the buttons and assigns their
      * text value to either display and empty slot or display
      * the name of the creature that currently occupies the slot
      */
@@ -273,10 +289,17 @@ public class OpponentSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * used to set the opponent select buttons text based on a string
+     * @param text
+     */
     private void updateTextView(String text) {
         binding.opponentSelectTextView.setText(text);
     }
 
+    /**
+     * used to reset the buttons when the activity is resumed
+     */
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -291,13 +314,21 @@ public class OpponentSelectActivity extends AppCompatActivity {
         updateTextView("Select opponent");
     }
 
+    /**
+     * a toast maker
+     * @param s
+     */
     private void toastMaker(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent OpponentSelectIntentFactory(Context context) {
         Intent intent = new Intent(context, OpponentSelectActivity.class);
-
         return intent;
     }
 }

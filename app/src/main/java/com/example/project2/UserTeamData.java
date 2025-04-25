@@ -1,4 +1,12 @@
 package com.example.project2;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  user team singleton that keeps track of the users
+ *  team data for easier access across the project whenever
+ *  its needed. prevents multiple instances of the same team
+ */
 
 import com.example.project2.creatures.Creature;
 
@@ -15,7 +23,10 @@ public class UserTeamData {
         userTeam = new HashMap<>();
     }
 
-    //static singleton method
+    /**
+     * static singleton method
+     * @return
+     */
     public static synchronized UserTeamData getInstance() {
         if (instance == null) {
             instance = new UserTeamData();
@@ -27,6 +38,12 @@ public class UserTeamData {
         return userTeam;
     }
 
+    /**
+     * adds a creature to a specific spot on the hashmap
+     * that stores the users team roster
+     * @param slot
+     * @param creature
+     */
     public void addCreatureToSlot(int slot, Creature creature) {
         if (slot >= 1 && slot <=6) {
             userTeam.put(slot, creature);
@@ -37,6 +54,12 @@ public class UserTeamData {
         return userTeam.get(slot);
     }
 
+    /**
+     * never ended up using this method but when I created it I
+     * figured it might be useful to swap around creatures positions
+     * @param slotA
+     * @param slotB
+     */
     public void swapCreatureToSlot(int slotA, int slotB) {
         Creature temp = userTeam.get(slotA);
         userTeam.put(slotA, userTeam.get(slotB));

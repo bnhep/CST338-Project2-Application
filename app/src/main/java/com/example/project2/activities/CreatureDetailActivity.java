@@ -1,4 +1,11 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity that will display all of a specific
+ *  creatures stats
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -73,6 +80,10 @@ public class CreatureDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to retrieve a creature from the database depending on
+     * which creature was selected in the previous activity
+     */
     private void getSelectedCreature() {
         int creatureId = getIntent().getIntExtra("creatureId", -1);
 
@@ -80,7 +91,9 @@ public class CreatureDetailActivity extends AppCompatActivity {
             CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
             AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
+            //create a CreatureEntity based on the ID that was passed in
             CreatureEntity entity = creatureDAO.getCreatureById(creatureId);
+            //convert the entity into a full creature
             selectedCreature = Converters.convertEntityToCreature(entity, abilityDAO);
 
             //set the UI to display creature stats
@@ -88,6 +101,10 @@ public class CreatureDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to set the UI to display the stats of the creature
+     * retrieved from the database
+     */
     private void setValues() {
         if (selectedCreature == null) {
             Toast.makeText(this, "Failed to load creature data.", Toast.LENGTH_SHORT).show();
@@ -105,6 +122,11 @@ public class CreatureDetailActivity extends AppCompatActivity {
         binding.creatureImage.setImageResource(ImageUtil.getCreatureImage(selectedCreature, getApplicationContext()));
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent CreatureDetailIntentFactory(Context context) {
         Intent intent = new Intent(context, CreatureDetailActivity.class);
         return intent;

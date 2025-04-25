@@ -1,4 +1,11 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity that will display a list of all available
+ *  Abilities that can be added to the creature
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,23 +14,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.Ability;
 import com.example.project2.AbilityCellAdapter;
-import com.example.project2.CreatureCellAdapter;
-import com.example.project2.R;
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.database.AbilityDAO;
-import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.AbilityEntity;
-import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivitySelectAbilityToAddBinding;
 
 import java.util.ArrayList;
@@ -79,6 +79,11 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to call the cell adapter so that it can populate
+     * the screen with a list of available abilities to select from
+     * abilities already on the creatures list are not added
+     */
     private void setUpData() {
         Executors.newSingleThreadExecutor().execute(() -> {
             AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
@@ -114,6 +119,11 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent SelectAbilityToAddIntentFactory(Context context) {
         Intent intent = new Intent(context, SelectAbilityToAddActivity.class);
         return intent;

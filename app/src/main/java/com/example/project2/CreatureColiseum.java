@@ -1,20 +1,17 @@
 package com.example.project2;
-
 /**
- * This class will be called on start up
- * It will be used to instantiate global
- * Singletons that can be used throughout
- * The project as needed.
- * - Austin
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  This class will be called on start up
+ *  It will be used to instantiate global
+ *  Singletons that can be used throughout
+ *  The project as needed.
  */
 
 import android.app.Application;
 
-import com.example.project2.creatures.CustomCreature;
-import com.example.project2.creatures.ElectricRat;
-import com.example.project2.creatures.FireLizard;
-import com.example.project2.creatures.FlowerDino;
-import com.example.project2.creatures.WeirdTurtle;
+import com.example.project2.creatures.*;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
@@ -54,6 +51,11 @@ public class CreatureColiseum extends Application {
         UserTeamData.getInstance();
     }
 
+    /**
+     * This method is used to add a set of
+     * default creatures and abilities into
+     * the database to be used.
+     */
     private void prepopulateCreaturesAndAbilities() {
         //this is run on a background thread so that changes to the DB can be made properly
         new Thread(() -> {

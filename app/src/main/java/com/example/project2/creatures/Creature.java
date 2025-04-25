@@ -3,9 +3,11 @@ package com.example.project2.creatures;
  * Name: Austin Shatswell
  * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
+ *  An updated and altered Creature class that now not
+ *  only stores more information about the creature that
+ *  is needed for the game, but also contains updated
+ *  methods that are used for a more complex battle system
  */
-
-import android.util.Log;
 
 import com.example.project2.Ability;
 import com.example.project2.ElementalType;
@@ -51,7 +53,9 @@ public abstract class Creature {
     private int bonusDefense;
     private int bonusSpeed;
 
-
+    /**
+     * default constructor that is used when added a template creature into the database
+     */
     public Creature() {
         this.level = 1;
         this.experienceNeededToLevel = calculateExperienceNeeded(level);
@@ -61,6 +65,12 @@ public abstract class Creature {
         this.abilityList.add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("TACKLE")));
     }
 
+    /**
+     * constructor that is used when when creating a creature from a subclass
+     * @param name
+     * @param level
+     * @param types
+     */
     public Creature(String name, int level, ElementalType... types) {
         this.name = name;
         this.level = level;
@@ -123,8 +133,6 @@ public abstract class Creature {
     public List<Ability> getAbilityList() {
         return abilityList;
     }
-
-
 
     public int getLevel() {
         return level;
@@ -273,6 +281,9 @@ public abstract class Creature {
         return Math.round(baseStat * ((float) level / LEVEL_MAX));
     }
 
+    /**
+     * used to calculate a creatures stats that will be used during battle
+     */
     public void updateStats() {
         healthStat = (calculateStat(baseHealth, bonusHealth)*2)+this.getLevel();
         attackStat = calculateStat(baseAttack, bonusAttack);
@@ -280,6 +291,11 @@ public abstract class Creature {
         speedStat = calculateStat(baseSpeed, bonusSpeed);
     }
 
+    /**
+     * used to gain experience after a battle and determine if a creature
+     * has leveled up as a result of gaining XP
+     * @param experience
+     */
     public void gainExperience(int experience) {
         if (level == LEVEL_MAX) {
             curExperiencePoints = 0;
@@ -293,12 +309,23 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * used to determine the amount of XP need for a creature
+     * to level up. As they level up, more XP should be needed to level
+     * @param level
+     * @return
+     */
     public int calculateExperienceNeeded(int level) {
         int baseXP = 10;
         double growthRate = 1.4;
         return (int) Math.round(baseXP * Math.pow(growthRate, level - 1));
     }
 
+    /**
+     * used to level a creature up after reaching an XP threshold
+     * this will also call for a creatures stats to be recalculated
+     * as they should be increased as they level up
+     */
     public void levelUp() {
         level++;
         updateStats();
@@ -306,6 +333,18 @@ public abstract class Creature {
         experienceNeededToLevel = calculateExperienceNeeded(this.getLevel());
     }
 
+    /**
+     * New fun method made to determine the results of an attack made. It accepts
+     * a target and an ability and determines if the attack missed, critically hit,
+     * and also passes along the amount of damage that has been calculated as a
+     * result of the takeDamage method. This could be removed from creature and instead
+     * placed into a new class for battle logic along with other combat related methods
+     * but I decided to keep it here as a nod to the fact that this is an upgrade of
+     * our previous Legally Distinct Pocket Monsters project
+     * @param target
+     * @param ability
+     * @return
+     */
     public double[] attack(Creature target, Ability ability) {
         //percentage rolls
         int accuracyRoll = Dice.roll(100);
@@ -337,11 +376,24 @@ public abstract class Creature {
         return new double[] {attackValue, elementalModifier, critFlag};
     }
 
+    /**
+     * this is used to determine the damage resulting from the ability
+     * attacking the target. In this class the abilities power is used along
+     * side the attacking creatures attack, and the defending creatures defense
+     * to calculate an amount of damage. this result is then multiplied by an
+     * elemental modifier and a Same Type Attack Bonus (STAB checks if a creature uses
+     * an ability with a matching element as themselves) to determine the final result.
+     * An array is returned as this way I can pass both the damage, and the
+     * elemental modifier so that the attack can be flagged as super effective
+     * ot not very effective based on the result of the elementalDamageModifier method
+     * @param target
+     * @param ability
+     * @return
+     */
     public double[] calculateDamage(Creature target, Ability ability) {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
-        double critModifier = 1.0;
 
         if (this.elements.contains(ability.getAbilityElement())) {
             STABModifier = 1.5;
@@ -361,6 +413,14 @@ public abstract class Creature {
         return new double[] {damageTotal, elementalModifier};
     }
 
+    /**
+     * this has been mostly untouched... mostly. Uses the targeted creatures
+     * elements list and compares it to the attacking type of the ability used
+     * to determine if the move is super effective or not very effective
+     * @param defending
+     * @param abilityElement
+     * @return
+     */
     double elementalDamageModifier(ElementalType defending, ElementalType abilityElement) {
         //switch statement that checks the value of the passed in element
         switch (defending) {
@@ -420,6 +480,11 @@ public abstract class Creature {
         }
     }
 
+    /**
+     * used to reduce the current amount of health a creature
+     * has by the damage amount passed in
+     * @param attackValue
+     */
     public void takeDamage(double attackValue) {
         int damage = (int) Math.round(attackValue);
 
