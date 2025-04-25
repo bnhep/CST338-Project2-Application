@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/usernameTitleRecyclerTextView"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usernameRecyclerViewText"
+        android:layout_marginBottom="-24dp"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/usernamecolon"
+        android:textColor="@color/black"
+        android:background="@color/primaryContainer" />
+
+
+    <TextView
+        android:id="@+id/passwordTitleRecyclerTextView"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usernameRecyclerViewText"
+        android:layout_marginBottom="-47dp"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/passwordcolon"
+        android:textColor="@color/black"
+/>
+
+    <TextView
+        android:id="@+id/usernameRecyclerViewText"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/usernameTitleRecyclerTextView"
+        android:fontFamily="@font/merriweather"
+        android:text="@string/username"
+        android:background="@color/primaryContainer"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/passwordRecyclerViewText"
+        android:layout_width="253dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/usernameRecyclerViewText"
+        android:layout_toRightOf="@+id/passwordTitleRecyclerTextView"
+        android:layout_marginBottom="-23dp"
+
+        android:fontFamily="@font/merriweather"
+        android:text="@string/password"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/bottomSpacer"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="44dp"
+        android:background="#A99494"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

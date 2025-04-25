@@ -50,8 +50,7 @@ public class SignupActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -90,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 if (user != null) {
                     // Username exists so displays a toast to prompt user and goes back to the top
-                    Toast.makeText(SignupActivity.this, "Username already exists",
+                    Toast.makeText(SignupActivity.this, "Username is already taken.",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // Username does not exist, insert credentials
@@ -100,6 +99,7 @@ public class SignupActivity extends AppCompatActivity {
                     //Takes you back to the login screen after a successful account creation
                     Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
                     startActivity(intent);
+                    finish();
                 }
                 // Remove the observer after the first change to avoid repeated checks
                 userObserver.removeObserver(this);

@@ -3,10 +3,10 @@ package com.example.project2.database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Query;
 
 import com.example.project2.database.entities.User;
 
+import java.util.List;
 
 
 public class ApplicationRepository {
@@ -47,6 +47,23 @@ public class ApplicationRepository {
 
     public LiveData<User> getUsernameByID(int id) {
         return userDAO.getUsernameByID(id);
+    }
+
+    public void setPasswordByUsername(String newPassword, String username) {
+        ApplicationDatabase.databaseWriteExecutor.execute(() ->
+        {
+            userDAO.setPasswordByUsername(newPassword,username);
+        });
+    }
+
+    public LiveData<List<User>> getAllUsers(){
+        return userDAO.getAllUsers();
+    }
+    public void deleteUser(User user){
+        ApplicationDatabase.databaseWriteExecutor.execute(() ->
+        {
+            userDAO.delete(user);
+        });
     }
 
 }
