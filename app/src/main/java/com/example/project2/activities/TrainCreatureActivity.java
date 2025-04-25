@@ -4,10 +4,13 @@ import com.example.project2.creatures.ElectricRat;
 import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
 import com.example.project2.creatures.WeirdTurtle;
+
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import com.example.project2.creatures.Creature;
 
 public class TrainCreatureActivity extends AppCompatActivity {
     private Button buttonMash;
+    private Button buttonBackToMain;
     private TextView timer;
     private TextView goal;
     private TextView counter;
@@ -37,8 +41,6 @@ public class TrainCreatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attribute_select);
 
-        trainee = new ElectricRat(); //temporary trainee
-
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -49,6 +51,15 @@ public class TrainCreatureActivity extends AppCompatActivity {
                 .build();
         tapSoundId = soundPool.load(this, R.raw.tap_sound, 1);
 
+        new Thread(() -> {
+            trainee = new ElectricRat(); //temporary before team select
+            runOnUiThread(() -> {
+                setupUI();
+            });
+        }).start();
+    }
+
+    private void setupUI() {
         findViewById(R.id.btn_train_attack).setOnClickListener(v -> tryAttribute("attack"));
         findViewById(R.id.btn_train_defense).setOnClickListener(v -> tryAttribute("defense"));
         findViewById(R.id.btn_train_health).setOnClickListener(v -> tryAttribute("health"));
@@ -109,12 +120,21 @@ public class TrainCreatureActivity extends AppCompatActivity {
         goal = findViewById(R.id.goal);
         counter = findViewById(R.id.counter);
         result = findViewById(R.id.result);
+        buttonBackToMain = findViewById(R.id.button_back_to_main);
+        buttonBackToMain.setVisibility(View.GONE); // Hide initially
 
         buttonMash.setEnabled(true);
         buttonMash.setOnClickListener(v ->{
             tapCount++;
             soundPool.play(tapSoundId, 1, 1, 0, 0, 1);
             counter.setText("Taps: " + tapCount);
+        });
+
+        buttonBackToMain.setOnClickListener(v -> {
+            Intent intent = new Intent(TrainCreatureActivity.this, UserLandingActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -123,6 +143,14 @@ public class TrainCreatureActivity extends AppCompatActivity {
         result.setText("");
         int levelScale = getAttributeLevel(selectedAttribute);
         tapGoal = 30 + (levelScale * 3);//check if too hard lol
+        goal.setTextColor(getResources().getColor(android.R.color.black));
+
+        goal.setText("Tap Goal: " + tapGoal);
+        counter.setText("Taps: 0");
+
+        buttonMash.setEnabled(true);
+        buttonMash.setClickable(true);
+        buttonMash.setAlpha(1f);
 
         countDownTimer = new CountDownTimer(TIME_LIMIT, 1000) {
             @Override
@@ -133,6 +161,8 @@ public class TrainCreatureActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 buttonMash.setEnabled(false);
+                buttonMash.setClickable(false);
+                buttonMash.setAlpha(0.5f);
                 evaluateTraining();
             }
         }.start();
@@ -161,9 +191,12 @@ public class TrainCreatureActivity extends AppCompatActivity {
                 break;
             }
             result.setText("Success! " + capitalize(selectedAttribute) + " increased!");
+            goal.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else {
-            result.setText("Failed! You needed " + tapGoal + "taps, but got " + tapCount);
+            result.setText("Failed! You needed " + tapGoal + " taps, but got " + tapCount);
+            goal.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
+        buttonBackToMain.setVisibility(View.VISIBLE);
     }
     private String capitalize(String s){
         return s.substring(0,1).toUpperCase()+s.substring(1);
