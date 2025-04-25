@@ -89,7 +89,15 @@ public class TrainCreatureActivity extends AppCompatActivity {
         if(trainee.getBonusAttack() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
             //do not allow increment + toast maxxed, return true
         }
-        if(trainee.getBonusDefense() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal())
+        if(trainee.getBonusDefense() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+
+        }
+        if(trainee.getBonusHealth() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+
+        }
+        if(trainee.getBonusSpeed() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+
+        }
         return false;
     }
 

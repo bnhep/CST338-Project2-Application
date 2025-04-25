@@ -53,7 +53,6 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
     public void contextualButtonChoice(int slot) {
         Creature selected = UserTeamData.getInstance().getCreatureAtSlot(slot);
         if (selected != null) {
-            UserTeamData.getInstance().setCreatureInTraining(selected);
             Intent intent = new Intent(this, TrainCreatureActivity.class);
             intent.putExtra("slotNumber", slot);
             startActivity(intent);
