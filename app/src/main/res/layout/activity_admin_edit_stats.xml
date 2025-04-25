@@ -5,7 +5,72 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AdminEditStats">
+    android:background="@drawable/background_activities"
+    tools:context=".activities.SelectCreatureToAddActivity">
 
+    <Space
+        android:id="@+id/userDisplaySpacer"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/usernameDisplayTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/usernameDisplayTextView"
+        android:layout_width="90dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="username"
+        android:textSize="16sp"
+        android:fontFamily="@font/merriweather"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userDisplaySpacer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Space
+        android:id="@+id/backButtonSpacer"
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/playfair_bold"
+        android:text="back"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameDisplayTextView"
+        app:layout_constraintEnd_toStartOf="@+id/backButtonSpacer"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/selectCreatureTextView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="Select The Creature You Want to Edit"
+        android:textColor="@color/black"
+        android:fontFamily="@font/merriweather"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userDisplaySpacer" />
+
+    <ListView
+        android:id="@+id/creatureTypeListView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectCreatureTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

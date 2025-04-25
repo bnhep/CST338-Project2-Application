@@ -10,16 +10,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project2.ElementalType;
 import com.example.project2.R;
+import com.example.project2.creatures.CustomCreature;
+import com.example.project2.database.CreatureDAO;
+import com.example.project2.database.DAOProvider;
 import com.example.project2.databinding.ActivityAddMonstersBinding;
+import com.example.project2.utilities.Converters;
 
 public class AddMonstersActivity extends AppCompatActivity {
-   String creatureName = "";
-    String creatureType = "";
-    int atkStat = 0;
-    int speedStat = 0;
-    int dfenseStat = 0;
-    int hpStat = 0;
+   private String creatureName = "";
+    private ElementalType creatureType;
+    private int atkStat = 0;
+    private int speedStat = 0;
+    private int dfenseStat = 0;
+    private int hpStat = 0;
 
     ActivityAddMonstersBinding binding;
 
@@ -33,8 +38,8 @@ public class AddMonstersActivity extends AppCompatActivity {
         binding.fireButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creatureType = "Fire";
-                binding.typeViewer.setText(creatureType);
+                creatureType = ElementalType.FIRE;
+                binding.typeViewer.setText("FIRE");
                 Toast toast = Toast.makeText(AddMonstersActivity.this, "Type Changed", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
                 toast.show();
@@ -43,8 +48,8 @@ public class AddMonstersActivity extends AppCompatActivity {
         binding.electricButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creatureType = "Electric";
-                binding.typeViewer.setText(creatureType);
+                creatureType = ElementalType.ELECTRIC;
+                binding.typeViewer.setText("ELECTRIC");
                 Toast toast = Toast.makeText(AddMonstersActivity.this, "Type Changed", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
                 toast.show();
@@ -53,8 +58,8 @@ public class AddMonstersActivity extends AppCompatActivity {
         binding.grassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creatureType = "Grass";
-                binding.typeViewer.setText(creatureType);
+                creatureType = ElementalType.GRASS;
+                binding.typeViewer.setText("GRASS");
                 Toast toast = Toast.makeText(AddMonstersActivity.this, "Type Changed", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
                 toast.show();
@@ -63,8 +68,8 @@ public class AddMonstersActivity extends AppCompatActivity {
         binding.waterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creatureType = "Water";
-                binding.typeViewer.setText(creatureType);
+                creatureType = ElementalType.WATER;
+                binding.typeViewer.setText("WATER");
                 Toast toast = Toast.makeText(AddMonstersActivity.this, "Type Changed", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
                 toast.show();
@@ -74,8 +79,8 @@ public class AddMonstersActivity extends AppCompatActivity {
         binding.normalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creatureType = "Normal";
-                binding.typeViewer.setText(creatureType);
+                creatureType = ElementalType.NORMAL;
+                binding.typeViewer.setText("NORMAL");
                 Toast toast = Toast.makeText(AddMonstersActivity.this, "Type Changed", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
                 toast.show();
@@ -85,25 +90,37 @@ public class AddMonstersActivity extends AppCompatActivity {
         binding.createMonsterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creatureName = ((EditText) findViewById(R.id.creaturesName)).getText().toString().trim();
-
-                try {
-                    atkStat = Integer.parseInt(((EditText) findViewById(R.id.attackStat)).getText().toString().trim());
-                    speedStat = Integer.parseInt(((EditText) findViewById(R.id.speedStat)).getText().toString().trim()) ;
-                    dfenseStat = Integer.parseInt(((EditText) findViewById(R.id.defenseStat)).getText().toString().trim());
-                    hpStat = Integer.parseInt(((EditText) findViewById(R.id.healthStat)).getText().toString().trim());
-                    // code will stop here if an exception is thrown
-                    Intent intent = AdminLandingActivity.adminLandingIntentFactory(getApplicationContext());
-                    startActivity(intent);
-                    //Converters.convertCreatureToEntity(new [name] , , , , "NONE", -1, 0 )
-                }catch (NumberFormatException e){
-                    Toast toast = Toast.makeText(AddMonstersActivity.this, "Invalid Number in Edit Stats", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
-                    toast.show();
-                }
+                getStats();
+                addNewCreatureToDatabase();
             }
+
         });
     }
+
+private void getStats(){
+    creatureName = ((EditText) findViewById(R.id.creaturesName)).getText().toString().trim();
+
+    try {
+        atkStat = Integer.parseInt(((EditText) findViewById(R.id.attackStat)).getText().toString().trim());
+        speedStat = Integer.parseInt(((EditText) findViewById(R.id.speedStat)).getText().toString().trim()) ;
+        dfenseStat = Integer.parseInt(((EditText) findViewById(R.id.defenseStat)).getText().toString().trim());
+        hpStat = Integer.parseInt(((EditText) findViewById(R.id.healthStat)).getText().toString().trim());
+        // code will stop here if an exception is thrown
+        Intent intent = AdminLandingActivity.adminLandingIntentFactory(getApplicationContext());
+        startActivity(intent);
+        //Converters.convertCreatureToEntity(new [name] , , , , "NONE", -1, 0 )
+    }catch (NumberFormatException e){
+        Toast toast = Toast.makeText(AddMonstersActivity.this, "Invalid Number in Edit Stats", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
+        toast.show();
+    }
+}
+private void addNewCreatureToDatabase(){
+    new Thread(() -> {
+        CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
+        creatureDAO.insert(Converters.convertCreatureToEntity(new CustomCreature(creatureName, creatureType, hpStat, atkStat, dfenseStat, speedStat), "NONE", -1, 0));
+    }).start();
+}
 
     public static Intent AddMonsterIntentFactory(Context context) {
         return new Intent(context, AddMonstersActivity.class);

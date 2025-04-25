@@ -44,6 +44,14 @@ public class AdminLandingActivity extends AppCompatActivity {
             }
         });
 
+        binding.editStatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AdminEditStatsActivity.AdminEditStatsIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
         binding.startBattleButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,16 +77,6 @@ public class AdminLandingActivity extends AppCompatActivity {
             }
         });
         */
-
-         /* Need from Austin
-        binding.editStatsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = editStatsActivity.editStatsIntentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
-        * */
 
     }
 
