@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+
 import com.example.project2.database.entities.User;
 
 import java.util.List;
@@ -35,4 +36,9 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + ApplicationDatabase.USER_TABLE + " WHERE id == :id")
     LiveData<User> getUsernameByID(int id);
+
+    @Query("UPDATE userTable SET password = :newPassword WHERE username = :username")
+    void setPasswordByUsername(String newPassword, String username);
+
+
 }

@@ -14,10 +14,10 @@
         android:theme="@style/Theme.Project2"
         tools:targetApi="31">
         <activity
-            android:name=".activities.ViewUsersActivity"
+            android:name=".activities.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ForgotPasswordActivity"
+            android:name=".activities.ViewUsersActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AdminStatEditorActivity"
