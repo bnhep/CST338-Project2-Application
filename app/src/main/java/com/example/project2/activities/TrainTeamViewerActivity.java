@@ -45,8 +45,8 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         // TEMPORARY TEST CREATURE SETUP
         if (UserTeamData.getInstance().getCreatureAtSlot(1) == null) {
             new Thread(() -> {
-                ElectricRat sparky = new ElectricRat();
-                UserTeamData.getInstance().addCreatureToSlot(1, sparky);
+                ElectricRat peekerchu = new ElectricRat();
+                UserTeamData.getInstance().addCreatureToSlot(1, peekerchu);
 
                 // Update the UI on the main thread
                 runOnUiThread(() -> updateTeamSlotButtons());
