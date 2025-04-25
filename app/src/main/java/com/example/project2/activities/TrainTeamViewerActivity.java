@@ -12,19 +12,20 @@ import com.example.project2.UserTeamData;
 import com.example.project2.creatures.*;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityTeamViewerBinding;
+import com.example.project2.databinding.ActivityTrainTeamViewerBinding;
 
 import java.util.Map;
 
 public class TrainTeamViewerActivity extends AppCompatActivity {
 
-    ActivityTeamViewerBinding binding;
+    ActivityTrainTeamViewerBinding binding;
     private AccountStatusCheck accountManager;
     private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityTeamViewerBinding.inflate(getLayoutInflater());
+        binding = ActivityTrainTeamViewerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         View view = binding.getRoot();
         setContentView(view);
