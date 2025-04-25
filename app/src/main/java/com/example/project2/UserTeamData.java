@@ -54,4 +54,5 @@ public class UserTeamData {
     public int teamSize() {
         return userTeam.size();
     }
+
 }

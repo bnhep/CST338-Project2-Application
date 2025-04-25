@@ -1,5 +1,6 @@
 package com.example.project2.activities;
 
+import com.example.project2.UserTeamData;
 import com.example.project2.creatures.ElectricRat;
 import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
@@ -20,27 +21,56 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2.creatures.Creature;
 
+/**
+* Activity that trains a selected creature via a button mashing game
+* @author Alexis Wogoman
+* @date 24 April 2025
+ */
 public class TrainCreatureActivity extends AppCompatActivity {
     private Button buttonMash;
     private Button buttonBackToMain;
+
     private TextView timer;
     private TextView goal;
     private TextView counter;
     private TextView result;
+
     private Creature trainee;
     private String selectedAttribute = "";
+
     private int tapGoal;
     private int tapCount = 0;
+
     private CountDownTimer countDownTimer;
     private static final int TIME_LIMIT = 20000;
+
     private SoundPool soundPool;
     private int tapSoundId;
 
+    private int slot;
+
+    private final int MAX_OVERALL_BONUS = 30;
+    private final int MAX_INDIVIDUAL_BONUS = 20;
+
+
+    /**
+     * Creation method to set up content view, trainee, audio, and call the UI setup
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attribute_select);
 
+        //get the passed selected creature from the menu
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
+            finish();
+        }
+        //set your trainee to be the creature selected from menu
+        trainee = UserTeamData.getInstance().getCreatureAtSlot(slot);
+
+        //button sound setup
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -51,14 +81,13 @@ public class TrainCreatureActivity extends AppCompatActivity {
                 .build();
         tapSoundId = soundPool.load(this, R.raw.tap_sound, 1);
 
-        new Thread(() -> {
-            trainee = new ElectricRat(); //temporary before team select
-            runOnUiThread(() -> {
-                setupUI();
-            });
-        }).start();
+        setupUI();
     }
 
+    /**
+     * Sets up buttons to test if the chosen attribute is maxed out
+     * Made separately for clarity in setting up user interface
+     */
     private void setupUI() {
         findViewById(R.id.btn_train_attack).setOnClickListener(v -> tryAttribute("attack"));
         findViewById(R.id.btn_train_defense).setOnClickListener(v -> tryAttribute("defense"));
@@ -66,6 +95,11 @@ public class TrainCreatureActivity extends AppCompatActivity {
         findViewById(R.id.btn_train_speed).setOnClickListener(v -> tryAttribute("speed"));
     }
 
+    /**
+     * Checks if selected attribute is maxed out by calling isMaxed, if so, display an error message
+     * if not maxed, begin the training mini game
+     * @param attribute the attribute selected for training from the menu options
+     */
     private void tryAttribute(String attribute){
         if(isMaxed(attribute)){
             Toast.makeText(this, attribute + " is already at max level!", Toast.LENGTH_SHORT).show();
@@ -77,43 +111,30 @@ public class TrainCreatureActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if selected attribute is at max level or if the overall number of bonus points is at max
+     * @param attribute the attribute being checked
+     * @return true if attribute is at max, false if not
+     */
     private boolean isMaxed(String attribute){
-        if (trainee instanceof ElectricRat) {
-            ElectricRat cr = (ElectricRat) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
-        } else if (trainee instanceof FireLizard) {
-            FireLizard cr = (FireLizard) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
-        } else if (trainee instanceof FlowerDino) {
-            FlowerDino cr = (FlowerDino) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
-        } else if (trainee instanceof WeirdTurtle) {
-            WeirdTurtle cr = (WeirdTurtle) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
+        if(trainee.getBonusAttack() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+            return true;
+        }
+        if(trainee.getBonusDefense() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+            return true;
+        }
+        if(trainee.getBonusHealth() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+            return true;
+        }
+        if(trainee.getBonusSpeed() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+            return true;
         }
         return false;
     }
 
+    /**
+     * Sets up the mini game page and counts the button clicks
+     */
     private void initTrainingViews(){
         buttonMash = findViewById(R.id.button_mash);
         timer = findViewById(R.id.timer);
@@ -138,11 +159,14 @@ public class TrainCreatureActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Performs math for the scale of the goal, then calls evaluation of the result
+     */
     private void startTraining(){
         tapCount = 0;
         result.setText("");
         int levelScale = getAttributeLevel(selectedAttribute);
-        tapGoal = 30 + (levelScale * 3);//check if too hard lol
+        tapGoal = 30 + (levelScale * 20); //check if too hard lol
         goal.setTextColor(getResources().getColor(android.R.color.black));
 
         goal.setText("Tap Goal: " + tapGoal);
@@ -168,6 +192,11 @@ public class TrainCreatureActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Simple method that returns the level of selected attribute to be used in math computation
+     * @param attribute the attribute whose level is being checked
+     * @return int of the current level of the selected attribute
+     */
     private int getAttributeLevel(String attribute){
         switch(attribute){
             case "attack": return trainee.getAttackStat();
@@ -178,16 +207,19 @@ public class TrainCreatureActivity extends AppCompatActivity {
         return 0;
     }
 
+    /**
+     * Evaluates the result of the training mini game, outputs success or failure and shows back button
+     */
     private void evaluateTraining(){
         if(tapCount >= tapGoal){
             switch (selectedAttribute){
-                case "attack": trainee.setAttackStat(trainee.getAttackStat() + 1);
+                case "attack": trainee.setBonusAttack(trainee.getBonusAttack() + 1);
                 break;
-                case "defense": trainee.setDefenseStat(trainee.getDefenseStat() + 1);
+                case "defense": trainee.setBonusDefense(trainee.getBonusDefense() + 1);
                 break;
-                case "health": trainee.setHealthStat(trainee.getHealthStat() + 1);
+                case "health": trainee.setBonusHealth(trainee.getBonusHealth() + 1);
                 break;
-                case "speed": trainee.setSpeedStat(trainee.getSpeedStat() + 1);
+                case "speed": trainee.setBonusSpeed(trainee.getBonusSpeed() + 1);
                 break;
             }
             result.setText("Success! " + capitalize(selectedAttribute) + " increased!");
@@ -198,10 +230,19 @@ public class TrainCreatureActivity extends AppCompatActivity {
         }
         buttonBackToMain.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Simple method to capitalize the first letter of a string
+     * @param s the string to be capitalized
+     * @return a string with the now capitalized letter in front
+     */
     private String capitalize(String s){
         return s.substring(0,1).toUpperCase()+s.substring(1);
     }
 
+    /**
+     * Breakdown method
+     */
     @Override
     protected void onDestroy(){
         super.onDestroy();
