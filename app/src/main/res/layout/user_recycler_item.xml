@@ -10,11 +10,11 @@
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/usernameRecyclerViewText"
-        android:layout_marginBottom="-21dp"
+        android:layout_marginBottom="-24dp"
         android:fontFamily="@font/merriweather"
         android:text="@string/usernamecolon"
         android:textColor="@color/black"
-        android:background="#EAC3C3" />
+        android:background="@color/primaryContainer" />
 
 
     <TextView
@@ -33,9 +33,9 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/usernameTitleRecyclerTextView"
-        android:background="@drawable/background_activities"
         android:fontFamily="@font/merriweather"
         android:text="@string/username"
+        android:background="@color/primaryContainer"
         android:textColor="@color/black" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_alignBottom="@+id/usernameRecyclerViewText"
         android:layout_toRightOf="@+id/passwordTitleRecyclerTextView"
         android:layout_marginBottom="-23dp"
-        android:background="@drawable/background_activities"
+
         android:fontFamily="@font/merriweather"
         android:text="@string/password"
         android:textColor="@color/black" />
@@ -54,7 +54,7 @@
         android:id="@+id/bottomSpacer"
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="44dp"
         android:background="#A99494"
         android:orientation="vertical">
 
