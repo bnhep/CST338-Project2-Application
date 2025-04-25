@@ -16,6 +16,7 @@ import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.databinding.ActivityBattleBinding;
 import com.example.project2.utilities.Dice;
+import com.example.project2.utilities.ImageUtil;
 
 import java.util.List;
 
@@ -138,6 +139,10 @@ public class BattleActivity extends AppCompatActivity {
         //set creatures current health
         updatePlayerHealth();
         updateOpponentHealth();
+        //set creature images
+        binding.playerCreatureImage.setImageResource(ImageUtil.getCreatureImage(playerCreature, getApplicationContext()));
+        binding.opponentCreatureImage.setImageResource(ImageUtil.getCreatureImage(opponentCreature, getApplicationContext()));
+
         //set the default battle prompt
         updateBattlePrompt("What will " + playerCreature.getName() + " do?");
         //toggle the UI
@@ -154,8 +159,10 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     private void battleUiUpdate() {
+        //set names and levels
         handler.postDelayed(() -> binding.playerNameTextView.setText(playerCreature.getName() + " [lvl: " + playerCreature.getLevel() + "]"), battleTextPromptStep);
         handler.postDelayed(() -> binding.opponentNameTextView.setText(opponentCreature.getName() + " [lvl: " + opponentCreature.getLevel() + "]"), battleTextPromptStep);
+        //set user xp
         handler.postDelayed(() -> binding.xpBarTextView.setText("[XP: " + playerCreature.getCurExperiencePoints() + "/" + playerCreature.getExperienceNeededToLevel() + "]"), battleTextPromptStep);
     }
 
