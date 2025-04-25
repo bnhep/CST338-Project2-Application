@@ -104,16 +104,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //TODO TESTING PLEASE REMOVE LATER
-        binding.ratTitleLoginImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ViewUsersActivity.userViewAdminIntentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
-
-
 
     }
 
