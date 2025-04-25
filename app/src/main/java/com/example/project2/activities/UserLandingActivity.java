@@ -70,16 +70,6 @@ public class UserLandingActivity extends AppCompatActivity {
             }
         });
 
-        //button functionality for View recent battles
-        //TODO should have factory method to swap to Recent Battles(BASICALLY A STUB BUTTON)
-        binding.trainCreaturesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Testing button please remove later
-                Toast.makeText(UserLandingActivity.this, "View Recent Button works", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         Button trainButton = findViewById(R.id.trainCreaturesButton);
 
         trainButton.setOnClickListener(v -> {
