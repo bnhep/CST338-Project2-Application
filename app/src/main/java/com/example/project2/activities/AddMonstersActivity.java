@@ -95,23 +95,24 @@ public class AddMonstersActivity extends AppCompatActivity {
             }
 
         });
+        binding.backButton.setOnClickListener(v -> finish());
     }
 
 private void getStats(){
     creatureName = ((EditText) findViewById(R.id.creaturesName)).getText().toString().trim();
 
     try {
-        atkStat = Integer.parseInt(((EditText) findViewById(R.id.attackStat)).getText().toString().trim());
-        speedStat = Integer.parseInt(((EditText) findViewById(R.id.speedStat)).getText().toString().trim()) ;
-        dfenseStat = Integer.parseInt(((EditText) findViewById(R.id.defenseStat)).getText().toString().trim());
-        hpStat = Integer.parseInt(((EditText) findViewById(R.id.healthStat)).getText().toString().trim());
-        // code will stop here if an exception is thrown
+        atkStat = Integer.parseInt(binding.attackStat.getText().toString().trim());
+        speedStat = Integer.parseInt(binding.speedStat.getText().toString().trim());
+        dfenseStat = Integer.parseInt(binding.defenseStat.getText().toString().trim());
+        hpStat = Integer.parseInt(binding.healthStat.getText().toString().trim());
+
         Intent intent = AdminLandingActivity.adminLandingIntentFactory(getApplicationContext());
         startActivity(intent);
-        //Converters.convertCreatureToEntity(new [name] , , , , "NONE", -1, 0 )
-    }catch (NumberFormatException e){
+
+    } catch (NumberFormatException e) {
         Toast toast = Toast.makeText(AddMonstersActivity.this, "Invalid Number in Edit Stats", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0); // Center the Toast
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 }
