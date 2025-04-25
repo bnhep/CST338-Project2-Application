@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:padding="32dp">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
 
     <TextView
+        android:id="@+id/attributeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select an Attribute to Train"
-        android:textSize="22sp"
-        android:layout_marginBottom="24dp" />
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/playfair_bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
 
     <Button
         android:id="@+id/btn_train_attack"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Train Attack" />
+        android:text="Train Attack"
+        android:textSize="18sp"
+        android:fontFamily="@font/playfair_bold"
+        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/btn_train_defense"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Train Defense"
+        android:textSize="18sp"
+        android:fontFamily="@font/playfair_bold"
         android:layout_marginTop="12dp" />
 
     <Button
         android:id="@+id/btn_train_health"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Train Health"
+        android:textSize="18sp"
+        android:fontFamily="@font/playfair_bold"
         android:layout_marginTop="12dp" />
 
     <Button
         android:id="@+id/btn_train_speed"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Train Speed"
+        android:textSize="18sp"
+        android:fontFamily="@font/playfair_bold"
         android:layout_marginTop="12dp" />
 
 </LinearLayout>
