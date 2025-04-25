@@ -10,6 +10,7 @@ import com.example.project2.ElementalType;
 public class CustomCreature extends Creature {
 
     private final String PHRASE = "'Gah!";
+    //these are unneeded
     private int HEALTH_MAX;
     private int ATTACK_MAX;
     private int DEFENSE_MAX;

@@ -57,7 +57,8 @@ public class CreatureDetailActivity extends AppCompatActivity {
                     selectedCreature.setCreatureId(0);
                     UserTeamData.getInstance().addCreatureToSlot(slot, selectedCreature);
 
-                    Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
+                    Intent intent = new Intent(getApplicationContext(), TeamViewerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 });
             }

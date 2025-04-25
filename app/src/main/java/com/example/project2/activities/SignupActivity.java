@@ -50,7 +50,8 @@ public class SignupActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
     }
@@ -73,8 +74,8 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
         if (usernameEnter.isEmpty()) {
-            Toast.makeText(SignupActivity.this,
-                    "Username is blank. \nPlease enter a username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignupActivity.this, "Username is blank. \nPlease enter a username",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
         if (passwordEnter.isEmpty()) {
@@ -89,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onChanged(User user) {
                 if (user != null) {
                     // Username exists so displays a toast to prompt user and goes back to the top
-                    Toast.makeText(SignupActivity.this, "Username is already taken",
+                    Toast.makeText(SignupActivity.this, "Username already exists",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // Username does not exist, insert credentials
@@ -97,7 +98,8 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Sign up successful",
                             Toast.LENGTH_SHORT).show();
                     //Takes you back to the login screen after a successful account creation
-                    finish();
+                    Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+                    startActivity(intent);
                 }
                 // Remove the observer after the first change to avoid repeated checks
                 userObserver.removeObserver(this);

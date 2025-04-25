@@ -84,7 +84,7 @@ public class CreatureColiseum extends Application {
                         Converters.convertCreatureToEntity(new FireLizard(), "NONE", -1, 0),
                         Converters.convertCreatureToEntity(new FlowerDino(), "NONE", -1, 0),
                         Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0),
-                        //Custom creature test
+                        //Custom creature testing
                         Converters.convertCreatureToEntity(new CustomCreature("Custom", ElementalType.NORMAL, 40, 50, 60, 70), "NONE", -1, 0)
                 ));
             }

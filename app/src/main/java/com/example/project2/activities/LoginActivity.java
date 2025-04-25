@@ -1,10 +1,7 @@
 package com.example.project2.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,14 +35,11 @@ public class LoginActivity extends AppCompatActivity {
     boolean adminCheck = false;
 
 
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(binding.getRoot());
-
         repository = ApplicationRepository.getInstance();
         accountManager = AccountStatusCheck.getInstance();
 
@@ -93,17 +87,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /**
-         * Forgot password button leading to ForgotPasswordActivity
-         */
-        binding.forgotPassWordTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ForgotPasswordActivity.forgotPasswordIntentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
-
     }
 
     /**
@@ -122,13 +105,13 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if (username.isEmpty()) {
-            Toast.makeText(LoginActivity.this,
-                    "Username is blank. \nPlease enter a username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Username is blank. \nPlease enter a username",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.isEmpty()) {
             Toast.makeText(LoginActivity.this,
-                    "Please enter a password",
+                    "Password is blank.\nPlease enter a password",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -136,12 +119,15 @@ public class LoginActivity extends AppCompatActivity {
         userObserver.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
+
                 if (user != null) {
                     if (password.equals(user.getPassword())) {
+                        //TODO: ADD A IF/ELSE TO DETERMINE IN USER IS AN ADMIN OR NOT
+                        // IF THEY ARE AN ADMIN GO TO ADMIN SCREEN
                         Intent intent;
                         adminCheck = user.isAdmin();
                         if(!adminCheck) {
-                            //moves to the UserLandingActivity page
+                            //moves to the MainActivity(basic user) page
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
@@ -157,10 +143,9 @@ public class LoginActivity extends AppCompatActivity {
                             intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
                         }
                         startActivity(intent);
-                        finish();
                     } else {
-                        Toast.makeText(LoginActivity.this,
-                                "Password is incorrect.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Password Invalid. Please Enter a Password",
+                                Toast.LENGTH_SHORT).show();
                         binding.passwordLoginEditTextView.setSelection(0);
                     }
                 } else {
@@ -175,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loadTeam(String userId){
+        //TODO: This is just here for testing. this should be moved to when the user logs in later
         try {
             //run on a background thread when making changes to the database
             Executors.newSingleThreadExecutor().execute(() -> {
@@ -185,6 +171,8 @@ public class LoginActivity extends AppCompatActivity {
                 //get reference to the CreatureDAO and AbilityDAO singletons
                 CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
                 AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
+
+                //TODO:later on we want to pass in the actual users generated id here
                 /**
                  * Passing the users ID into the creatureDAO to collect a list of
                  * creatures associated with the current user.
@@ -208,8 +196,7 @@ public class LoginActivity extends AppCompatActivity {
             //im going to be sad if i see this
             Log.e("TeamBuilder", "Error loading team", e);
             runOnUiThread(() ->
-                    Toast.makeText(LoginActivity.this,
-                            "Failed to load", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(LoginActivity.this, "Failed to load", Toast.LENGTH_SHORT).show()
             );
         }
     }

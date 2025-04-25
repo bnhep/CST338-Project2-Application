@@ -28,8 +28,9 @@ public abstract class Creature {
     private List<ElementalType> elements = new ArrayList<ElementalType>();
     private List<Ability> abilityList = new ArrayList<Ability>();
 
-    private int level;
+    private int level = 1;
     private final int LEVEL_MAX = 20;
+
     private int curExperiencePoints = 0;
     private int experienceNeededToLevel = 10;
 
@@ -43,13 +44,12 @@ public abstract class Creature {
     private int baseDefense;
     private int speedStat;
     private int baseSpeed;
-
-    //bonus points used for training
-    private int bonusPointTotal;
+    private int bonusStatTotal;
     private int bonusHealth;
     private int bonusAttack;
     private int bonusDefense;
     private int bonusSpeed;
+
 
     public Creature() {
         this.level = 1;
@@ -122,6 +122,8 @@ public abstract class Creature {
     public List<Ability> getAbilityList() {
         return abilityList;
     }
+
+
 
     public int getLevel() {
         return level;
@@ -219,12 +221,12 @@ public abstract class Creature {
         this.baseSpeed = baseSpeed;
     }
 
-    public int getBonusPointTotal() {
-        return bonusPointTotal;
+    public int getBonusStatTotal() {
+        return bonusStatTotal;
     }
 
-    public void setBonusPointTotal(int bonusPointTotal) {
-        this.bonusPointTotal = bonusPointTotal;
+    public void setBonusStatTotal(int bonusStatTotal) {
+        this.bonusStatTotal = bonusStatTotal;
     }
 
     public int getBonusHealth() {
@@ -267,7 +269,7 @@ public abstract class Creature {
     }
 
     public int calculateStat(int baseStat, int bonusStat) {
-        return Math.round((baseStat + bonusStat) * ((float) level / LEVEL_MAX));
+        return Math.round(baseStat * ((float) level / LEVEL_MAX));
     }
 
     public void updateStats() {
@@ -304,7 +306,7 @@ public abstract class Creature {
     }
 
     public double[] attack(Creature target, Ability ability) {
-        //store the result of calculateDamage
+        //store the results of calculateDamage
         double[] result = calculateDamage(target, ability);
 
         //convert into int
@@ -320,6 +322,7 @@ public abstract class Creature {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
+        double critMult = 1.0;
 
         if (this.elements.contains(ability.getAbilityElement())) {
             STABModifier = 1.5;

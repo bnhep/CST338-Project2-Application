@@ -13,9 +13,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.project2.Ability;
 import com.example.project2.AbilityCellAdapter;
 import com.example.project2.CreatureCellAdapter;
 import com.example.project2.R;
+import com.example.project2.UserTeamData;
+import com.example.project2.creatures.Creature;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
@@ -33,6 +36,7 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
     private List<AbilityEntity> abilityEntities = new ArrayList<>();
     private ListView listView;
     private int slot;
+    private Creature playerCreature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,9 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
             finish();
         }
 
+        //get reference to chosen creature
+        playerCreature = UserTeamData.getInstance().getUserTeam().get(slot);
+
         setUpData();
 
         listView = binding.abilityTypeListView;
@@ -56,6 +63,7 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String abilityId = abilityEntities.get(position).getAbilityID();
 
+                //pass the abilityID as well as the creature slot
                 Intent intent = new Intent(getApplicationContext(), AbilityDetailActivity.class);
                 intent.putExtra("abilityId", abilityId);
                 intent.putExtra("slotNumber", slot);
@@ -75,17 +83,31 @@ public class SelectAbilityToAddActivity extends AppCompatActivity {
         Executors.newSingleThreadExecutor().execute(() -> {
             AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
+            //get a full list of ability entities
             List<AbilityEntity> abilities = abilityDAO.getAll();
 
+            //clear the list if if already has data
             abilityEntities.clear();
-            abilityEntities.addAll(abilities);
+            //new arraylist to hold the IDs for all the abilities already in the creatures abilityList
+            List<String> existingAbilityIds = new ArrayList<>();
+            //loop through the abilityList and add all IDs to the existingAbilityIds arraylist
+            for (Ability ability : playerCreature.getAbilityList()) {
+                existingAbilityIds.add(ability.getAbilityID());
+            }
+            //loop through all ability entities in the list and check for matching IDs
+            for (AbilityEntity entity : abilities) {
+                if (!existingAbilityIds.contains(entity.getAbilityID())) {
+                    abilityEntities.add(entity);
+                }
+            }
 
             runOnUiThread(() -> {
                 List<String> abilityNames = new ArrayList<>();
+                //collect all the names found in the list of abilities
                 for (AbilityEntity e : abilityEntities) {
                     abilityNames.add(e.getAbilityName());
                 }
-
+                //pass them to the adaptor to make a scrollable list
                 AbilityCellAdapter adapter = new AbilityCellAdapter(getApplicationContext(), 0, abilityNames);
                 listView.setAdapter(adapter);
             });

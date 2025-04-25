@@ -34,14 +34,40 @@ public class CreatureEntity {
     private int baseDefense;
     private int speedStat;
     private int baseSpeed;
-    private int bonusPointTotal;
+    private int bonusStatTotal;
     private int bonusHealth;
     private int bonusAttack;
     private int bonusDefense;
     private int bonusSpeed;
     private int teamSlot;
 
-    public CreatureEntity(int creatureId, String userId, String type, String name, String phrase, boolean fainted, List<ElementalType> elements, List<String> abilityList, int level, int curExperiencePoints, int experienceNeededToLevel, int curHealth, int healthStat, int baseHealth, int attackStat, int baseAttack, int defenseStat, int baseDefense, int speedStat, int baseSpeed, int bonusPointTotal, int bonusHealth, int bonusAttack, int bonusDefense, int bonusSpeed, int teamSlot) {
+    public CreatureEntity(
+            int creatureId,
+            String userId,
+            String type,
+            String name,
+            String phrase,
+            boolean fainted,
+            List<ElementalType> elements,
+            List<String> abilityList,
+            int level,
+            int curExperiencePoints,
+            int experienceNeededToLevel,
+            int curHealth,
+            int healthStat,
+            int baseHealth,
+            int attackStat,
+            int baseAttack,
+            int defenseStat,
+            int baseDefense,
+            int speedStat,
+            int baseSpeed,
+            int bonusStatTotal,
+            int bonusHealth,
+            int bonusAttack,
+            int bonusDefense,
+            int bonusSpeed,
+            int teamSlot) {
         this.creatureId = creatureId;
         this.userId = userId;
         this.type = type;
@@ -62,7 +88,7 @@ public class CreatureEntity {
         this.baseDefense = baseDefense;
         this.speedStat = speedStat;
         this.baseSpeed = baseSpeed;
-        this.bonusPointTotal = bonusPointTotal;
+        this.bonusStatTotal = bonusStatTotal;
         this.bonusHealth = bonusHealth;
         this.bonusAttack = bonusAttack;
         this.bonusDefense = bonusDefense;
@@ -230,12 +256,12 @@ public class CreatureEntity {
         this.baseSpeed = baseSpeed;
     }
 
-    public int getBonusPointTotal() {
-        return bonusPointTotal;
+    public int getBonusStatTotal() {
+        return bonusStatTotal;
     }
 
-    public void setBonusPointTotal(int bonusPointTotal) {
-        this.bonusPointTotal = bonusPointTotal;
+    public void setBonusStatTotal(int bonusStatTotal) {
+        this.bonusStatTotal = bonusStatTotal;
     }
 
     public int getBonusHealth() {
