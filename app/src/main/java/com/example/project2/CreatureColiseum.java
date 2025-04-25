@@ -74,7 +74,9 @@ public class CreatureColiseum extends Application {
                         new AbilityEntity("FLAMETHROWER", "flamethrower", "FIRE", 25, 10, 100),
                         new AbilityEntity("RAZORLEAF", "razor leaf", "GRASS", 25, 10, 100),
                         new AbilityEntity("SHOCK", "shock", "ELECTRIC", 25, 10, 100),
-                        new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100)
+                        new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100),
+                        new AbilityEntity("CRITTEST", "crit test", "NORMAL", 25, 90, 100),
+                        new AbilityEntity("MISSTEST", "miss test", "NORMAL", 25, 10, 10)
                 ));
             }
 

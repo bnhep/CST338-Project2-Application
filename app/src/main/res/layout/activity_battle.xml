@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_activities"
     tools:context=".activities.BattleActivity">
 
     <Button
@@ -58,8 +59,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/creatureViewLayout"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toTopOf="@id/battlePromptTextView"
+        android:layout_height="380dp"
+        app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userDisplaySpacer"
@@ -88,7 +89,7 @@
             android:layout_margin="8dp"
             android:scaleX="-1"
             android:src="@color/design_default_color_primary"
-            app:layout_constraintBottom_toTopOf="@id/playerNameTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/playerCreatureSpacer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -99,7 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerCreatureImage"
             app:layout_constraintEnd_toStartOf="@+id/opponentNameTextView"
             android:textSize="16sp"
@@ -126,7 +126,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/opponentCreatureSpacer"
-            app:layout_constraintBottom_toTopOf="@id/opponentNameTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
              />
 
         <TextView
@@ -138,7 +138,6 @@
             app:layout_constraintTop_toBottomOf="@id/opponentCreatureImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/playerNameTextView"
-            app:layout_constraintBottom_toBottomOf="parent"
              />
 
         <TextView

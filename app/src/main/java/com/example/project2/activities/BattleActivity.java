@@ -247,8 +247,13 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     private void creatureAttackResultPrompt(double[] damageDealt) {
-        //check if attack dealt damage
-        if (damageDealt[0] > 0) {
+        //check if attack missed
+        if (damageDealt[2] > 0) {
+            //check for critical hit
+            if (damageDealt[2] > 1) {
+                updateBattlePrompt("Its a critical hit!");
+            }
+
             //check for super effective
             if (damageDealt[1] > 1) {
                 updateBattlePrompt("Its super effective!");
@@ -256,6 +261,7 @@ public class BattleActivity extends AppCompatActivity {
             else if (damageDealt[1] < 1) {
                 updateBattlePrompt("Its not very effective...");
             }
+
             //show damage
             updateBattlePrompt(opponentCreature.getName() + " took " + Math.round(damageDealt[0]) + " damage");
         }
