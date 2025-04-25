@@ -67,4 +67,5 @@
     <string name="click_the_usernames_to_edit">Click the usernames to edit.</string>
     <string name="change_username">Change Username</string>
     <string name="change_password">Change Password</string>
+    <string name="done">Done</string>
 </resources>
