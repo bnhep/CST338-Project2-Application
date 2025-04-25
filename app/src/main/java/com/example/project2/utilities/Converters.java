@@ -81,9 +81,18 @@ public class Converters {
                 creature.getExperienceNeededToLevel(),
                 creature.getCurHealth(),
                 creature.getHealthStat(),
+                creature.getBaseHealth(),
                 creature.getAttackStat(),
+                creature.getBaseAttack(),
                 creature.getDefenseStat(),
+                creature.getBaseDefense(),
                 creature.getSpeedStat(),
+                creature.getBaseSpeed(),
+                creature.getBonusStatTotal(),
+                creature.getBonusHealth(),
+                creature.getBonusAttack(),
+                creature.getBonusDefense(),
+                creature.getBonusSpeed(),
                 teamSlot
         );
     }
@@ -105,6 +114,8 @@ public class Converters {
             case "WeirdTurtle":
                 creature = new WeirdTurtle(entity.getName(), entity.getLevel());
                 break;
+            case "CustomCreature":
+                creature = new CustomCreature(entity.getName(), entity.getLevel());
             default:
                 throw new IllegalArgumentException("creature type not found: " + entity.getType());
         }
@@ -125,14 +136,30 @@ public class Converters {
         creature.setDefenseStat(entity.getDefenseStat());
         creature.setSpeedStat(entity.getSpeedStat());
 
+        //set base stats
+        creature.setBaseHealth(entity.getBaseHealth());
+        creature.setBaseAttack(entity.getBaseAttack());
+        creature.setBaseDefense(entity.getBaseDefense());
+        creature.setBaseSpeed(entity.getBaseSpeed());
+
+        //set bonus stats
+        creature.setBonusStatTotal(entity.getBonusStatTotal());
+        creature.setBonusHealth(entity.getBonusHealth());
+        creature.setBonusAttack(entity.getBonusAttack());
+        creature.setBonusDefense(entity.getBonusDefense());
+        creature.setBonusSpeed(entity.getBonusSpeed());
+
         // Restore abilities from their IDs
         List<String> abilityIds = entity.getAbilityList();
         if (abilityIds != null) {
             //clear out ability list before adding saved abilities
             creature.getAbilityList().clear();
+            //loop through list of ability IDs
             for (String id : abilityIds) {
+                //pass each ID into the DAO to retrieve and store it
                 AbilityEntity abilityEntity = abilityDAO.getAbilityById(id);
                 if (abilityEntity != null) {
+                    //pass the retrieved entity into the converter and store it into the creatures abilityList
                     creature.getAbilityList().add(convertEntityToAbility(abilityEntity));
                 }
             }
