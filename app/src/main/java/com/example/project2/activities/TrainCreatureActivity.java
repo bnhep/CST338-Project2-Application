@@ -1,5 +1,6 @@
 package com.example.project2.activities;
 
+import com.example.project2.UserTeamData;
 import com.example.project2.creatures.ElectricRat;
 import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
@@ -35,11 +36,24 @@ public class TrainCreatureActivity extends AppCompatActivity {
     private static final int TIME_LIMIT = 20000;
     private SoundPool soundPool;
     private int tapSoundId;
+    private int slot;
+
+    private final int MAX_OVERALL_BONUS = 30;
+    private final int MAX_INDIVIDUAL_BONUS = 20;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attribute_select);
+
+        slot = getIntent().getIntExtra("slotNumber", -1);
+        if (slot == -1) {
+            //if the number failed to pass in correctly just cancel
+            finish();
+        }
+
+        trainee = UserTeamData.getInstance().getCreatureAtSlot(slot);
 
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -51,12 +65,6 @@ public class TrainCreatureActivity extends AppCompatActivity {
                 .build();
         tapSoundId = soundPool.load(this, R.raw.tap_sound, 1);
 
-        new Thread(() -> {
-            trainee = new ElectricRat(); //temporary before team select
-            runOnUiThread(() -> {
-                setupUI();
-            });
-        }).start();
     }
 
     private void setupUI() {
@@ -78,38 +86,17 @@ public class TrainCreatureActivity extends AppCompatActivity {
     }
 
     private boolean isMaxed(String attribute){
-        if (trainee instanceof ElectricRat) {
-            ElectricRat cr = (ElectricRat) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
-        } else if (trainee instanceof FireLizard) {
-            FireLizard cr = (FireLizard) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
-        } else if (trainee instanceof FlowerDino) {
-            FlowerDino cr = (FlowerDino) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
-        } else if (trainee instanceof WeirdTurtle) {
-            WeirdTurtle cr = (WeirdTurtle) trainee;
-            switch (attribute) {
-                case "attack": return cr.getAttackStat() >= cr.getATTACK_MAX();
-                case "defense": return cr.getDefenseStat() >= cr.getDEFENSE_MAX();
-                case "health": return cr.getHealthStat() >= cr.getHEALTH_MAX();
-                case "speed": return cr.getSpeedStat() >= cr.getSPEED_MAX();
-            }
+        if(trainee.getBonusAttack() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+            //do not allow increment + toast maxxed, return true
+        }
+        if(trainee.getBonusDefense() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+
+        }
+        if(trainee.getBonusHealth() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+
+        }
+        if(trainee.getBonusSpeed() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
+
         }
         return false;
     }
@@ -142,7 +129,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
         tapCount = 0;
         result.setText("");
         int levelScale = getAttributeLevel(selectedAttribute);
-        tapGoal = 30 + (levelScale * 3);//check if too hard lol
+        tapGoal = 30 + (levelScale * 3); //check if too hard lol
         goal.setTextColor(getResources().getColor(android.R.color.black));
 
         goal.setText("Tap Goal: " + tapGoal);
@@ -181,13 +168,13 @@ public class TrainCreatureActivity extends AppCompatActivity {
     private void evaluateTraining(){
         if(tapCount >= tapGoal){
             switch (selectedAttribute){
-                case "attack": trainee.setAttackStat(trainee.getAttackStat() + 1);
+                case "attack": trainee.setBonusAttack(trainee.getBonusAttack() + 1);
                 break;
-                case "defense": trainee.setDefenseStat(trainee.getDefenseStat() + 1);
+                case "defense": trainee.setBonusDefense(trainee.getBonusDefense() + 1);
                 break;
-                case "health": trainee.setHealthStat(trainee.getHealthStat() + 1);
+                case "health": trainee.setBonusHealth(trainee.getBonusHealth() + 1);
                 break;
-                case "speed": trainee.setSpeedStat(trainee.getSpeedStat() + 1);
+                case "speed": trainee.setBonusSpeed(trainee.getBonusSpeed() + 1);
                 break;
             }
             result.setText("Success! " + capitalize(selectedAttribute) + " increased!");

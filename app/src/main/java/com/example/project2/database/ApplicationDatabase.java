@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 /**
  * Actual Database, if more data needs to be stored use this, create entity and DAO
  */
-@Database(entities = {User.class, CreatureEntity.class, AbilityEntity.class} , version = 2, exportSchema = false)
+@Database(entities = {User.class, CreatureEntity.class, AbilityEntity.class} , version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class ApplicationDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";

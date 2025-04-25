@@ -71,6 +71,7 @@
         <activity
             android:name=".activities.UserLandingActivity"
             android:exported="false" />
+        <activity android:name=".activities.TrainTeamViewerActivity" />
     </application>
 
 </manifest>
