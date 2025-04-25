@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project2.creatures.Creature;
 import com.example.project2.database.AbilityDAO;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.CreatureEntity;
@@ -41,11 +42,16 @@ public class AdminStatEditorActivity extends AppCompatActivity {
     private AbilityDAO abilityDAO;
     private ActivityAdminStatEditorBinding binding;
 
+    private AccountStatusCheck accountManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminStatEditorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        accountManager = AccountStatusCheck.getInstance();
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
 
         creatureDAO = DAOProvider.getCreatureDAO();
         abilityDAO = DAOProvider.getAbilityDAO();
