@@ -40,7 +40,7 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull UserViewHolder holder, @SuppressLint("RecyclerView") int position) {
         User current = users.get(position);
         holder.usernameTextView.setText(current.getUsername());
         holder.passwordTextView.setText(current.getPassword());

@@ -82,16 +82,16 @@ public class ViewUsersActivity extends AppCompatActivity implements UserSelectLi
         alertBuilder.setTitle("What do you want to do?");
         alertBuilder.setMessage("Do you want to modify the user?");
 
-        alertBuilder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+        alertBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
+                deleteUser();
             }
         });
         alertBuilder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deleteUser();
+                alertDialog.dismiss();
             }
         });
         alertBuilder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
@@ -108,7 +108,16 @@ public class ViewUsersActivity extends AppCompatActivity implements UserSelectLi
 
     private void deleteUser() {
         appRepository.getUserByUserName(usernameFromRecycler).observe(this, users -> {
-            appRepository.deleteUser(users);
+            if (users != null) {
+                if (!users.isAdmin()) {
+                    appRepository.deleteUser(users);
+                    Toast.makeText(this,
+                            "User has been deleted.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this,
+                            "Can't Delete an Admin", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 }
