@@ -46,7 +46,7 @@ public class AdminEditStatsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int creatureId = templateEntities.get(position).getCreatureId();
 
-                Intent intent = new Intent(getApplicationContext(), CreatureDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminStatEditorActivity.class);
                 intent.putExtra("creatureId", creatureId);
                 startActivity(intent);
             }
