@@ -3,7 +3,6 @@ package com.example.project2.database;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Query;
 
 import com.example.project2.database.entities.User;
 
@@ -60,6 +59,11 @@ public class ApplicationRepository {
     public LiveData<List<User>> getAllUsers(){
         return userDAO.getAllUsers();
     }
-
+    public void deleteUser(User user){
+        ApplicationDatabase.databaseWriteExecutor.execute(() ->
+        {
+            userDAO.delete(user);
+        });
+    }
 
 }
