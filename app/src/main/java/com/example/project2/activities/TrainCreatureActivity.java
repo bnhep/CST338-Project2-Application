@@ -142,7 +142,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
         counter = findViewById(R.id.counter);
         result = findViewById(R.id.result);
         buttonBackToMain = findViewById(R.id.button_back_to_main);
-        buttonBackToMain.setVisibility(View.GONE); // Hide initially
+        buttonBackToMain.setVisibility(View.GONE); // hide button initially
 
         buttonMash.setEnabled(true);
         buttonMash.setOnClickListener(v ->{
@@ -166,7 +166,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
         tapCount = 0;
         result.setText("");
         int levelScale = getAttributeLevel(selectedAttribute);
-        tapGoal = 30 + (levelScale * 20); //check if too hard lol
+        tapGoal = 30 + (levelScale * 5); //check if too hard or easy
         goal.setTextColor(getResources().getColor(android.R.color.black));
 
         goal.setText("Tap Goal: " + tapGoal);

@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Activity that allows for selection of a creature from one's team to be used for training
- * @author Alexis Wogoman
+ * @author Alexis Wogoman, version of Austin's original team viewer
  * @date 24 April 2025
  */
 public class TrainTeamViewerActivity extends AppCompatActivity {
@@ -65,9 +65,6 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(v -> finish());
     }
 
-    /**
-     *
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -112,9 +109,6 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     *
-     */
     public static Intent TrainTeamViewerIntentFactory(Context context) {
         return new Intent(context, TrainTeamViewerActivity.class);
     }
