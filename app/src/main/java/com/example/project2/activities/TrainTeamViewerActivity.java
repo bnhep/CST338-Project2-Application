@@ -16,12 +16,20 @@ import com.example.project2.databinding.ActivityTrainTeamViewerBinding;
 
 import java.util.Map;
 
+/**
+ * Activity that allows for selection of a creature from one's team to be used for training
+ * @author Alexis Wogoman
+ * @date 24 April 2025
+ */
 public class TrainTeamViewerActivity extends AppCompatActivity {
 
     ActivityTrainTeamViewerBinding binding;
     private AccountStatusCheck accountManager;
     private String userId;
 
+    /**
+     * Creation method to set up content view, team display, and button options
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +65,19 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         binding.backButton.setOnClickListener(v -> finish());
     }
 
+    /**
+     *
+     */
     @Override
     protected void onResume() {
         super.onResume();
         updateTeamSlotButtons();
     }
 
+    /**
+     * Contextualizes the slot int into a Creature choice
+     * @param slot the slot number of the creature that was selected
+     */
     public void contextualButtonChoice(int slot) {
         Creature selected = UserTeamData.getInstance().getCreatureAtSlot(slot);
         if (selected != null) {
@@ -74,6 +89,9 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the buttons to contain user's saved creatures
+     */
     private void updateTeamSlotButtons() {
         Map<Integer, Creature> userTeam = UserTeamData.getInstance().getUserTeam();
         Button[] buttons = {
@@ -94,6 +112,9 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     */
     public static Intent TrainTeamViewerIntentFactory(Context context) {
         return new Intent(context, TrainTeamViewerActivity.class);
     }
