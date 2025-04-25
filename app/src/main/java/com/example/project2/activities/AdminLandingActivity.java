@@ -67,7 +67,6 @@ public class AdminLandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //changed again
         //lex button
        /* binding.trainCreaturesButton.setOnClickListener(new View.OnClickListener() {
             @Override
