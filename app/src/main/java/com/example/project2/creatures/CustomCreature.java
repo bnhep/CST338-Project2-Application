@@ -1,8 +1,11 @@
 package com.example.project2.creatures;
 /**
  * Name: Austin Shatswell
- * Date: --/--/25
+ * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
+ *  custom creature class that was created so that
+ *  an admin can pass new stats and information to
+ *  build a new template creature
  */
 
 import com.example.project2.ElementalType;
@@ -10,12 +13,18 @@ import com.example.project2.ElementalType;
 public class CustomCreature extends Creature {
 
     private final String PHRASE = "'Gah!";
-    //these are unneeded
+
+    //TODO: these are unneeded and probably should be removed
     private int HEALTH_MAX;
     private int ATTACK_MAX;
     private int DEFENSE_MAX;
     private int SPEED_MAX;
 
+    /**
+     * constructed used when recreating an custom creature from the database
+     * @param name
+     * @param level
+     */
     public CustomCreature(String name, int level) {
         super(name, level);
 
@@ -25,7 +34,17 @@ public class CustomCreature extends Creature {
         setCurHealth(this.getHealthStat());
     }
 
-    //used for creating a new creature type
+    /**
+     * constructor built so that it can be used to pass a set of base
+     * stats in from an admin page. this allows a custom creature to
+     * uniquely be built with custom base stats.
+     * @param name
+     * @param elementalType
+     * @param baseHealth
+     * @param baseAttack
+     * @param baseDefense
+     * @param baseSpeed
+     */
     public CustomCreature(String name, ElementalType elementalType, int baseHealth, int baseAttack, int baseDefense, int baseSpeed) {
         super(name, 1, elementalType);
 
@@ -36,6 +55,7 @@ public class CustomCreature extends Creature {
         setCurHealth(this.getHealthStat());
     }
 
+    //TODO:these are unneeded and should probably be removed
     public int getHEALTH_MAX(){
         return HEALTH_MAX;
     }

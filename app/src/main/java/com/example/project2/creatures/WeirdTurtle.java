@@ -1,8 +1,9 @@
 package com.example.project2.creatures;
 /**
  * Name: Austin Shatswell
- * Date: --/--/25
+ * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
+ *  updated weird turtle Creature subclass
  */
 
 import com.example.project2.ElementalType;
@@ -18,6 +19,9 @@ public class WeirdTurtle extends Creature {
     private final int DEFENSE_MAX = 70;
     private final int SPEED_MAX = 35;
 
+    /**
+     * default constructor used with establishing this creatures template
+     */
     public WeirdTurtle() {
         super("Weird Turtle", 1, ElementalType.WATER);
         setType(this.getClass().getSimpleName());
@@ -32,6 +36,11 @@ public class WeirdTurtle extends Creature {
         }
     }
 
+    /**
+     * constructor used when building a creature from an entity
+     * @param name
+     * @param level
+     */
     public WeirdTurtle(String name, int level) {
         super(name, level, ElementalType.WATER);
 
@@ -46,6 +55,7 @@ public class WeirdTurtle extends Creature {
         this.getAbilityList().add(Converters.convertEntityToAbility(abilityDAO.getAbilityById("WATERJET")));
     }
 
+    //TODO: these are unneeded and should probably be removed
     public int getHEALTH_MAX(){
         return HEALTH_MAX;
     }

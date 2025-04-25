@@ -1,11 +1,13 @@
 package com.example.project2.database;
 /**
- * This will be used to handle DAO's as global singletons
- * because the individual DAO's will not be changing
- * throughout the project. This helps cut down on rewriting
- * code and keeps things looking cleaner
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  This will be used to handle DAO's as global singletons
+ *  because the individual DAO's will not be changing
+ *  throughout the project. This helps cut down on rewriting
+ *  code and keeps things looking cleaner
  */
-
 
 import android.app.Application;
 

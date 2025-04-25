@@ -1,4 +1,12 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity that is used to view and select creatures
+ *  that available to the user. If a slot is empty the
+ *  user is able to fill the slot with a new creature
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,11 +32,6 @@ public class TeamViewerActivity extends AppCompatActivity {
 
     ActivityTeamViewerBinding binding;
     private AccountStatusCheck accountManager;
-
-    //TODO: just for testing. this will be removed later
-    private final String TEMP_USER_ID = "testUserId";
-
-    //TODO:this should be assigned the users unique ID as its used for saving and loading creatures
     private String userId;
 
     @Override
@@ -42,10 +45,6 @@ public class TeamViewerActivity extends AppCompatActivity {
         //update buttons to display team members
         updateTeamSlotButtons();
 
-        /**
-         * TODO:this is where we should be picking up and assigning the
-         *  the users proper randomly generated userId
-         */
         userId = String.valueOf(AccountStatusCheck.getInstance().getUserID());
 
         binding.teamSlotOneButton.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +176,10 @@ public class TeamViewerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * used to save all current creature team data into the database
+     * so that it may be retrieved at a later time
+     */
     public void saveTeam(){
         //run on a background thread when making changes to the database
         Executors.newSingleThreadExecutor().execute(() -> {
@@ -196,7 +199,6 @@ public class TeamViewerActivity extends AppCompatActivity {
                 //store the creatures unique ID for retrieval
                 int id = creature.getCreatureId();
 
-                //TODO:later on we want to pass in the actual users generated id here
                 /**
                  * passing the information about the creature along with user ID into
                  * the converter to 'dehydrate' the creature class into simple data
@@ -212,6 +214,11 @@ public class TeamViewerActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent TeamViewerIntentFactory(Context context) {
         Intent intent = new Intent(context, TeamViewerActivity.class);
 

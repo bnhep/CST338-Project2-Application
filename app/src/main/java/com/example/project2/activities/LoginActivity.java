@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -64,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
              * Im putting these finish() calls because everywhere I read they say try to always
              * finish activities when youre done with them so that youre not
              * just adding more layers of activities onto the stack
+             * - Austin
              */
             finish();
             return;
@@ -175,8 +175,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to load creatures from the database by user ID
+     * and populate the users team with found information
+     * - Austin
+     * @param userId
+     */
     public void loadTeam(String userId){
-        //TODO: This is just here for testing. this should be moved to when the user logs in later
         try {
             //run on a background thread when making changes to the database
             Executors.newSingleThreadExecutor().execute(() -> {
@@ -188,7 +193,6 @@ public class LoginActivity extends AppCompatActivity {
                 CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
                 AbilityDAO abilityDAO = DAOProvider.getAbilityDAO();
 
-                //TODO:later on we want to pass in the actual users generated id here
                 /**
                  * Passing the users ID into the creatureDAO to collect a list of
                  * creatures associated with the current user.

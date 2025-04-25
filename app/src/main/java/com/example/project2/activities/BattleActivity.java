@@ -1,4 +1,12 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity where the main battling mechanic of
+ *  the game takes place. this is where creatures will
+ *  battle each other
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +34,6 @@ public class BattleActivity extends AppCompatActivity {
     ActivityBattleBinding binding;
     private Handler handler = new Handler(Looper.getMainLooper());
     private int slot;
-    private String opponentName;
     private Button[] abilityButtons;
     private Creature playerCreature;
     private Creature opponentCreature;
@@ -101,6 +108,11 @@ public class BattleActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to hide or un-hide the battle screens UI. this is mostly just to
+     * add a bit of flavor
+     * @param visible
+     */
     private void setBattleViewVisible(boolean visible) {
         //advanced if/else statement makes this look way cleaner
         binding.battleDisplayTextView.setVisibility(visible ? View.GONE : View.VISIBLE);
@@ -112,6 +124,11 @@ public class BattleActivity extends AppCompatActivity {
         binding.abilityButtonsLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * updates the ability buttons so that names of the
+     * abilities are displayed and disables them if
+     * there is no ability associated with it
+     */
     private void updateAbilityButtons() {
         List<Ability> abilities = playerCreature.getAbilityList();
 
@@ -129,6 +146,11 @@ public class BattleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * used to initialize the battle screens UI so that it
+     * displays the proper information for both the opponent
+     * and user Creatures when the battle begins
+     */
     private void battleUiSetup() {
         //show opponent intro
         setBattleViewVisible(false);
@@ -152,15 +174,24 @@ public class BattleActivity extends AppCompatActivity {
         handler.postDelayed(() -> setBattleViewVisible(true), 2000);
     }
 
+    /**
+     * used to update only the players health
+     */
     private void updatePlayerHealth() {
         handler.postDelayed(() -> binding.playerHealthTextView.setText("Health: " + playerCreature.getCurHealth() + "/" + playerCreature.getHealthStat()), battleTextPromptStep);
 
     }
 
+    /**
+     * used to update only the opponents health
+     */
     private void updateOpponentHealth() {
         handler.postDelayed(() -> binding.opponentHealthTextView.setText("Health: " + opponentCreature.getCurHealth() + "/" + opponentCreature.getHealthStat()), battleTextPromptStep);
     }
 
+    /**
+     * used to update the name, level, and XP for the Creatures
+     */
     private void battleUiUpdate() {
         //set names and levels
         handler.postDelayed(() -> binding.playerNameTextView.setText(playerCreature.getName() + " [lvl: " + playerCreature.getLevel() + "]"), battleTextPromptStep);
@@ -169,24 +200,41 @@ public class BattleActivity extends AppCompatActivity {
         handler.postDelayed(() -> binding.xpBarTextView.setText("[XP: " + playerCreature.getCurExperiencePoints() + "/" + playerCreature.getExperienceNeededToLevel() + "]"), battleTextPromptStep);
     }
 
+    /**
+     * used to disable to enable the battle screens buttons so that
+     * they cant be pressed while the results of a combat turn
+     * are being displayed
+     * @param enabled
+     */
     private void setButtonsClickable(boolean enabled) {
         List<Ability> abilities = playerCreature.getAbilityList();
 
         binding.backButton.setEnabled(enabled);
 
-        //dia
+        //disable or enable
         for (int i = 0; i < abilityButtons.length; i++) {
             boolean abilityExists = (i < abilities.size()) && (abilities.get(i) != null);
             abilityButtons[i].setEnabled(enabled && abilityExists);
         }
     }
 
+    /**
+     * this is used to update the prompt displayed to the user
+     * also automatically updates the amount of time the display
+     * should be delayed so that the prompts are updated after each other
+     * @param text
+     */
     private void updateBattlePrompt(String text) {
         //increment another 2 second delay from last prompt
         handler.postDelayed(() -> binding.battlePromptTextView.setText(text), battleTextPromptStep);
         battleTextPromptStep += 2000;
     }
 
+    /**
+     * this is the core logic for the battles turns. based on which
+     * ability is selected the user and opponent will attack each other
+     * @param selectedAbility
+     */
     private void battleLogic(Ability selectedAbility) {
         //variable to keep track of ability damage
         double[] damageDealt;
@@ -249,6 +297,12 @@ public class BattleActivity extends AppCompatActivity {
         updateBattlePrompt("What will " + playerCreature.getName() + " do?");
     }
 
+    /**
+     * this method is used to to display to the user what the results
+     * of a specific attack are. if it landed, if it was a crit, how
+     * effective it was, and how much damage was dealt
+     * @param damageDealt
+     */
     private void creatureAttackResultPrompt(double[] damageDealt) {
         //check if attack missed
         if (damageDealt[2] > 0) {
@@ -274,10 +328,15 @@ public class BattleActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * called when the opponent creature is fainted. this method updates the prompt with
+     * the battle results as well as grants experience based on the opponent level
+     * finally, it exits the activity after a delay based on the battleTextPromptStep variable
+     */
     private void playerWin() {
         updateBattlePrompt(opponentCreature.getName() + " has fainted!");
 
-        int xpGained = Math.round(opponentCreature.getLevel() * 10);
+        int xpGained = Math.round(opponentCreature.getLevel() * 8);
 
         updateBattlePrompt(playerCreature.getName() + " gains " + xpGained + "XP!");
 
@@ -298,6 +357,11 @@ public class BattleActivity extends AppCompatActivity {
         handler.postDelayed(() -> exitBattle(), battleTextPromptStep+2000);
     }
 
+    /**
+     * called when the player creature is fainted. this method updates
+     * the prompt with the battle results and exits the activity after
+     * a delay based on the battleTextPromptStep variable
+     */
     private void playerLose() {
         updateBattlePrompt(playerCreature.getName() + " has fainted!");
 
@@ -309,6 +373,9 @@ public class BattleActivity extends AppCompatActivity {
         handler.postDelayed(() -> exitBattle(), battleTextPromptStep+2000);
     }
 
+    /**
+     * used to exit the battle if the user decided to flee
+     */
     private void exitBattle() {
         //reset player creature health and fainted status
         playerCreature.setCurHealth(playerCreature.getHealthStat());
@@ -316,9 +383,13 @@ public class BattleActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent BattleIntentFactory(Context context) {
         Intent intent = new Intent(context, BattleActivity.class);
-
         return intent;
     }
 }

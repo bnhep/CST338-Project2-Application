@@ -1,8 +1,10 @@
 package com.example.project2.utilities;
 /**
  * Name: Austin Shatswell
- * Date: --/--/25
+ * Date: 4/27/25
  * Explanation: Project 2: Creature Coliseum
+ *  slightly altered version of the Dice class that was used
+ *  in the original Legally Distinct Pocket Monsters project
  */
 
 import java.util.Random;

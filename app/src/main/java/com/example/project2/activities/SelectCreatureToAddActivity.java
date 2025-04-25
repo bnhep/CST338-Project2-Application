@@ -1,4 +1,12 @@
 package com.example.project2.activities;
+/**
+ * Name: Austin Shatswell
+ * Date: 4/27/25
+ * Explanation: Project 2: Creature Coliseum
+ *  activity that will display a list of all available
+ *  creatures (displays the creature templates) that can
+ *  be added to the team as a new creature to use
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +76,10 @@ public class SelectCreatureToAddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * used to call the cell adapter so that it can populate
+     * the screen with a list of available creatures to select from
+     */
     private void setUpData() {
         Executors.newSingleThreadExecutor().execute(() -> {
             CreatureDAO creatureDAO = DAOProvider.getCreatureDAO();
@@ -89,6 +101,11 @@ public class SelectCreatureToAddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * intent factory
+     * @param context
+     * @return
+     */
     public static Intent SelectCreatureToAddIntentFactory(Context context) {
         Intent intent = new Intent(context, SelectCreatureToAddActivity.class);
 
