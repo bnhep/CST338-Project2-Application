@@ -116,6 +116,7 @@ public class Converters {
                 break;
             case "CustomCreature":
                 creature = new CustomCreature(entity.getName(), entity.getLevel());
+                break;
             default:
                 throw new IllegalArgumentException("creature type not found: " + entity.getType());
         }
