@@ -40,5 +40,8 @@ public interface UserDAO {
     @Query("UPDATE userTable SET password = :newPassword WHERE username = :username")
     void setPasswordByUsername(String newPassword, String username);
 
+    @Query("UPDATE userTable SET username = :newUsername WHERE username = :username")
+    void setUsernameByUsername(String newUsername, String username);
+
 
 }

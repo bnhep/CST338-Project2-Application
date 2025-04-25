@@ -23,8 +23,4 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
         passwordTextView = itemView.findViewById(R.id.passwordRecyclerViewText);
         userNameTitleTextView = itemView.findViewById(R.id.usernameTitleRecyclerTextView);
     }
-
-
-
-
 }

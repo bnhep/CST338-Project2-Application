@@ -14,6 +14,7 @@ import com.example.project2.Ability;
 import com.example.project2.OpponentTeamData;
 import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityBattleBinding;
 import com.example.project2.utilities.Dice;
 import com.example.project2.utilities.ImageUtil;
@@ -30,6 +31,7 @@ public class BattleActivity extends AppCompatActivity {
     private Creature playerCreature;
     private Creature opponentCreature;
     private int battleTextPromptStep = 0;
+    private AccountStatusCheck accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,8 @@ public class BattleActivity extends AppCompatActivity {
         binding = ActivityBattleBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        accountManager = AccountStatusCheck.getInstance();
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //get passed in variables
         slot = getIntent().getIntExtra("slotNumber", -1);
         if (slot == -1) {
