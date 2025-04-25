@@ -12,6 +12,7 @@ import com.example.project2.ElementalType;
 import com.example.project2.database.AbilityDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.utilities.Converters;
+import com.example.project2.utilities.Dice;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -306,23 +307,41 @@ public abstract class Creature {
     }
 
     public double[] attack(Creature target, Ability ability) {
-        //store the results of calculateDamage
-        double[] result = calculateDamage(target, ability);
+        //percentage rolls
+        int accuracyRoll = Dice.roll(100);
+        int critChanceRoll = Dice.roll(100);
 
-        //convert into int
-        int attackValue = (int) Math.round(result[0]);
+        double critFlag = 1.0;
+
+        if (accuracyRoll > ability.getAccuracy()) {
+            //attack missed
+            //no damage, no elemental modifier, flag as a missed
+            return new double[] {0.0, 1.0, 0.0};
+        }
+
+        //calculate damage and store result
+        double[] result = calculateDamage(target, ability);
+        double attackValue = result[0];
+        double elementalModifier = result[1];
+
+        if (!(critChanceRoll > ability.getCritChance())) {
+            //critical hit
+            critFlag = 2.0; //set flag to show crit
+            attackValue *= 2; //double damage
+        }
+
         //pass the damage result onto the deal damage to the target
         target.takeDamage(attackValue);
 
-        //return result to be used in battle prompt
-        return result;
+        //return damage, elemental modifier, flag as a hit or crit
+        return new double[] {attackValue, elementalModifier, critFlag};
     }
 
     public double[] calculateDamage(Creature target, Ability ability) {
         double damageTotal;
         double elementalModifier = 1.0;
         double STABModifier = 1.0;
-        double critMult = 1.0;
+        double critModifier = 1.0;
 
         if (this.elements.contains(ability.getAbilityElement())) {
             STABModifier = 1.5;
@@ -401,7 +420,9 @@ public abstract class Creature {
         }
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(double attackValue) {
+        int damage = (int) Math.round(attackValue);
+
         //make sure the attack dealt damage
         if (damage > 0) {
             this.curHealth = this.curHealth - damage;

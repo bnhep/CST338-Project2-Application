@@ -17,6 +17,7 @@ import com.example.project2.database.DAOProvider;
 import com.example.project2.database.entities.CreatureEntity;
 import com.example.project2.databinding.ActivityCreatureDetailBinding;
 import com.example.project2.utilities.Converters;
+import com.example.project2.utilities.ImageUtil;
 
 import java.util.concurrent.Executors;
 
@@ -25,7 +26,7 @@ public class CreatureDetailActivity extends AppCompatActivity {
     ActivityCreatureDetailBinding binding;
 
     private int slot;
-    Creature selectedCreature;
+    private Creature selectedCreature;
     String userId;
     private AccountStatusCheck accountManager;
 
@@ -99,6 +100,9 @@ public class CreatureDetailActivity extends AppCompatActivity {
         binding.attackStatTextView.setText("Attack: " + selectedCreature.getBaseAttack());
         binding.defenseStatTextView.setText("Defense: " + selectedCreature.getBaseDefense());
         binding.speedStatTextView.setText("Speed: " + selectedCreature.getBaseSpeed());
+
+        //set the image to the creatures
+        binding.creatureImage.setImageResource(ImageUtil.getCreatureImage(selectedCreature, getApplicationContext()));
     }
 
     public static Intent CreatureDetailIntentFactory(Context context) {

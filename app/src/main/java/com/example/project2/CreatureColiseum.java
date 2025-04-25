@@ -74,7 +74,9 @@ public class CreatureColiseum extends Application {
                         new AbilityEntity("FLAMETHROWER", "flamethrower", "FIRE", 25, 10, 100),
                         new AbilityEntity("RAZORLEAF", "razor leaf", "GRASS", 25, 10, 100),
                         new AbilityEntity("SHOCK", "shock", "ELECTRIC", 25, 10, 100),
-                        new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100)
+                        new AbilityEntity("WATERJET", "water jet", "WATER", 25, 10, 100),
+                        new AbilityEntity("CRITTEST", "crit test", "NORMAL", 25, 90, 100),
+                        new AbilityEntity("MISSTEST", "miss test", "NORMAL", 25, 10, 10)
                 ));
             }
 
@@ -83,9 +85,7 @@ public class CreatureColiseum extends Application {
                         Converters.convertCreatureToEntity(new ElectricRat(), "NONE", -1, 0),
                         Converters.convertCreatureToEntity(new FireLizard(), "NONE", -1, 0),
                         Converters.convertCreatureToEntity(new FlowerDino(), "NONE", -1, 0),
-                        Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0),
-                        //Custom creature testing
-                        Converters.convertCreatureToEntity(new CustomCreature("Custom", ElementalType.NORMAL, 40, 50, 60, 70), "NONE", -1, 0)
+                        Converters.convertCreatureToEntity(new WeirdTurtle(), "NONE", -1, 0)
                 ));
             }
         }).start();
