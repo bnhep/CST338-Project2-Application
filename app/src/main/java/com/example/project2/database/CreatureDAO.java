@@ -65,4 +65,10 @@ public interface CreatureDAO {
      */
     @Query("DELETE FROM " + ApplicationDatabase.CREATURE_TABLE + " WHERE userId = :userId")
     void deleteAllCreaturesByUserId(String userId);
+
+    @androidx.room.Update
+    void update(CreatureEntity creature);
+
+    @androidx.room.Delete
+    void delete(CreatureEntity creature);
 }

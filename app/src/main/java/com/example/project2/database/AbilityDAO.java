@@ -49,4 +49,10 @@ public interface AbilityDAO {
      */
     @Query("SELECT * FROM abilityTable")
     List<AbilityEntity> getAll();
+
+    @androidx.room.Update
+    void update(AbilityEntity ability);
+
+    @androidx.room.Delete
+    void delete(AbilityEntity ability);
 }
