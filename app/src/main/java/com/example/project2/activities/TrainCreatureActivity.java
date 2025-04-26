@@ -35,7 +35,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
     private TextView counter;
     private TextView result;
 
-    private Creature trainee;
+    public Creature trainee;
     private String selectedAttribute = "";
 
     private int tapGoal;
@@ -116,7 +116,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
      * @param attribute the attribute being checked
      * @return true if attribute is at max, false if not
      */
-    private boolean isMaxed(String attribute){
+    public boolean isMaxed(String attribute){
         if(trainee.getBonusAttack() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
             return true;
         }
@@ -197,7 +197,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
      * @param attribute the attribute whose level is being checked
      * @return int of the current level of the selected attribute
      */
-    private int getAttributeLevel(String attribute){
+    public int getAttributeLevel(String attribute){
         switch(attribute){
             case "attack": return trainee.getAttackStat();
             case "defense": return trainee.getDefenseStat();
@@ -238,7 +238,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
      * @param s the string to be capitalized
      * @return a string with the now capitalized letter in front
      */
-    private String capitalize(String s){
+    public static String capitalize(String s){
         return s.substring(0,1).toUpperCase()+s.substring(1);
     }
 
@@ -250,6 +250,14 @@ public class TrainCreatureActivity extends AppCompatActivity {
         super.onDestroy();
         soundPool.release();
         soundPool = null;
+    }
+
+    /**
+     * Made solely for unit testing, not to be used in gameplay
+     * @param creature to be set as the trainee
+     */
+    public void setTrainee(Creature creature) {
+        this.trainee = creature;
     }
 
 }
