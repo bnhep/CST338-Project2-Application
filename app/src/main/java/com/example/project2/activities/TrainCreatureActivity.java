@@ -114,7 +114,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if selected attribute is at max level or if the overall number of bonus points is at max
+     * Checks if selected attribute is at max level || if the overall number of bonus points is at max
      * @param attribute the attribute being checked
      * @return true if attribute is at max, false if not
      */
