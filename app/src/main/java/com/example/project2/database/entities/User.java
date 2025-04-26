@@ -8,8 +8,10 @@ import com.example.project2.database.ApplicationDatabase;
 import java.util.Objects;
 
 /**
- * POJO Plain Old Java Object
- * This is for the user login credentials
+ * POJO defines the tables in the database. This class will be the table and the fields are the
+ * columns. Will be handled in the database for query.
+ * @author Brandon Nhep
+ * Date: 4/21/25
  */
 @Entity(tableName = ApplicationDatabase.USER_TABLE)
 public class User {

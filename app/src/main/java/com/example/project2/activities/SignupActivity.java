@@ -16,6 +16,14 @@ import com.example.project2.database.ApplicationRepository;
 import com.example.project2.database.entities.User;
 import com.example.project2.databinding.ActivitySignupBinding;
 
+/**
+ * This is the signup activity where a user can create an account. The menu will prompt the user
+ * to enter a username and a password. If the username exists then they are prompted a message
+ * to pick a new one. Validates if user leaves the edit texts blank, and enters an existing
+ * username.
+ * @author Brandon Nhep
+ * Date: 4/21/25
+ */
 public class SignupActivity extends AppCompatActivity {
 
     private ActivitySignupBinding binding;
@@ -66,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
         usernameEnter = binding.usernameSignUpEditText.getText().toString();
         passwordEnter = binding.passwordSignUpEditTextView.getText().toString();
 
-        if (usernameEnter.isEmpty() && passwordEnter.isEmpty()){
+        if (usernameEnter.isEmpty() && passwordEnter.isEmpty()) {
             Toast.makeText(SignupActivity.this,
                     "Username and Password are blank.",
                     Toast.LENGTH_SHORT).show();
@@ -83,7 +91,6 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
         LiveData<User> userObserver = appRepository.getUserByUserName(usernameEnter);
-        //This has override onChanged because before the
         userObserver.observe(this, new Observer<>() {
             @Override
             public void onChanged(User user) {
@@ -119,7 +126,11 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     /**
-     * Creating Intent Factory to swap over to other activities
+     * This is the intent factory method for this activity. If the method is called and the return
+     * value is stored in an intent. This will be passed to a start activity method in order to
+     * swap to this activity.
+     * @param context
+     * @return new instantiated intent
      */
     public static Intent signUpIntentFactory(Context context) {
         return new Intent(context, SignupActivity.class);
