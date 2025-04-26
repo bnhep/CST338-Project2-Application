@@ -99,7 +99,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
 
     /**
      * Checks if selected attribute is maxed out by calling isMaxed, if so, display an error message
-     * if not maxed, begin the training mini game
+     * if not maxed, begin the training mini game, call setup and start
      * @param attribute the attribute selected for training from the menu options
      */
     private void tryAttribute(String attribute){
