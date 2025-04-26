@@ -6,6 +6,7 @@ import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
 import com.example.project2.creatures.WeirdTurtle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -260,4 +261,12 @@ public class TrainCreatureActivity extends AppCompatActivity {
         this.trainee = creature;
     }
 
+    /**
+     * Factory method to create an Intent for TrainCreatureActivity
+     */
+    public static Intent intentFactory(Context context, int slotNumber) {
+        Intent intent = new Intent(context, TrainCreatureActivity.class);
+        intent.putExtra("slotNumber", slotNumber);
+        return intent;
+    }
 }
