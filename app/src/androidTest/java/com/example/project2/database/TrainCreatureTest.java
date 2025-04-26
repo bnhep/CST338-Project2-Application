@@ -14,6 +14,7 @@ import android.content.Context;
 //Tests the train creature methods
 @RunWith(AndroidJUnit4.class)
 public class TrainCreatureTest {
+    //sets up a train creature activity for testing
     private TrainCreatureActivity trainCreatureActivity;
 
     //Tests the written capitalization method
