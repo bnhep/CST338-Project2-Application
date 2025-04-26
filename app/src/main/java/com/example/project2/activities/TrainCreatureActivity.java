@@ -136,6 +136,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
 
     /**
      * Sets up the mini game page and counts the button clicks
+     * allows for back to menu visibility once game ends
      */
     private void initTrainingViews(){
         buttonMash = findViewById(R.id.button_mash);
