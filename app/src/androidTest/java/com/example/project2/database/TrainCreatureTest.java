@@ -16,6 +16,7 @@ import android.content.Context;
 public class TrainCreatureTest {
     private TrainCreatureActivity trainCreatureActivity;
 
+    //Tests the written capitalization method
     @Test
     public void testCapitalize() {
         String result = trainCreatureActivity.capitalize("speed");
