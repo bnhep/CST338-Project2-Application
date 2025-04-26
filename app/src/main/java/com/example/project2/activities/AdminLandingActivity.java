@@ -76,6 +76,16 @@ public class AdminLandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.editUsersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ViewUsersActivity.userViewAdminIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 
