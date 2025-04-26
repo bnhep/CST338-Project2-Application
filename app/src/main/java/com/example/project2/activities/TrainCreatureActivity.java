@@ -211,6 +211,9 @@ public class TrainCreatureActivity extends AppCompatActivity {
      * Evaluates the result of the training mini game, outputs success or failure and shows back button
      */
     private void evaluateTraining(){
+        buttonBackToMain.setVisibility(View.VISIBLE);
+        buttonBackToMain.bringToFront();
+
         if(tapCount >= tapGoal){
             switch (selectedAttribute){
                 case "attack": trainee.setBonusAttack(trainee.getBonusAttack() + 1);
@@ -228,7 +231,6 @@ public class TrainCreatureActivity extends AppCompatActivity {
             result.setText("Failed! You needed " + tapGoal + " taps, but got " + tapCount);
             goal.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
-        buttonBackToMain.setVisibility(View.VISIBLE);
     }
 
     /**

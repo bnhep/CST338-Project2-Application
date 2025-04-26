@@ -42,17 +42,6 @@ public class TrainTeamViewerActivity extends AppCompatActivity {
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         updateTeamSlotButtons();
 
-        // TEMPORARY TEST CREATURE SETUP
-        if (UserTeamData.getInstance().getCreatureAtSlot(1) == null) {
-            new Thread(() -> {
-                ElectricRat peekerchu = new ElectricRat();
-                UserTeamData.getInstance().addCreatureToSlot(1, peekerchu);
-
-                // Update the UI on the main thread
-                runOnUiThread(() -> updateTeamSlotButtons());
-            }).start();
-        }
-
         userId = String.valueOf(accountManager.getUserID());
 
         binding.teamSlotOneButton.setOnClickListener(v -> contextualButtonChoice(1));
