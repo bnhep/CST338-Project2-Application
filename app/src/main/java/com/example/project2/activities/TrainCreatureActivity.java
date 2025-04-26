@@ -88,6 +88,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
     /**
      * Sets up buttons to test if the chosen attribute is maxed out
      * Made separately for clarity in setting up user interface
+     * could be in the onCreate, but wanted to make it look cleaner
      */
     private void setupUI() {
         findViewById(R.id.btn_train_attack).setOnClickListener(v -> tryAttribute("attack"));
