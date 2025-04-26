@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.project2.ElementalType;
 import com.example.project2.R;
 import com.example.project2.creatures.CustomCreature;
+import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.CreatureDAO;
 import com.example.project2.database.DAOProvider;
 import com.example.project2.databinding.ActivityAddMonstersBinding;
@@ -28,12 +29,16 @@ public class AddMonstersActivity extends AppCompatActivity {
 
     ActivityAddMonstersBinding binding;
 
+    private AccountStatusCheck accountManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddMonstersBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        accountManager = AccountStatusCheck.getInstance();
+        binding.usernameDisplayTextView.setText(accountManager.getUserName());
 
         binding.fireButton.setOnClickListener(new View.OnClickListener() {
             @Override

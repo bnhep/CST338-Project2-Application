@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
 import com.example.project2.UserTeamData;
 import com.example.project2.database.AccountStatusCheck;
@@ -25,9 +27,8 @@ public class AdminLandingActivity extends AppCompatActivity {
         binding = ActivityAdminLandingBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         accountManager = AccountStatusCheck.getInstance();
-        binding.textView.setText(String.format("Welcome %s", accountManager.getUserName()));
+        binding.textView.setText(String.format(" Welcome to Creature Colosseum\n Admin Screen \n%s", accountManager.getUserName()));
 
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
