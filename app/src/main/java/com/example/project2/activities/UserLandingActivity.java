@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import com.example.project2.R;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,22 +15,20 @@ import com.example.project2.UserTeamData;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.database.ApplicationRepository;
 import com.example.project2.databinding.ActivityUserLandingBinding;
-import com.example.project2.databinding.ActivityUserLandingBinding;
+
 
 /**
- * Activity Menu where user will choose the options to battle, view monsters, view recent battles
- * //TODO implement the other activity layouts, A logout button should be here
+ * Activity Menu where user will choose the options to battle, view creatures, train their creatures
+ * @author Brandon Nhep
+ * Date: 4/21/25
  */
 public class UserLandingActivity extends AppCompatActivity {
     public static final String TAG = "Application_LOG";
-    private static final String MAIN_ACTIVITY_USER_ID = "com.example.project2.MAIN_ACTIVITY_USER_ID";
+
     private ActivityUserLandingBinding binding;
     private ApplicationRepository appRepository; //Performs the queries for the database
 
     private AccountStatusCheck accountManager;
-
-    private static final int LOGGED_OUT_STATUS = -1;
-    private static final boolean ADMIN_STATUS = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,24 +37,27 @@ public class UserLandingActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         appRepository = ApplicationRepository.getInstance();
         accountManager = AccountStatusCheck.getInstance();
+        //Changes user name text view in the corner to display current logged in user
         binding.usernameDisplayTextView.setText(accountManager.getUserName());
         //If we want it to say "Welcome [whatever the username]"
         binding.welcomeFighterLoginTextView.setText("Welcome " + accountManager.getUserName());
 
-        //button functionality for Start Battle
-        //TODO should have factory method to swap to StartBattle Activity
+        /*
+            button for the Start Battle activity
+         */
         binding.startBattleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = OpponentSelectActivity.OpponentSelectIntentFactory(getApplicationContext());
+                Intent intent = OpponentSelectActivity
+                        .OpponentSelectIntentFactory(getApplicationContext());
                 startActivity(intent);
 
             }
         });
 
-        //button functionality for View Monsters
-        //TODO should have factory method to swap to View Monsters(BASICALLY A STUB BUTTON)
+        /*
+            button for the view monsters activity
+         */
         binding.viewMonstersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,19 +65,24 @@ public class UserLandingActivity extends AppCompatActivity {
                 Intent intent = TeamViewerActivity.TeamViewerIntentFactory(getApplicationContext());
                 startActivity(intent);
 
-                //Testing button please remove later
-                //Toast.makeText(MainActivity.this, "View Monster Button works", Toast.LENGTH_SHORT).show();
+
             }
         });
 
+        /*
+            button for the train creatures activity
+         */
         Button trainButton = findViewById(R.id.trainCreaturesButton);
-
         trainButton.setOnClickListener(v -> {
-            Intent intent = new Intent(UserLandingActivity.this, TrainTeamViewerActivity.class);
+            Intent intent = new Intent(UserLandingActivity.this,
+                    TrainTeamViewerActivity.class);
             startActivity(intent);
         });
 
-
+        /*
+            button for the logout, calls logOutAlertDialog() to prompt user if they want to logout
+            or continue to stay logged in
+         */
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,16 +92,9 @@ public class UserLandingActivity extends AppCompatActivity {
 
     }
 
-
-
-    //MainIntentFactory that takes in a
-    public static Intent UserLandingPageIntentFactory(Context context){
-        Intent intent = new Intent(context, UserLandingActivity.class);
-        return intent;
-    }
-
     /**
-     * placeholder dialog may create a custom dialog
+     * Creates an alert dialog to prompt the user to stay logged in or to log out and quit the
+     * application and go back to the login screen. Calls the logoutMain() method.
      */
     private void logOutAlertDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -120,11 +118,28 @@ public class UserLandingActivity extends AppCompatActivity {
         alertBuilder.show();
     }
 
+    /**
+     * Allows the user to logout, calls the accountManager object method logout to clear the
+     * shared preferences file associated with the user. Clears the user's team data. Swaps to
+     * the login screen
+     */
     private void logoutMain(){
         accountManager.logout();
         UserTeamData.getInstance().clearTeam();
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
+        finish();
     }
 
+    /**
+     * This is the intent factory method for this activity. If the method is called and the return
+     * value is stored in an intent. This will be passed to a start activity method in order to
+     * swap to this activity.
+     * @param context
+     * @return new instantiated intent
+     */
+    public static Intent UserLandingPageIntentFactory(Context context){
+        Intent intent = new Intent(context, UserLandingActivity.class);
+        return intent;
+    }
 }

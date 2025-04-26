@@ -1,14 +1,14 @@
 package com.example.project2.database;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
  * @Author Brandon Nhep
+ * Date: 4/21/25
  * <p>
  * This manages the Shared-preferences of the whole application, This will manage the userID
- * and username of the current logged in user. Utilizes Shared-preferences
+ * their isAdmin boolean, and username of the current logged in user. Utilizes Shared-preferences
  * to store smaller data. Utilizes singleton method to only have one instance at a time, can be
  * called in any activity page. Contains a method to receive the userID, a getter function to return
  * the ID. Contains a method to receive the username, a getter function to return the username.
@@ -106,14 +106,26 @@ public class AccountStatusCheck {
         editor.apply();
     }
 
+    /**
+     * Receives the boolean of isAdmin from the user and adds it to a key
+     * @return
+     */
     public boolean getIsAdminStatus(){
         return preferences.getBoolean(CURRENT_STATUS_KEY, true);
     }
 
+    /**
+     * Checks if the team is loaded with a key
+     * @return
+     */
     public boolean isTeamLoaded() {
         return preferences.getBoolean(TEAM_LOADED_KEY, false);
     }
 
+    /**
+     * Sets the the team loaded with a key
+     * @param loaded
+     */
     public void setTeamLoaded(boolean loaded) {
         editor.putBoolean(TEAM_LOADED_KEY, loaded);
         editor.apply();

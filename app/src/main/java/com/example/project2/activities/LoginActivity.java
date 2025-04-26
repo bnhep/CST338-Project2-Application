@@ -28,7 +28,21 @@ import com.example.project2.utilities.Converters;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-
+/**
+ * This class will handle the login activity for the user. The user will be prompted to enter
+ * a username and password to enter the application's landing screens. Offer the user ability to
+ * change their passwords if they forgot it or if they do not have an account then sign up. The
+ * user will only be able to login if they have an account created and that account is stored in
+ * the database under userTable. Validates for blanks, existence of the username, wrong password
+ * or wrong username/password combination. If a user successfully logs in then their unique id,
+ * isAdmin boolean, and username will be stored in a shared preference file to keep track of their
+ * login status and the creature lists associated with the user's unique id will be loaded to the
+ * game. If the user never logs out and force quits the app they will be validated on whether
+ * their id exists in the shared preference file. If it does then it will auto switch to landing
+ * page essentially keeping the user logged in. Else it will keep them on the log in page.
+ * @author Brandon Nhep
+ * Date: 4/21/25
+ */
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
@@ -48,6 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         repository = ApplicationRepository.getInstance();
         accountManager = AccountStatusCheck.getInstance();
 
+        /*
+         * Checks if the user is already logged in or essentially their id is still in the
+         * shared preference file. The only way it is not is when they logout in the landing screen
+         * due to logging out deleting the contents of the shared preference file.
+         */
         if (accountManager.getUserID() != -1) {
             //user is already logged in
             String userId = String.valueOf(accountManager.getUserID());
@@ -93,13 +112,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /**
+        /*
          * Forgot password button leading to ForgotPasswordActivity
          */
         binding.forgotPassWordTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ForgotPasswordActivity.forgotPasswordIntentFactory(getApplicationContext());
+                Intent intent = ForgotPasswordActivity
+                        .forgotPasswordIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
@@ -111,7 +131,10 @@ public class LoginActivity extends AppCompatActivity {
      * This function serves to validate the user's login information. Checks if user enters a
      * username, if not prompt user to enter one and not leave it blank. Create an observer to
      * manage the live data. If user enters a password and its not equal to the password in the
-     * database then prompt invalid password else it will successfully login.
+     * database then prompt invalid password else it will successfully login. On successful login
+     * of basic user or admin user, the associated unique ID, username, isAdmin boolean will be
+     * stored in a shared preference file. In addition it will load the creature data associated
+     * with the unique id into an array list for the game.
      */
     private void userValidation() {
         String username = binding.usernameLoginEditText.getText().toString();
@@ -143,19 +166,25 @@ public class LoginActivity extends AppCompatActivity {
                         adminCheck = user.isAdmin();
                         if(!adminCheck) {
                             //moves to the UserLandingActivity page
+                            //Stores stuff into shared preference and load creature data associated
+                            //with the account
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
                             loadTeam(String.valueOf(user.getId()));
-                            intent = UserLandingActivity.UserLandingPageIntentFactory(getApplicationContext());
+                            intent = UserLandingActivity
+                                    .UserLandingPageIntentFactory(getApplicationContext());
                         }
                         else{
                             //moves to the AdminLandingActivity page
+                            //Stores stuff into shared preference and load creature data associated
+                            //with the account
                             accountManager.setUserID(user.getId());
                             accountManager.setUserName(user.getUsername());
                             accountManager.setIsAdminStatus(user.isAdmin());
                             loadTeam(String.valueOf(user.getId()));
-                            intent = AdminLandingActivity.AdminLandingIntentFactory(getApplicationContext());
+                            intent = AdminLandingActivity
+                                    .AdminLandingIntentFactory(getApplicationContext());
                         }
                         startActivity(intent);
                         finish();
@@ -222,6 +251,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This is the intent factory method for this activity. If the method is called and the return
+     * value is stored in an intent. This will be passed to a start activity method in order to
+     * swap to this activity.
+     * @param context
+     * @return new instantiated intent
+     */
     public static Intent loginIntentFactory(Context context) {
         return new Intent(context, LoginActivity.class);
     }
