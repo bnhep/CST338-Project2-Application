@@ -164,6 +164,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
 
     /**
      * Performs math for the scale of the goal, then calls evaluation of the result
+     * makes button available for clicking while game is active
      */
     private void startTraining(){
         tapCount = 0;
