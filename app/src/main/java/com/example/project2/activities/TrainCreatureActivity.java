@@ -6,6 +6,7 @@ import com.example.project2.creatures.FireLizard;
 import com.example.project2.creatures.FlowerDino;
 import com.example.project2.creatures.WeirdTurtle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -35,7 +36,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
     private TextView counter;
     private TextView result;
 
-    private Creature trainee;
+    public Creature trainee;
     private String selectedAttribute = "";
 
     private int tapGoal;
@@ -87,6 +88,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
     /**
      * Sets up buttons to test if the chosen attribute is maxed out
      * Made separately for clarity in setting up user interface
+     * could be in the onCreate, but wanted to make it look cleaner
      */
     private void setupUI() {
         findViewById(R.id.btn_train_attack).setOnClickListener(v -> tryAttribute("attack"));
@@ -97,7 +99,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
 
     /**
      * Checks if selected attribute is maxed out by calling isMaxed, if so, display an error message
-     * if not maxed, begin the training mini game
+     * if not maxed, begin the training mini game, call setup and start
      * @param attribute the attribute selected for training from the menu options
      */
     private void tryAttribute(String attribute){
@@ -112,11 +114,11 @@ public class TrainCreatureActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if selected attribute is at max level or if the overall number of bonus points is at max
+     * Checks if selected attribute is at max level || if the overall number of bonus points is at max
      * @param attribute the attribute being checked
      * @return true if attribute is at max, false if not
      */
-    private boolean isMaxed(String attribute){
+    public boolean isMaxed(String attribute){
         if(trainee.getBonusAttack() >= MAX_INDIVIDUAL_BONUS || trainee.getBonusStatTotal() >= MAX_OVERALL_BONUS){
             return true;
         }
@@ -134,6 +136,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
 
     /**
      * Sets up the mini game page and counts the button clicks
+     * allows for back to menu visibility once game ends
      */
     private void initTrainingViews(){
         buttonMash = findViewById(R.id.button_mash);
@@ -161,6 +164,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
 
     /**
      * Performs math for the scale of the goal, then calls evaluation of the result
+     * makes button available for clicking while game is active
      */
     private void startTraining(){
         tapCount = 0;
@@ -197,7 +201,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
      * @param attribute the attribute whose level is being checked
      * @return int of the current level of the selected attribute
      */
-    private int getAttributeLevel(String attribute){
+    public int getAttributeLevel(String attribute){
         switch(attribute){
             case "attack": return trainee.getAttackStat();
             case "defense": return trainee.getDefenseStat();
@@ -238,7 +242,7 @@ public class TrainCreatureActivity extends AppCompatActivity {
      * @param s the string to be capitalized
      * @return a string with the now capitalized letter in front
      */
-    private String capitalize(String s){
+    public static String capitalize(String s){
         return s.substring(0,1).toUpperCase()+s.substring(1);
     }
 
@@ -252,4 +256,20 @@ public class TrainCreatureActivity extends AppCompatActivity {
         soundPool = null;
     }
 
+    /**
+     * Made solely for unit testing, not to be used in gameplay
+     * @param creature to be set as the trainee
+     */
+    public void setTrainee(Creature creature) {
+        this.trainee = creature;
+    }
+
+    /**
+     * Factory method to create an Intent for TrainCreatureActivity
+     */
+    public static Intent intentFactory(Context context, int slotNumber) {
+        Intent intent = new Intent(context, TrainCreatureActivity.class);
+        intent.putExtra("slotNumber", slotNumber);
+        return intent;
+    }
 }
