@@ -55,7 +55,7 @@
     <TextView
         android:id="@+id/creatureNameTextView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_margin="16dp"
         android:gravity="center"
         android:text="Creature Name"
@@ -66,6 +66,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userDisplaySpacer" />
 
+    <ImageView
+        android:id="@+id/creatureImage"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:src="@color/design_default_color_primary"
+        android:scaleX="-1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creatureNameTextView"
+        />
 
     <GridLayout
         android:id="@+id/abilityStatsGridLayout"
@@ -79,12 +89,12 @@
         app:layout_constraintBottom_toTopOf="@id/abilityButtonsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/creatureNameTextView">
+        app:layout_constraintTop_toBottomOf="@+id/creatureImage">
 
         <TextView
             android:id="@+id/typeTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Type]"
             android:gravity="center"
@@ -94,7 +104,7 @@
         <TextView
             android:id="@+id/elementTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Element]"
             android:gravity="center"
@@ -103,7 +113,7 @@
         <TextView
             android:id="@+id/levelTextview"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Level]"
             android:gravity="center"
@@ -112,7 +122,7 @@
         <TextView
             android:id="@+id/curXpTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[curXP/XPneeded]"
             android:gravity="center"
@@ -121,7 +131,7 @@
         <TextView
             android:id="@+id/healthStatTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Health]"
             android:gravity="center"
@@ -130,7 +140,7 @@
         <TextView
             android:id="@+id/attackStatTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Attack]"
             android:gravity="center"
@@ -139,7 +149,7 @@
         <TextView
             android:id="@+id/defenseStatTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Defense]"
             android:gravity="center"
@@ -148,7 +158,7 @@
         <TextView
             android:id="@+id/speedStatTextView"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_columnWeight="1"
             android:text="[Speed]"
             android:gravity="center"
@@ -165,7 +175,6 @@
         android:padding="8dp"
         android:rowCount="2"
         android:useDefaultMargins="true"
-        app:layout_constraintBottom_toTopOf="@id/addAbilityButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/abilityStatsGridLayout">
@@ -205,19 +214,21 @@
 
     <Button
         android:id="@+id/addAbilityButton"
-        android:layout_width="260dp"
-        android:layout_height="70dp"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:text="Add Ability"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/deleteCreatureButton"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/abilityButtonsLayout"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
 
     <Button
         android:id="@+id/deleteCreatureButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:layout_margin="16dp"
         android:layout_marginStart="40dp"
         android:fontFamily="@font/playfair_bold"

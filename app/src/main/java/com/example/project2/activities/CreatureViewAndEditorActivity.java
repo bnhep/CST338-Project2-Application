@@ -23,6 +23,7 @@ import com.example.project2.UserTeamData;
 import com.example.project2.creatures.Creature;
 import com.example.project2.database.AccountStatusCheck;
 import com.example.project2.databinding.ActivityCreatureViewAndEditorBinding;
+import com.example.project2.utilities.ImageUtil;
 
 import java.util.List;
 
@@ -135,6 +136,8 @@ public class CreatureViewAndEditorActivity extends AppCompatActivity {
          */
         //name
         binding.creatureNameTextView.setText(playerCreature.getName());
+        //image
+        binding.creatureImage.setImageResource(ImageUtil.getCreatureImage(playerCreature, getApplicationContext()));
         //type
         binding.typeTextView.setText(playerCreature.getType());
         //elements
