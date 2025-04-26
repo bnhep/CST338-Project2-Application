@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 
 import android.content.Context;
 
+//Tests the train creature methods
 @RunWith(AndroidJUnit4.class)
 public class TrainCreatureTest {
     private TrainCreatureActivity trainCreatureActivity;
