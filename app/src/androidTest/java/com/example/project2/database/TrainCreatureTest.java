@@ -23,6 +23,7 @@ public class TrainCreatureTest {
         assertEquals("Speed", result);
     }
 
+    //tests the capitalization method
     @Test
     public void testCapitalize2(){
         String result = trainCreatureActivity.capitalize("health");
